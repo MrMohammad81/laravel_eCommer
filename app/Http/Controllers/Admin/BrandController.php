@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
@@ -14,17 +15,17 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
-        //
+        return view('admin.brands.create');
     }
 
     /**
@@ -35,7 +36,15 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $request->validate([
+            'name' => 'required|min:2|max:30'
+        ]);
+
+        $createBrand = Brand::create([
+            'name' => $request->name,
+            'is_active' => $request->is_active
+        ]);
+         redirect()->route('admin.brands.index');
     }
 
     /**
