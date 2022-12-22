@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\BrandController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('admin.dashboard');
+// Admin Routes
+Route::get('admin-panel/dashboard',[DashboardController::class , 'index'])->name('dashboard');
+
+Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
+{
+    Route::resource('brands', BrandController::class);
 });
