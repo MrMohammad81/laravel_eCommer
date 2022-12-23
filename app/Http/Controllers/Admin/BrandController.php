@@ -5,17 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
+Use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Requests\Admin\Brands\StoreRequest;
 
 class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-
+        $brands = Brand::paginate(20);
+        return view('admin.brands.index' , compact('brands'));
     }
 
     /**
@@ -32,19 +35,19 @@ class BrandController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-         $request->validate([
-            'name' => 'required|min:2|max:30'
-        ]);
+         $request->validated();
 
         $createBrand = Brand::create([
             'name' => $request->name,
             'is_active' => $request->is_active
         ]);
-         redirect()->route('admin.brands.index');
+
+         Alert::success('با تشکر', " $request->name با موفقیت ثبت شد");
+        return redirect()->route('admin.brands.index');
     }
 
     /**

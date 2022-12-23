@@ -75,6 +75,8 @@
 <script defer src="{{ asset('admin/js/demo/chart-pie-demo.js') }}"></script>
 
 @yield('script')
+@include('sweetalert::alert')
+
 </body>
 
 </html>
