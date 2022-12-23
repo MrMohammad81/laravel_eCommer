@@ -43,7 +43,7 @@
                                 <form action="{{ route('admin.brands.destroy' , $brand->id) }}" method="post" style="display: inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button  class="btn btn-sm btn-outline-danger mr-3" onclick="confirm('آیا از حذف  {{ $brand->name }} اطمینان دارید ؟')" type="submit">حذف</button>
+                                    <button  class="btn btn-sm btn-outline-danger mr-3"  type="submit">حذف</button>
                                 </form>
                             </th>
                         </tr>

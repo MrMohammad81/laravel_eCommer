@@ -4,21 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
-use App\Models\Brand;
-use Illuminate\Http\Request;
-use App\Http\Requests\Admin\attributes\StoreRequest;
+use App\Http\Requests\Admin\Attributes\StoreRequest;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Requests\Admin\Attributes\UpdateRequest;
 
 class AttributeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        //
+        $attributes = Attribute::paginate(15);
+        return view('admin.attributes.index' , compact('attributes'));
     }
 
     /**
@@ -45,7 +45,7 @@ class AttributeController extends Controller
             'name' => $request->name,
         ]);
 
-        Alert::success('با تشکر', " ویژگی$request->name با موفقیت ثبت شد");
+        Alert::success('با تشکر', " ویژگی $request->name با موفقیت ثبت شد ");
         return redirect()->route('admin.attributes.index');
     }
 
@@ -53,22 +53,22 @@ class AttributeController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show($id)
+    public function show(Attribute $attribute)
     {
-        //
+        return view('admin.attributes.show' , compact('attribute'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit($id)
+    public function edit(Attribute $attribute)
     {
-        //
+        return view('admin.attributes.edit' , compact('attribute'));
     }
 
     /**
@@ -76,21 +76,29 @@ class AttributeController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, Attribute $attribute)
     {
-        //
+        $request->validated();
+
+        $updatedData = $attribute->update([
+            'name' => $request->name,
+        ]);
+        Alert::success('با تشکر' , "$request->name با موفقیت بروزرسانی شد");
+        return redirect()->route('admin.attributes.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Attribute $attribute)
     {
-        //
+        $deleteBrand = $attribute->delete();
+        Alert::success('با تشکر', " $attribute->name با موفقیت حذف شد");
+        return redirect()->route('admin.attributes.index');
     }
 }

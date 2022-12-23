@@ -60,10 +60,18 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>محصولات</span></a>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProducts" aria-expanded="true"
+           aria-controls="collapsePages">
+            <i class="fas fa-fw fa-cart-plus"></i>
+            <span> محصولات </span>
+        </a>
+        <div id="collapseProducts" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('admin.attributes.index') }}">ویژگی ها</a>
+            </div>
+        </div>
     </li>
+
 
     <!-- Nav Item - Tables -->
     <!-- Divider -->
