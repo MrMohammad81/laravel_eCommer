@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\AttributeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,4 +21,6 @@ Route::get('admin-panel/dashboard',[DashboardController::class , 'index'])->name
 Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
 {
     Route::resource('brands', BrandController::class);
+    Route::resource('attributes', AttributeController::class);
+
 });
