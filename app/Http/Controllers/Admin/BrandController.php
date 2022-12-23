@@ -7,6 +7,7 @@ use App\Models\Brand;
 use Illuminate\Http\Request;
 Use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\Admin\Brands\StoreRequest;
+use App\Http\Requests\Admin\brands\UpdateRequest;
 
 class BrandController extends Controller
 {
@@ -65,11 +66,11 @@ class BrandController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit($id)
+    public function edit(Brand $brand)
     {
-        //
+        return view('admin.brands.edit' , compact('brand'));
     }
 
     /**
@@ -77,11 +78,18 @@ class BrandController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, Brand $brand)
     {
-        //
+        $request->validated();
+
+        $updatedData = $brand->update([
+           'name' => $request->name,
+            'is_active' => $request->is_active
+        ]);
+        Alert::success('با تشکر' , "$request->name با موفقیت بروزرسانی شد");
+        return redirect()->route('admin.brands.index');
     }
 
     /**

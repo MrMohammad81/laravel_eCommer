@@ -35,7 +35,9 @@
                                 </span>
                             </th>
                             <th>
-                                <a class="btn btn-sm btn-outline-info" href="{{ route('admin.brands.show' , $brand->id) }}">نمایش برند</a>
+                                <a class="btn btn-sm btn-outline-success" href="{{ route('admin.brands.show' , $brand->id) }}">نمایش</a>
+                                <a class="btn btn-sm btn-outline-info mr-3" href="{{ route('admin.brands.edit' , $brand->id) }}">ویرایش</a>
+                                <a class="btn btn-sm btn-outline-danger mr-3" href="{{ route('admin.brands.edit' , $brand->id) }}">حذف</a>
                             </th>
                         </tr>
                     @endforeach
