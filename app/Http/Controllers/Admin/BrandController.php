@@ -96,10 +96,12 @@ class BrandController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Brand $brand)
     {
-        //
+         $deleteBrand = $brand->delete();
+         Alert::success('با تشکر', " $brand->name با موفقیت حذف شد");
+        return redirect()->route('admin.brands.index');
     }
 }

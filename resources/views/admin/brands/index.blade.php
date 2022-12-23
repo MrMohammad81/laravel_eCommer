@@ -1,5 +1,8 @@
 @extends('admin.layouts.admin')
 
+@section('title')
+    لیست برندها
+@endsection
 @section('content')
     <!-- Content Row -->
     <div class="row">
@@ -37,7 +40,11 @@
                             <th>
                                 <a class="btn btn-sm btn-outline-success" href="{{ route('admin.brands.show' , $brand->id) }}">نمایش</a>
                                 <a class="btn btn-sm btn-outline-info mr-3" href="{{ route('admin.brands.edit' , $brand->id) }}">ویرایش</a>
-                                <a class="btn btn-sm btn-outline-danger mr-3" href="{{ route('admin.brands.edit' , $brand->id) }}">حذف</a>
+                                <form action="{{ route('admin.brands.destroy' , $brand->id) }}" method="post" style="display: inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button  class="btn btn-sm btn-outline-danger mr-3" onclick="confirm('آیا از حذف  {{ $brand->name }} اطمینان دارید ؟')" type="submit">حذف</button>
+                                </form>
                             </th>
                         </tr>
                     @endforeach
