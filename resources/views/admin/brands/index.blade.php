@@ -35,7 +35,7 @@
                                 </span>
                             </th>
                             <th>
-                                <a href="#">#</a>
+                                <a class="btn btn-sm btn-outline-info" href="{{ route('admin.brands.show' , $brand->id) }}">نمایش برند</a>
                             </th>
                         </tr>
                     @endforeach
