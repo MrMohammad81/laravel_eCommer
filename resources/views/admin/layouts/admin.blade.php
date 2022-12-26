@@ -17,6 +17,8 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('admin/css/admin.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/sb-admin-2.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/bootstrap-select/css/bootstrap-select.min.css') }}" rel="stylesheet">
+
 
     @yield('style')
 
@@ -68,11 +70,14 @@
 <!-- JavaScript-->
 <script defer src="{{ asset('admin/vendor/jquery/jquery.min.js') }}"></script>
 <script defer src="{{ asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script defer src="{{ asset('admin/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 <script defer src="{{ asset('admin/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 <script defer src="{{ asset('admin/js/sb-admin-2.min.js') }}"></script>
 <script defer src="{{ asset('admin/vendor/chart.js/Chart.min.js') }}"></script>
 <script defer src="{{ asset('admin/js/demo/chart-area-demo.js') }}"></script>
 <script defer src="{{ asset('admin/js/demo/chart-pie-demo.js') }}"></script>
+<script defer src="{{ asset('admin/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
+<script defer src="{{ asset('admin/bootstrap-select/js/i18n/defaults-fa_IR.min.js') }}"></script>
 
 @yield('script')
 @include('sweetalert::alert')

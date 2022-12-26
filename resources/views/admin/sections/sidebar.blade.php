@@ -5,7 +5,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">WebProg.ir</div>
+        <div class="sidebar-brand-text mx-3"></div>
     </a>
 
     <!-- Divider -->
@@ -68,6 +68,7 @@
         <div id="collapseProducts" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('admin.attributes.index') }}">ویژگی ها</a>
+                <a class="collapse-item" href="{{ route('admin.categories.create') }}">ایجاد دسته بندی</a>
             </div>
         </div>
     </li>

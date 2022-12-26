@@ -1,24 +1,22 @@
 @extends('admin.layouts.admin')
 
 @section('title')
-    create categories
+    ایجاد دسته بندی
 @endsection
 
 @section('script')
-    <script>
-        $('#attributeSelect').selectpicker({
-            'title': 'انتخاب ویژگی'
-        });
+    <script defer>
+        $('#attributeSelect').selectpicker();
 
         $('#attributeSelect').on('changed.bs.select', function() {
-            let attributesSelected = $(this).val();
-            let attributes = @json($attributes);
+            var attributesSelected = $('#attributeSelect').val();
+            var attributes = @json($attributes);
 
-            let attributeForFilter = [];
+            var attributeForFilter = [];
 
-            attributes.map((attribute) => {
+             attributes.map((attribute) => {
                 $.each(attributesSelected , function(i,element){
-                    if( attribute.id == element ){
+                    if( attribute.id === element ){
                         attributeForFilter.push(attribute);
                     }
                 });
@@ -27,12 +25,12 @@
             $("#attributeIsFilterSelect").find("option").remove();
             $("#variationSelect").find("option").remove();
             attributeForFilter.forEach((element)=>{
-                let attributeFilterOption = $("<option/>" , {
+                var attributeFilterOption = $("<option/>" , {
                     value : element.id,
                     text : element.name
                 });
 
-                let variationOption = $("<option/>" , {
+                var variationOption = $("<option/>" , {
                     value : element.id,
                     text : element.name
                 });
@@ -43,18 +41,7 @@
                 $("#variationSelect").append(variationOption);
                 $("#variationSelect").selectpicker('refresh');
             });
-
-
         });
-
-        $("#attributeIsFilterSelect").selectpicker({
-            'title': 'انتخاب ویژگی'
-        });
-
-        $("#variationSelect").selectpicker({
-            'title': 'انتخاب ویژگی'
-        });
-
     </script>
 @endsection
 
@@ -105,8 +92,7 @@
 
                     <div class="form-group col-md-3">
                         <label for="attribute_ids">ویژگی</label>
-                        <select id="attributeSelect" name="attribute_ids[]" class="form-control" multiple
-                            data-live-search="true">
+                        <select id="attributeSelect" name="attribute_ids[]" class="selectpicker form-control " multiple data-live-search="true" title="انتخاب ویژگی">
                             @foreach ($attributes as $attribute)
                                 <option value="{{ $attribute->id }}">{{ $attribute->name }}</option>
                             @endforeach
@@ -115,14 +101,13 @@
 
                     <div class="form-group col-md-3">
                         <label for="attribute_is_filter_ids">انتخاب ویژگی های قابل فیلتر</label>
-                        <select id="attributeIsFilterSelect" name="attribute_is_filter_ids[]" class="form-control" multiple
-                            data-live-search="true">
+                        <select id="attributeIsFilterSelect" name="attribute_is_filter_ids[]" class="form-control selectpicker" title="انتخاب ویژگی" multiple data-live-search="true">
                         </select>
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="attribute_is_filter_ids">انتخاب ویژگی متغیر</label>
-                        <select id="variationSelect" name="variation_id" class="form-control" data-live-search="true">
+                        <select id="variationSelect" name="variation_id" class="form-control selectpicker" data-live-search="true" title="انتخاب ویژگی">
                         </select>
                     </div>
 
