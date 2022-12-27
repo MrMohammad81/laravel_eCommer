@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Http\Requests\Admin\Categories\CreateRequest as CreateCategoryRequest;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Requests\Admin\Categories\CreateRequest as CreateCategoryRequest;
+use App\Http\Requests\Admin\Categories\UpdateRequest as UpdateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -80,11 +81,14 @@ class CategoryController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        $parentCategories = Category::where('parent_id' , 0)->get();
+        $attributes = Attribute::all();
+
+        return view('admin.categories.edit' , compact('category' , 'attributes' , 'parentCategories'));
     }
 
     /**
@@ -94,9 +98,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        dd($request->all());
     }
 
     /**

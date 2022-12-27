@@ -25,4 +25,9 @@ class Category extends Model
     {
         return $is_active ? 'فعال' : 'غیرفعال' ;
     }
+
+    public function attributes()
+    {
+        return $this->belongsToMany(Attribute::class , 'attribute_category');
+    }
 }

@@ -39,7 +39,7 @@
                                 <th>{{ $category->slug }}</th>
                                 <th>
                                     @if($category->parent_id == 0)
-                                        {{ $category->name }}
+                                        بدون والد
                                     @else
                                         {{  $category->parent->name }}
                                     @endif
