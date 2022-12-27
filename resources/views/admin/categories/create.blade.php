@@ -5,42 +5,32 @@
 @endsection
 
 @section('script')
-    <script defer>
+    <script type="text/javascript">
         $('#attributeSelect').selectpicker();
 
-        $('#attributeSelect').on('changed.bs.select', function() {
-            var attributesSelected = $('#attributeSelect').val();
+        $('#attributeSelect').on('changed.bs.select' , function (){
+            var attributeSelected = $('#attributeSelect').val();
             var attributes = @json($attributes);
 
             var attributeForFilter = [];
 
-             attributes.map((attribute) => {
-                $.each(attributesSelected , function(i,element){
-                    if( attribute.id === element ){
-                        attributeForFilter.push(attribute);
-                    }
-                });
+            attributes.map((attribute) => {
+               $.each(attributeSelected , function (i,element) {
+                  if (attribute.id == element) {
+                      attributeForFilter.push(attribute);
+                  }
+               });
             });
 
-            $("#attributeIsFilterSelect").find("option").remove();
-            $("#variationSelect").find("option").remove();
-            attributeForFilter.forEach((element)=>{
-                var attributeFilterOption = $("<option/>" , {
-                    value : element.id,
-                    text : element.name
-                });
+            $('#attributeIsFilterSelect , #variationSelect').html('');
 
-                var variationOption = $("<option/>" , {
-                    value : element.id,
-                    text : element.name
-                });
-
-                $("#attributeIsFilterSelect").append(attributeFilterOption);
-                $("#attributeIsFilterSelect").selectpicker('refresh');
-
-                $("#variationSelect").append(variationOption);
-                $("#variationSelect").selectpicker('refresh');
+            attributeForFilter.forEach((element) => {
+               $("<option/>" , {
+                   value : element.id,
+                   text : element.name
+               }).appendTo('#attributeIsFilterSelect , #variationSelect')
             });
+            $('#attributeIsFilterSelect , #variationSelect').selectpicker('refresh');
         });
     </script>
 @endsection

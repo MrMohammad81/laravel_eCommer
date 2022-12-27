@@ -47,7 +47,7 @@ class BrandController extends Controller
             'is_active' => $request->is_active
         ]);
 
-         Alert::success('با تشکر', " $request->name با موفقیت ثبت شد");
+         Alert::success('ایجاد برند', "برند $request->name با موفقیت ثبت شد");
         return redirect()->route('admin.brands.index');
     }
 
@@ -88,7 +88,7 @@ class BrandController extends Controller
            'name' => $request->name,
             'is_active' => $request->is_active
         ]);
-        Alert::success('با تشکر' , "$request->name با موفقیت بروزرسانی شد");
+        Alert::success('بروزرسانی برند' , "برند $request->name با موفقیت بروزرسانی شد");
         return redirect()->route('admin.brands.index');
     }
 
@@ -101,7 +101,7 @@ class BrandController extends Controller
     public function destroy(Brand $brand)
     {
          $deleteBrand = $brand->delete();
-         Alert::success('با تشکر', " $brand->name با موفقیت حذف شد");
-        return redirect()->route('admin.brands.index');
+         Alert::success('حذف برند', "برند $brand->name با موفقیت حذف شد");
+         return redirect()->route('admin.brands.index');
     }
 }

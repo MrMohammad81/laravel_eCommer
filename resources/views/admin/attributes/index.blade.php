@@ -37,7 +37,7 @@
                                 <form action="{{ route('admin.attributes.destroy' , $attribute->id) }}" method="post" style="display: inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button  class="btn btn-sm btn-outline-danger mr-3" type="submit">حذف</button>
+                                    <button onclick="return confirm('آیا از حذف ویژگی {{ $attribute->name }} اطمینان دارید ؟')" class="btn btn-sm btn-outline-danger mr-3" type="submit">حذف</button>
                                 </form>
                             </th>
                         </tr>

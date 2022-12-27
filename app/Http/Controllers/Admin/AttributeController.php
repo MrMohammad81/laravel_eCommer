@@ -45,7 +45,7 @@ class AttributeController extends Controller
             'name' => $request->name,
         ]);
 
-        Alert::success('با تشکر', " ویژگی $request->name با موفقیت ثبت شد ");
+        Alert::success('ایجاد ویژگی', " ویژگی $request->name با موفقیت ثبت شد ");
         return redirect()->route('admin.attributes.index');
     }
 
@@ -85,7 +85,7 @@ class AttributeController extends Controller
         $updatedData = $attribute->update([
             'name' => $request->name,
         ]);
-        Alert::success('با تشکر' , "$request->name با موفقیت بروزرسانی شد");
+        Alert::success('بروزرسانی ویژگی' , "ویژگی $request->name با موفقیت بروزرسانی شد");
         return redirect()->route('admin.attributes.index');
     }
 
@@ -97,8 +97,9 @@ class AttributeController extends Controller
      */
     public function destroy(Attribute $attribute)
     {
-        $deleteBrand = $attribute->delete();
-        Alert::success('با تشکر', " $attribute->name با موفقیت حذف شد");
-        return redirect()->route('admin.attributes.index');
+
+         $deleteBrand = $attribute->delete();
+         Alert::success('حذف ویژگی', "ویژگی $attribute->name با موفقیت حذف شد");
+         return redirect()->route('admin.attributes.index');
     }
 }
