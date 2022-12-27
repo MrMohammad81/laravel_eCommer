@@ -52,6 +52,11 @@
                                 <th>
                                     <a class="btn btn-sm btn-outline-success" href="{{ route('admin.categories.show' , $category->id) }}">نمایش</a>
                                     <a class="btn btn-sm btn-outline-info mr-3" href="{{ route('admin.categories.edit' , $category->id) }}">ویرایش</a>
+                                    <form action="{{ route('admin.categories.destroy' , $category->id) }}" method="post" style="display: inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button onclick="return confirm('آیا از حذف دسته بندی {{ $category->name }} اطمینان دارید ؟')"  class="btn btn-sm btn-outline-danger mr-3"  type="submit">حذف</button>
+                                    </form>
                                 </th>
                             </tr>
                     @endforeach
