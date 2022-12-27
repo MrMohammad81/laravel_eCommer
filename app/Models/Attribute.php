@@ -11,4 +11,9 @@ class Attribute extends Model
 
     protected $guarded = [];
     protected $table = 'attributes';
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class , 'attribute_category');
+    }
 }

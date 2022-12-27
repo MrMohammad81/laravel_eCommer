@@ -215,7 +215,10 @@ return [
         'thumbnail_url' => 'تصویر شاخص',
         'demo_url' => 'تصویر محصول',
         'source_url' => 'سورس اصلی محصول',
-        'role' => 'نقش کاربری'
+        'role' => 'نقش کاربری',
+        'attribute_ids' => 'ویژگی',
+        'attribute_is_filter_ids' => 'ویژگی های قابل فیلتر',
+        'variation_id' => 'ویژگی متغیر'
     ],
 
 ];

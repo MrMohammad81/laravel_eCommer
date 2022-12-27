@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
-use App\Http\Requests\Admin\Attributes\StoreRequest;
+use App\Http\Requests\Admin\Attributes\StoreRequest as CreateAttributeRequest;
 use RealRashid\SweetAlert\Facades\Alert;
-use App\Http\Requests\Admin\Attributes\UpdateRequest;
+use App\Http\Requests\Admin\Attributes\UpdateRequest as UpdateAttributeRequest;
 
 class AttributeController extends Controller
 {
@@ -37,13 +37,11 @@ class AttributeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StoreRequest $request)
+    public function store(CreateAttributeRequest $request)
     {
         $request->validated();
 
-        $createBrand = Attribute::create([
-            'name' => $request->name,
-        ]);
+        $this->createAttribute($request);
 
         Alert::success('ایجاد ویژگی', " ویژگی $request->name با موفقیت ثبت شد ");
         return redirect()->route('admin.attributes.index');
@@ -78,13 +76,12 @@ class AttributeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateRequest $request, Attribute $attribute)
+    public function update(UpdateAttributeRequest $request, Attribute $attribute)
     {
         $request->validated();
 
-        $updatedData = $attribute->update([
-            'name' => $request->name,
-        ]);
+        $this->updateAttribute($request , $attribute);
+
         Alert::success('بروزرسانی ویژگی' , "ویژگی $request->name با موفقیت بروزرسانی شد");
         return redirect()->route('admin.attributes.index');
     }
@@ -101,5 +98,23 @@ class AttributeController extends Controller
          $deleteBrand = $attribute->delete();
          Alert::success('حذف ویژگی', "ویژگی $attribute->name با موفقیت حذف شد");
          return redirect()->route('admin.attributes.index');
+    }
+
+    private function createAttribute($request)
+    {
+        $createBrand = Attribute::create([
+            'name' => $request->name,
+        ]);
+
+        return $createBrand;
+    }
+
+    private function updateAttribute($request , $attribute)
+    {
+        $updatedData = $attribute->update([
+            'name' => $request->name,
+        ]);
+
+        return $updatedData;
     }
 }

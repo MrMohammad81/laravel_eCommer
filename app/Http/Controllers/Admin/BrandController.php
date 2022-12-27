@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 Use RealRashid\SweetAlert\Facades\Alert;
-use App\Http\Requests\Admin\Brands\StoreRequest;
-use App\Http\Requests\Admin\brands\UpdateRequest;
+use App\Http\Requests\Admin\Brands\StoreRequest as CreateBrandRequest;
+use App\Http\Requests\Admin\brands\UpdateRequest as UpdateBrandRequest;
 
 class BrandController extends Controller
 {
@@ -38,17 +38,14 @@ class BrandController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StoreRequest $request)
+    public function store(CreateBrandRequest $request)
     {
          $request->validated();
 
-        $createBrand = Brand::create([
-            'name' => $request->name,
-            'is_active' => $request->is_active
-        ]);
+         $this->createBrand($request);
 
          Alert::success('ایجاد برند', "برند $request->name با موفقیت ثبت شد");
-        return redirect()->route('admin.brands.index');
+         return redirect()->route('admin.brands.index');
     }
 
     /**
@@ -80,14 +77,12 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateRequest $request, Brand $brand)
+    public function update(UpdateBrandRequest $request, Brand $brand)
     {
         $request->validated();
 
-        $updatedData = $brand->update([
-           'name' => $request->name,
-            'is_active' => $request->is_active
-        ]);
+        $this->updateBrand($request , $brand);
+
         Alert::success('بروزرسانی برند' , "برند $request->name با موفقیت بروزرسانی شد");
         return redirect()->route('admin.brands.index');
     }
@@ -103,5 +98,23 @@ class BrandController extends Controller
          $deleteBrand = $brand->delete();
          Alert::success('حذف برند', "برند $brand->name با موفقیت حذف شد");
          return redirect()->route('admin.brands.index');
+    }
+
+    private function createBrand($request)
+    {
+        $createBrand = Brand::create([
+            'name' => $request->name,
+            'is_active' => $request->is_active
+        ]);
+        return $createBrand;
+    }
+
+    private function updateBrand($request , $brand)
+    {
+        $updatedData = $brand->update([
+            'name' => $request->name,
+            'is_active' => $request->is_active
+        ]);
+        return $updatedData;
     }
 }
