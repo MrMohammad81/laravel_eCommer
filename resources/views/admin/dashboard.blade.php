@@ -4,6 +4,7 @@
 داشبورد
 @endsection
 
+
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -299,7 +300,7 @@
                 <div class="card-body">
                     <div class="text-center">
                         <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                             src="img/undraw_posting_photo.svg" alt="">
+                             src="#" alt="">
                     </div>
                     <p>
                         لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
@@ -331,7 +332,7 @@
 @endsection
 
 @section('script')
-    <script defer>
+    <script>
         // Set new default font family and font color to mimic Bootstrap's default styling
         Chart.defaults.global.defaultFontFamily = 'Nunito',
             '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';

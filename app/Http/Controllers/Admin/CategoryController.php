@@ -107,11 +107,13 @@ class CategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $deleteCategory = $category->delete();
+        Alert::success('حذف ویژگی', "دسته بندی $category->name با موفقیت حذف شد");
+        return redirect()->route('admin.categories.index');
     }
 
     private function createCategory($request)

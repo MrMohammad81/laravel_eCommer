@@ -49,7 +49,7 @@
 
                 <div class="form-group col-md-3">
                     <label>تاریخ ایجاد</label>
-                    <input class="form-control" type="text" value="{{ verta($category->created_at) }}" disabled>
+                    <input class="form-control" type="text" value="{{ verta($category->created_at)->format('%d %B %Y   H:i') }}" disabled>
                 </div>
 
                 <div class="form-group col-md-12">
