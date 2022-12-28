@@ -22,6 +22,10 @@
                     <label for="name">تاریخ ایجاد</label>
                     <input class="form-control" value="{{ verta($attribute->created_at)->format('%d %B %Y   H:i') }}" disabled>
                 </div>
+                <div class="form-group col-md-3">
+                    <label for="name">تاریخ آخرین بروزرسانی</label>
+                    <input class="form-control" value="{{ verta($attribute->updated_at)->format('%d %B %Y   H:i') }}" disabled>
+                </div>
                   </div>
                 <a href="{{ route('admin.attributes.index') }}" class="btn btn-dark mt-5">بازگشت</a>
         </div>

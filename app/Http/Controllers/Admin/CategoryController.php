@@ -127,7 +127,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $deleteCategory = $category->delete();
+        $category->delete();
         Alert::success('حذف ویژگی', "دسته بندی $category->name با موفقیت حذف شد");
         return redirect()->route('admin.categories.index');
     }

@@ -52,6 +52,11 @@
                     <input class="form-control" type="text" value="{{ verta($category->created_at)->format('%d %B %Y   H:i') }}" disabled>
                 </div>
 
+                <div class="form-group col-md-3">
+                    <label for="name">تاریخ آخرین بروزرسانی</label>
+                    <input class="form-control" value="{{ verta($category->updated_at)->format('%d %B %Y   H:i') }}" disabled>
+                </div>
+
                 <div class="form-group col-md-12">
                     <label>توضیحات</label>
                     <textarea class="form-control" disabled>{{ $category->description }}</textarea>

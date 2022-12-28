@@ -95,26 +95,22 @@ class AttributeController extends Controller
     public function destroy(Attribute $attribute)
     {
 
-         $deleteBrand = $attribute->delete();
+         $attribute->delete();
          Alert::success('حذف ویژگی', "ویژگی $attribute->name با موفقیت حذف شد");
          return redirect()->route('admin.attributes.index');
     }
 
     private function createAttribute($request)
     {
-        $createBrand = Attribute::create([
+         Attribute::create([
             'name' => $request->name,
         ]);
-
-        return $createBrand;
     }
 
     private function updateAttribute($request , $attribute)
     {
-        $updatedData = $attribute->update([
+         $attribute->update([
             'name' => $request->name,
         ]);
-
-        return $updatedData;
     }
 }

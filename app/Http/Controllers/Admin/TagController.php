@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\Admin\Tags\StoreRequest as CreateTadRequest;
 use App\Models\Tag;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Requests\Admin\Tags\UpdateRequest as UpdateTagRequest;
 
 class TagController extends Controller
 {
@@ -42,7 +42,7 @@ class TagController extends Controller
     {
         $request->validated();
 
-        Tag::create(['name' => $request->name]);
+        $this->createTag($request);
 
         Alert::success('ایجاد تگ' , "تگ $request->name با موفقیت ثبت شد");
 
@@ -64,11 +64,11 @@ class TagController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit($id)
+    public function edit(Tag $tag)
     {
-        //
+        return view('admin.tags.edit' , compact('tag'));
     }
 
     /**
@@ -76,21 +76,39 @@ class TagController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTagRequest $request, Tag $tag)
     {
-        //
+        $request->validated();
+
+        $this->updateTag($request , $tag);
+
+        Alert::success('بروزرسانی تگ' , "تگ $request->name با موفقیت بروزرسانی شد");
+
+        return redirect()->route('admin.tags.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Tag $tag)
     {
-        //
+        $tag->delete();
+        Alert::success('حذف تگ', "تگ $tag->name با موفقیت حذف شد");
+        return redirect()->route('admin.tags.index');
+    }
+
+    private function createTag($request)
+    {
+        Tag::create(['name' => $request->name]);
+    }
+
+    private function updateTag($request , $tag)
+    {
+        $tag->update(['name' => $request->name]);
     }
 }

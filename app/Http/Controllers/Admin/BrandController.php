@@ -95,26 +95,24 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-         $deleteBrand = $brand->delete();
+         $brand->delete();
          Alert::success('حذف برند', "برند $brand->name با موفقیت حذف شد");
          return redirect()->route('admin.brands.index');
     }
 
     private function createBrand($request)
     {
-        $createBrand = Brand::create([
+        Brand::create([
             'name' => $request->name,
             'is_active' => $request->is_active
         ]);
-        return $createBrand;
     }
 
     private function updateBrand($request , $brand)
     {
-        $updatedData = $brand->update([
+         $brand->update([
             'name' => $request->name,
             'is_active' => $request->is_active
         ]);
-        return $updatedData;
     }
 }

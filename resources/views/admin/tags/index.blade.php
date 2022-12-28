@@ -10,7 +10,7 @@
         <div class="col-xl-12 col-md-12 mb-4 p-md-5 bg-white">
             <div class="d-flex justify-content-between mb-4">
                 <h5 class="font-weight-bold">لیست تگ ها  ({{ $tags->total() }})</h5>
-                <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.brands.create') }}">
+                <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.tags.create') }}">
                     <i class="fa fa-plus"></i>
                     ایجاد تگ
                 </a>
@@ -37,7 +37,7 @@
                                 <form action="{{ route('admin.tags.destroy' , $tag->id) }}" method="post" style="display: inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button onclick="return confirm('آیا از حذف برند {{ $tag->name }} اطمینان دارید ؟')"  class="btn btn-sm btn-outline-danger mr-3"  type="submit">حذف</button>
+                                    <button onclick="return confirm('آیا از حذف تگ {{ $tag->name }} اطمینان دارید ؟')"  class="btn btn-sm btn-outline-danger mr-3"  type="submit">حذف</button>
                                 </form>
                             </th>
                         </tr>
