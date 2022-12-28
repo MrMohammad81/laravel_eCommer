@@ -439,7 +439,7 @@ CREATE TABLE `settings` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tags`
+-- Table structure for table `tag`
 --
 
 CREATE TABLE `tags` (
@@ -693,7 +693,7 @@ ALTER TABLE `settings`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tags`
+-- Indexes for table `tag`
 --
 ALTER TABLE `tags`
   ADD PRIMARY KEY (`id`);
@@ -852,7 +852,7 @@ ALTER TABLE `settings`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `tags`
+-- AUTO_INCREMENT for table `tag`
 --
 ALTER TABLE `tags`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;

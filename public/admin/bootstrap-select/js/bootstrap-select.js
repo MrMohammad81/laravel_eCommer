@@ -434,7 +434,7 @@
       if (string) {
         string = string.toString();
 
-        // Strip HTML tags. This isn't perfect, but it's much faster than any other method
+        // Strip HTML tag. This isn't perfect, but it's much faster than any other method
         if (stringType === 'display') {
           string = string.replace(/<[^>]+>/g, '');
         }
@@ -1770,7 +1770,7 @@
         }, true);
       }
 
-      // strip all HTML tags and trim the result, then unescape any escaped tags
+      // strip all HTML tag and trim the result, then unescape any escaped tag
       button.title = titleFragment.textContent.replace(/<[^>]*>?/g, '').trim();
 
       if (this.options.sanitize && hasContent) {
