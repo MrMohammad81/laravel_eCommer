@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\Admin\Categories\CreateRequest as CreateCategoryRequest;
@@ -96,11 +95,28 @@ class CategoryController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        dd($request->all());
+        try {
+            DB::beginTransaction();
+
+            $request->validated();
+
+            $this->updateCategory($request , $category);
+
+            $this->updateAttributes($request, $category);
+
+            DB::commit();
+        }catch (\Exception $exception)
+        {
+            DB::rollBack();
+            \alert()->error('خطا در بروزرسانی دسته بندی' , $exception->getMessage())->persistent('ok');
+            return redirect()->back();
+        }
+        Alert::success('بروزرسانی دسته بندی' , "دسته بندی $category->name با موفقیت بروزرسانی شد");
+        return redirect()->route('admin.categories.index');
     }
 
     /**
@@ -137,6 +153,32 @@ class CategoryController extends Controller
             $attribute->categories()->attach($category->id , [
                 'is_filter' => in_array($attribute_id , $request->attribute_is_filter_ids) ? 1 : 0,
                 'is_variation' => $request->variation_id == $attribute_id ? 1 : 0
+            ]);
+        }
+    }
+
+    private function updateCategory($request , $category)
+    {
+          $category->update([
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'parent_id' => $request->parent_id,
+            'is_active' => $request->is_active,
+            'icon' => $request->icon,
+            'description' => $request->description,
+        ]);
+    }
+
+    private function updateAttributes($request , $category)
+    {
+        $category->attributes()->detach();
+
+        foreach ($request->attribute_ids as $attributeId)
+        {
+            $attribute = Attribute::findOrFail($attributeId);
+            $attribute->categories()->attach($category->id, [
+                'is_filter' => in_array($attributeId, $request->attribute_is_filter_ids) ? 1 : 0,
+                'is_variation' => $request->variation_id == $attributeId ? 1 : 0
             ]);
         }
     }
