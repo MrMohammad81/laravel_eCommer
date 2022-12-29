@@ -70,6 +70,7 @@
                 <a class="collapse-item" href="{{ route('admin.attributes.index') }}">ویژگی ها</a>
                 <a class="collapse-item" href="{{ route('admin.categories.index') }}">دسته بندی ها</a>
                 <a class="collapse-item" href="{{ route('admin.tags.index') }}"> تگ ها</a>
+                <a class="collapse-item" href="{{ route('admin.products.create') }}"> لیست محصولات </a>
             </div>
         </div>
     </li>

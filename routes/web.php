@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,4 +27,6 @@ Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
     Route::resource('attributes', AttributeController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('tags', TagController::class);
+    Route::resource('products', ProductController::class);
+
 });

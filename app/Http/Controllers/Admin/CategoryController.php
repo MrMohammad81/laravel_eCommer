@@ -182,4 +182,13 @@ class CategoryController extends Controller
             ]);
         }
     }
+
+    public function getCategoryAttribute(Category $category)
+    {
+        $attributes = $category->attributes()->get();
+
+        $variation = $category->attributes()->wherePivot('is_variation' ,1)->first();
+
+        return ['attributes' => $attributes , 'variations' => $variation];
+    }
 }
