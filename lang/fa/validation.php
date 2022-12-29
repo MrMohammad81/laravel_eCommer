@@ -218,7 +218,15 @@ return [
         'role' => 'نقش کاربری',
         'attribute_ids' => 'ویژگی',
         'attribute_is_filter_ids' => 'ویژگی های قابل فیلتر',
-        'variation_id' => 'ویژگی متغیر'
+        'variation_id' => 'ویژگی متغیر',
+        'brand_id' => 'برند',
+        'category_id' => 'دسته بندی',
+        'tag_ids' => 'تگ',
+        'delivery_amount' => 'هزینه ارسال',
+        'primary_image' => 'تصویر اصلی',
+        'images' => 'تصاویر',
+        'images.0' => 'تصاویر',
+        'variation_values' => 'ویژگی متغیر',
     ],
 
 ];

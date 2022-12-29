@@ -96,7 +96,7 @@
 
                     <div class="form-group col-md-3">
                         <label for="name">نام</label>
-                        <input class="form-control" id="name" name="name" type="text">
+                        <input class="form-control" id="name" name="name" type="text" value="{{ old('name') }}">
                     </div>
 
                     <div class="form-group col-md-3">
@@ -218,14 +218,13 @@
 
                     <div class="form-group col-md-3">
                         <label for="delivery_amount">هزینه ارسال</label>
-                        <input class="form-control" id="delivery_amount"  name="delivery_amount" type="text">
+                        <input class="form-control" id="delivery_amount"  name="delivery_amount" type="text" value="{{ old('delivery_amount') }}">
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="delivery_amount-per-product" class="mr-5">هزینه ارسال به ازای محصول اضافی</label>
-                        <input class="form-control mr-5" name="delivery_amount-per-product" type="text">
+                        <input class="form-control mr-5" name="delivery_amount-per-product" type="text" value="{{ old('delivery_amount-per-product') }}">
                     </div>
-
 
                 </div>
                 <button class="btn btn-outline-primary mt-5" type="submit">ثبت</button>

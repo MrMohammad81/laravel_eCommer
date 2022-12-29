@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use App\Http\Requests\Admin\Products\StoreRequest as CreateProductRequest;
 
 class ProductController extends Controller
 {
@@ -40,9 +41,9 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateProductRequest $request)
     {
-        dd($request->all());
+        $request->validated();
     }
 
     /**
