@@ -128,7 +128,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        Alert::success('حذف ویژگی', "دسته بندی $category->name با موفقیت حذف شد");
+        Alert::success('حذف دسته بندی', "دسته بندی $category->name با موفقیت حذف شد");
         return redirect()->route('admin.categories.index');
     }
 
@@ -183,7 +183,7 @@ class CategoryController extends Controller
         }
     }
 
-    public function getCategoryAttribute(Category $category)
+    public function getCategoryAttributeForStoreProduct(Category $category)
     {
         $attributes = $category->attributes()->get();
 

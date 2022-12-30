@@ -1532,7 +1532,7 @@ function getAlpha(string) {
 // generators
 function hexString(rgba, a) {
    var a = (a !== undefined && rgba.length === 3) ? a : rgba[3];
-   return "#" + hexDouble(rgba[0]) 
+   return "#" + hexDouble(rgba[0])
               + hexDouble(rgba[1])
               + hexDouble(rgba[2])
               + (
@@ -4530,7 +4530,7 @@ function isVertical(vm) {
 }
 
 /**
- * Helper function to get the bounds of the bar regardless of the orientation
+ * helper function to get the bounds of the bar regardless of the orientation
  * @param bar {Chart.Element.Rectangle} the bar
  * @return {Bounds} bounds of the bar
  * @private
@@ -6691,7 +6691,7 @@ var controllers = {
 };
 
 /**
- * Helper function to get relative position for an event
+ * helper function to get relative position for an event
  * @param {Event|IEvent} event - The event to get the position for
  * @param {Chart} chart - The chart
  * @returns {object} the event position
@@ -6708,7 +6708,7 @@ function getRelativePosition(e, chart) {
 }
 
 /**
- * Helper function to traverse all of the visible elements in the chart
+ * helper function to traverse all of the visible elements in the chart
  * @param {Chart} chart - the chart
  * @param {function} handler - the callback to execute for each visible item
  */
@@ -6728,7 +6728,7 @@ function parseVisibleItems(chart, handler) {
 }
 
 /**
- * Helper function to get the items that intersect the event position
+ * helper function to get the items that intersect the event position
  * @param {ChartElement[]} items - elements to filter
  * @param {object} position - the point to be nearest to
  * @return {ChartElement[]} the nearest items
@@ -6746,7 +6746,7 @@ function getIntersectItems(chart, position) {
 }
 
 /**
- * Helper function to get the items nearest to the event position considering all visible items in teh chart
+ * helper function to get the items nearest to the event position considering all visible items in teh chart
  * @param {Chart} chart - the chart to look at elements from
  * @param {object} position - the point to be nearest to
  * @param {boolean} intersect - if true, only consider items that intersect the position
@@ -6830,7 +6830,7 @@ function indexMode(chart, e, options) {
  * @namespace Chart.Interaction
  */
 var core_interaction = {
-	// Helper function for different modes
+	// helper function for different modes
 	modes: {
 		single: function(chart, e) {
 			var position = getRelativePosition(e, chart);
@@ -8289,7 +8289,7 @@ var positioners = {
 	}
 };
 
-// Helper to push or concat based on if the 2nd parameter is an array or not
+// helper to push or concat based on if the 2nd parameter is an array or not
 function pushOrConcat(base, toPush) {
 	if (toPush) {
 		if (helpers$1.isArray(toPush)) {
@@ -8344,7 +8344,7 @@ function createTooltipItem(element) {
 }
 
 /**
- * Helper to get the reset model for the tooltip
+ * helper to get the reset model for the tooltip
  * @param tooltipOpts {object} the tooltip options
  */
 function getBaseModel(tooltipOpts) {
@@ -8468,7 +8468,7 @@ function getTooltipSize(tooltip, model) {
 }
 
 /**
- * Helper to get the alignment of a tooltip given the size
+ * helper to get the alignment of a tooltip given the size
  */
 function determineAlignment(tooltip, size) {
 	var model = tooltip._model;
@@ -8541,7 +8541,7 @@ function determineAlignment(tooltip, size) {
 }
 
 /**
- * Helper to get the location a tooltip needs to be placed at given the initial position (via the vm) and the size and alignment
+ * helper to get the location a tooltip needs to be placed at given the initial position (via the vm) and the size and alignment
  */
 function getBackgroundPoint(vm, size, alignment, chart) {
 	// Background Position
@@ -8603,7 +8603,7 @@ function getAlignedX(vm, align) {
 }
 
 /**
- * Helper to build before and after body lines
+ * helper to build before and after body lines
  */
 function getBeforeAfterBodyLines(callback) {
 	return pushOrConcat([], splitNewlines(callback));
@@ -13466,7 +13466,7 @@ function determineLimits(angle, pos, size, min, max) {
 }
 
 /**
- * Helper function to fit a radial linear scale with point labels
+ * helper function to fit a radial linear scale with point labels
  */
 function fitWithPointLabels(scale) {
 
@@ -19818,7 +19818,7 @@ core_defaults._set('global', {
 });
 
 /**
- * Helper function to get the box width based on the usePointStyle option
+ * helper function to get the box width based on the usePointStyle option
  * @param {object} labelopts - the label options on the legend
  * @param {number} fontSize - the label font size
  * @return {number} width of the color box area

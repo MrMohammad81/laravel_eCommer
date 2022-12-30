@@ -20,4 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Admin Routes
 #<------------------------ category route --------------->
-Route::get('/category-attributes/{category}' , [CategoryController::class , 'getCategoryAttribute']);
+Route::get('/category-attributes/{category}' , [CategoryController::class , 'getCategoryAttributeForStoreProduct']);
