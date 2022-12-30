@@ -6,7 +6,6 @@
 @section('content')
     <!-- Content Row -->
     <div class="row">
-
         <div class="col-xl-12 col-md-12 mb-4 p-md-5 bg-white">
             <div class="d-flex justify-content-between mb-4">
                 <h5 class="font-weight-bold">لیست ویژگی ها ({{ $attributes->total() }})</h5>
@@ -44,6 +43,9 @@
                     @endforeach
                     </tbody>
                 </table>
+            </div>
+            <div class="d-flex justify-content-center mt-5">
+                {{ $attributes->render() }}
             </div>
         </div>
 @endsection

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ProductImage;
-use Illuminate\Http\Request;
+use Dflydev\DotAccessData\Data;
 
 class ProductImageController extends Controller
 {
