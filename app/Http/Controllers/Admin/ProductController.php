@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductImage;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\Products\StoreRequest as CreateRequestProduct;
@@ -48,12 +47,13 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CreateRequestProduct $request)
     {
         try
         {
             DB::beginTransaction();
-           // $request->validated();
+
+            $request->validated();
 
             # upload images
             $fileNameImages = ProductImageController::upload($request->primary_image , $request->images);
@@ -93,11 +93,17 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show($id)
+    public function show(Product $product)
     {
-        //
+        $productAttributes = $product->attributes()->with('attribute')->get();
+
+        $productVariations = $product->variations;
+
+        $images = $product->images;
+
+        return view('admin.products.show' , compact('product' , 'productAttributes' , 'productVariations' , 'images'));
     }
 
     /**
