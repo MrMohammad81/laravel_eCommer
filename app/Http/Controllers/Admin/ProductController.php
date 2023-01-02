@@ -134,9 +134,32 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
        //dd($request->all());
-        $request->validated();
+        try
+        {
+            DB::beginTransaction();
 
-        return redirect()->route('admin.products.index');
+            $request->validated();
+
+            # update product
+            $this->updateProduct($request,$product);
+
+            ProductAttributeController::update($request->attribute_values);
+
+            ProductVariationController::update($request->variation_values);
+
+            $product->tags()->sync($request->tag_ids);
+
+            DB::commit();
+
+            Alert::success('بروزرسانی محصول' , "محصول $request->name با موفقیت بروزرسانی شد");
+            return redirect()->route('admin.products.index');
+
+        }catch (\Exception $exception)
+        {
+            DB::rollBack();
+            alert()->error('خطا در بروزرسانی محصول' , $exception->getMessage());
+            return redirect()->back();
+        }
     }
 
     /**
@@ -163,6 +186,18 @@ class ProductController extends Controller
             'delivery_amount_per_product' => $request->delivery_amount_per_product,
         ]);
         return $product;
+    }
+
+    private function updateProduct($request , $product)
+    {
+         $product->update([
+            'name' => $request->name,
+            'brand_id' => $request->brand_id,
+            'description' => $request->description,
+            'is_active' => $request->is_active,
+            'delivery_amount' => $request->delivery_amount,
+            'delivery_amount_per_product' => $request->delivery_amount_per_product,
+        ]);
     }
 
 

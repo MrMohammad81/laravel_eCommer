@@ -6,22 +6,34 @@
 
 @section('style')
     <link href="{{ asset('admin/dateTimePicker/css/jalalidatepicker.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/dateTimePicker/css/jquery.md.bootstrap.datetimepicker.style.css') }}" rel="stylesheet">
 @endsection
 
 @section('script')
 
     <script type="text/javascript" src="{{ asset('admin/dateTimePicker/js/jalalidatepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin/dateTimePicker/js/jquery.md.bootstrap.datetimepicker.js') }}"></script>
 
     <script type="text/javascript">
         $('#brandSelect').selectpicker();
         $('#tagSelect').selectpicker();
 
-        jalaliDatepicker.startWatch({
-            time : true,
-            showCloseBtn : true,
-            persianDigits : true
-        });
+        var variations = @json($productVariations);
 
+        variations.forEach( variation => {
+            $(`#variationDateSaleOnFrom-${ variation.id }`).MdPersianDateTimePicker({
+                targetTextSelector: `#variationInputDateSaleOnFrom-${variation.id}`,
+                englishNumber: true,
+                enableTimePicker: true,
+                textFormat: 'yyyy-MM-dd HH:mm:ss',
+            });
+            $(`#variationDateSaleOnTo-${ variation.id }`).MdPersianDateTimePicker({
+                targetTextSelector: `#variationInputDateSaleOnTo-${variation.id}`,
+                englishNumber: true,
+                enableTimePicker: true,
+                textFormat: 'yyyy-MM-dd HH:mm:ss',
+            });
+        });
     </script>
 @endsection
 
@@ -144,7 +156,7 @@
                                     </div>
 
                                     <div class="form-group col-md-3">
-                                        <label> قیمت حراجی </label>
+                                        <label>قیمت حراجی : (تومان)</label>
                                         <input type="text" name="variation_values[{{ $variation->id }}][sale_price]" value="{{ $variation->sale_price }}"
                                                class="form-control">
                                     </div>

@@ -30,6 +30,16 @@
                     <label for="name">وضعیت</label>
                     <input class="form-control" value="{{ $product->is_active }}" disabled>
                 </div>
+
+                <div class="form-group col-md-3">
+                    <label for="name">تگ ها</label>
+                    <div class="form-control div-disabled">
+                        @foreach($product->tags as $tag)
+                            {{ $tag->name }} {{ $loop->last ? '' : '،' }}
+                        @endforeach
+                    </div>
+                </div>
+
                 <div class="form-group col-md-3">
                     <label for="name">تاریخ ایجاد</label>
                     <input class="form-control" value="{{ verta($product->updated_at)->format('%d %B %Y   H:i') }}" disabled>
@@ -110,7 +120,7 @@
                                         </div>
 
                                         <div class="form-group col-md-3">
-                                            <label> قیمت حراجی </label>
+                                            <label>قیمت حراجی : (تومان)</label>
                                             <input type="text" value="{{ number_format($variation->sale_price) }}" disabled
                                                    class="form-control">
                                         </div>

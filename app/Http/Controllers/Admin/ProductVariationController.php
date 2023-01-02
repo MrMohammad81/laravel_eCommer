@@ -24,4 +24,22 @@ class ProductVariationController extends Controller
             ]);
         }
     }
+
+    public static function update($variationIds)
+    {
+       // dd($variationIds);
+        foreach ($variationIds as $key => $value)
+        {
+            $productVariation = ProductVariation::findorFail($key);
+
+            $productVariation->update([
+                'price' => $value['price'],
+                'quantity' => $value['quantity'],
+                'sku' => $value['sku'],
+                'sale_price' => $value['sale_price'],
+                'date_on_sale_from' => convertShamsiDateToGregorian($value['date_on_sale_from']),
+                'date_on_sale_to' => convertShamsiDateToGregorian($value['date_on_sale_to']),
+            ]);
+        }
+    }
 }
