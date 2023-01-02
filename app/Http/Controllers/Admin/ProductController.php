@@ -110,11 +110,17 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        //
+        $productAttributes = $product->attributes()->with('attribute')->get();
+        $productVariations = $product->variations;
+        $brands = Brand::all();
+        $tags = Tag::all();
+        $ProductTagId = $product->tags()->pluck('id')->toArray();
+
+        return view('admin.products.edit' , compact('product' , 'productAttributes' , 'productVariations' , 'brands' , 'tags' , 'ProductTagId'));
     }
 
     /**
@@ -126,7 +132,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request->all());
     }
 
     /**

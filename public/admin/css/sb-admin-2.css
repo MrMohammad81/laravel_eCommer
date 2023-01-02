@@ -11340,3 +11340,7 @@ body {
     border-right: inherit;
     border-radius: 0.35rem 0 0 0.35rem;
 }
+
+.mds-bootstrap-persian-datatime-picker-popover{
+    max-width: fit-content !important;
+}

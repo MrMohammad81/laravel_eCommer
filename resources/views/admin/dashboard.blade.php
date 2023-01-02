@@ -332,6 +332,9 @@
 @endsection
 
 @section('script')
+    <script defer src="{{ asset('admin/vendor/chart.js/Chart.min.js') }}"></script>
+    <script defer src="{{ asset('admin/js/demo/chart-area-demo.js') }}"></script>
+    <script defer src="{{ asset('admin/js/demo/chart-pie-demo.js') }}"></script>
     <script>
         // Set new default font family and font color to mimic Bootstrap's default styling
         Chart.defaults.global.defaultFontFamily = 'Nunito',

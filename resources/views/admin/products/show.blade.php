@@ -142,7 +142,7 @@
                     </div>
                 <div class="col-md-3">
                     <div class="card>">
-                        <img class="card-img-top" src="{{ url(env('PRODUCT_IMAGES_UPLOAD_PATCH') . $product->primary_image) }}" alt="{{ $product->name }}">
+                        <img class="card-img-top" src="{{ url(env('PRODUCT_IMAGES_UPLOAD_PATCH') . $product->primary_image) }}" alt="خطا در دریافت تصویر {{ $product->name }}">
                     </div>
                 </div>
 
@@ -152,7 +152,7 @@
                     @foreach($images as $image)
                         <div class="col-md-3">
                             <div class="card>">
-                                <img class="card-img-top" src="{{ url(env('PRODUCT_IMAGES_UPLOAD_PATCH') . $image->images) }}" alt="{{ $product->name }}">
+                                <img class="card-img-top" src="{{ url(env('PRODUCT_IMAGES_UPLOAD_PATCH') . $image->images) }}" alt="خطا در دریافت تصویر {{ $product->name }}">
                             </div>
                         </div>
                     @endforeach

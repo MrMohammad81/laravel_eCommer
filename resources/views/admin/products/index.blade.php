@@ -54,7 +54,7 @@
                                        <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle"
                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">عملیات</button>
                                        <div class="dropdown-menu">
-                                           <a href="#"
+                                           <a href="{{ route('admin.products.edit' , $product->id) }}"
                                               class="dropdown-item text-right">ویرایش محصول</a>
                                            <a href="#"
                                               class="dropdown-item text-right">ویرایش تصاویر</a>
