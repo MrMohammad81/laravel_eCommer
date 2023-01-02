@@ -8,9 +8,10 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Tag;
 use Illuminate\Http\Request;
-use App\Http\Requests\Admin\Products\StoreRequest as CreateRequestProduct;
+use App\Http\Requests\Admin\Products\StoreRequest as CreateProductRequest;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Requests\Admin\Products\UpdateRequest as UpdateProductRequest;
 
 class ProductController extends Controller
 {
@@ -47,7 +48,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(CreateRequestProduct $request)
+    public function store(CreateProductRequest $request)
     {
         try
         {
@@ -128,11 +129,14 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        dd($request->all());
+       //dd($request->all());
+        $request->validated();
+
+        return redirect()->route('admin.products.index');
     }
 
     /**

@@ -29,9 +29,9 @@
 
     <!-- Content Row -->
     <div class="row">
-        <input data-jdp>
         <div class="col-xl-12 col-md-12 mb-4 p-md-5 bg-white">
             <div class="mb-4">
+                @include('admin.sections.errors')
                 <h5 class="font-weight-bold">محصول : {{ $product->name }}</h5>
             </div>
             <hr>
@@ -39,10 +39,10 @@
                 @csrf
                 @method('put')
 
-            <div class="form-row">
+               <div class="form-row">
                 <div class="form-group col-md-3">
                     <label for="name">نام</label>
-                    <input class="form-control" value="{{ $product->name }}" >
+                    <input class="form-control" name="name" value="{{ $product->name }}" >
                 </div>
 
                 <div class="form-group col-md-3">
@@ -75,33 +75,33 @@
                     <label for="name">توضیحات</label>
                     <textarea class="form-control" id="description" name="description">{{ $product->description }}</textarea>
                 </div>
-            </div>
+              </div>
 
-            <hr>
+               <hr>
 
-            <h5>هزینه ارسال : ( تومان )</h5>
-            <div class="form-row mt-3">
+                <h5>هزینه ارسال : ( تومان )</h5>
+              <div class="form-row mt-3">
                 <div class="form-group col-md-3">
                     <label for="name">هزینه ارسال</label>
-                    <input class="form-control" value="{{ $product->delivery_amount  }}">
+                    <input class="form-control" name="delivery_amount" value="{{ $product->delivery_amount  }}">
                 </div>
                 <div class="form-group col-md-3 mr-3">
                     <label for="name">هزینه ارسال به ازای محصول اضافی</label>
-                    <input class="form-control" value="{{ $product->delivery_amount_per_product  }}">
+                    <input class="form-control" name="delivery_amount_per_product" value="{{ $product->delivery_amount_per_product  }}">
                 </div>
-            </div>
+               </div>
 
-            <hr>
+              <hr>
 
-            {{-- attributes --}}
+               {{-- attributes --}}
 
-            <h5>ویژگی ها</h5>
+              <h5>ویژگی ها</h5>
 
-            <div class="form-row mt-3">
+              <div class="form-row mt-3">
                 @foreach($productAttributes as $productAttribute)
                     <div class="form-group col-md-3">
                         <label>{{ $productAttribute->attribute->name }}</label>
-                        <input class="form-control" name="attributes_value[{{ $productAttribute->id }}]" value="{{ $productAttribute->value }}">
+                        <input class="form-control" name="attribute_values[{{ $productAttribute->id }}]" value="{{ $productAttribute->value }}">
                     </div>
                 @endforeach
 
@@ -157,7 +157,7 @@
                                                     <i class="fa fa-clock"></i>
                                                 </span>
                                             </div>
-                                            <input data-jdp type="text" id="variationInputDateSaleOnFrom-{{ $variation->id }}"
+                                            <input data-jdp autocomplete="off" type="text" id="variationInputDateSaleOnFrom-{{ $variation->id }}"
                                                    class="form-control"
                                                    name="variation_values[{{ $variation->id }}][date_on_sale_from]"
                                                    value="{{ $variation->date_on_sale_from == null ? null : verta($variation->date_on_sale_from) }}">
@@ -172,7 +172,7 @@
                                                     <i class="fa fa-clock"></i>
                                                 </span>
                                             </div>
-                                            <input data-jdp type="text" id="variationInputDateSaleOnTo-{{ $variation->id }}"
+                                            <input data-jdp autocomplete="off" type="text" id="variationInputDateSaleOnTo-{{ $variation->id }}"
                                                    class="form-control"
                                                    name="variation_values[{{ $variation->id }}][date_on_sale_to]"
                                                    value="{{ $variation->date_on_sale_to == null ? null : verta($variation->date_on_sale_to) }}">
@@ -188,6 +188,7 @@
                 <a href="{{ route('admin.products.index') }}" class="btn btn-dark mt-5 mr-3">بازگشت</a>
               </div>
             </form>
+        </div>
     </div>
 
 @endsection

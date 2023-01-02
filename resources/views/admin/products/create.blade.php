@@ -223,7 +223,7 @@
 
                     <div class="form-group col-md-3">
                         <label for="delivery_amount_per_product" class="mr-5">هزینه ارسال به ازای محصول اضافی</label>
-                        <input class="form-control mr-5" name="delivery_amount-per-product" type="text" value="{{ old('delivery_amount-per-product') }}">
+                        <input class="form-control mr-5" name="delivery_amount_per_product" type="text" value="{{ old('delivery_amount-per-product') }}">
                     </div>
 
                 </div>
