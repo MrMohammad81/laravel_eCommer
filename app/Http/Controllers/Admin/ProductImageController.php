@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\ProductImage;
 use Dflydev\DotAccessData\Data;
 
@@ -36,5 +37,10 @@ class ProductImageController extends Controller
                 'images' => $fileNameImage
             ]);
         }
+    }
+
+    public static function edit(Product $product)
+    {
+        return view('admin.products.edit_images' , compact('product'));
     }
 }

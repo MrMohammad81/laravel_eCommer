@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ProductImageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BrandController;
@@ -28,5 +29,11 @@ Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
     Route::resource('categories', CategoryController::class);
     Route::resource('tags', TagController::class);
     Route::resource('products', ProductController::class);
+
+    // Edit Product Images
+    Route::get('/products/{product}/images-edit' , [ProductImageController::class , 'edit'])->name('products.images.edit');
+    Route::delete('/products/images-destroy' , [ProductImageController::class , 'destroy'])->name('product.images.destroy');
+    Route::put('/products/{product}/images-set-primary' , [ProductImageController::class , 'setPrimary'])->name('product.images.set_primary');
+    Route::post('/products/{product}/images-add' , [ProductImageController::class , 'add'])->name('products.images.add');
 
 });
