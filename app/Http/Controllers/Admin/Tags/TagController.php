@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Tags;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Tags\StoreRequest as CreateTadRequest;
+use App\Http\Requests\Admin\Tags\UpdateRequest as UpdateTagRequest;
 use App\Models\Tag;
 use RealRashid\SweetAlert\Facades\Alert;
-use App\Http\Requests\Admin\Tags\UpdateRequest as UpdateTagRequest;
+use function redirect;
+use function view;
 
 class TagController extends Controller
 {

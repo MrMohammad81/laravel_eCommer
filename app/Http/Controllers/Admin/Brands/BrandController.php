@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Brands;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
-use Illuminate\Http\Request;
-Use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\Admin\Brands\StoreRequest as CreateBrandRequest;
 use App\Http\Requests\Admin\brands\UpdateRequest as UpdateBrandRequest;
+use App\Models\Brand;
+use RealRashid\SweetAlert\Facades\Alert;
+use function redirect;
+use function view;
 
 class BrandController extends Controller
 {

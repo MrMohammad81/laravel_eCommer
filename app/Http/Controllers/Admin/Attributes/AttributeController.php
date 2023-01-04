@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Attributes;
 
 use App\Http\Controllers\Controller;
-use App\Models\Attribute;
 use App\Http\Requests\Admin\Attributes\StoreRequest as CreateAttributeRequest;
-use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\Admin\Attributes\UpdateRequest as UpdateAttributeRequest;
+use App\Models\Attribute;
+use RealRashid\SweetAlert\Facades\Alert;
+use function redirect;
+use function view;
 
 class AttributeController extends Controller
 {

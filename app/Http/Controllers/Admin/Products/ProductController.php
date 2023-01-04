@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Products;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Products\StoreRequest as CreateProductRequest;
+use App\Http\Requests\Admin\products\UpdateCategoryRequest;
+use App\Http\Requests\Admin\Products\UpdateRequest as UpdateProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductVariation;
 use App\Models\Tag;
-use Illuminate\Http\Request;
-use App\Http\Requests\Admin\Products\StoreRequest as CreateProductRequest;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
-use App\Http\Requests\Admin\Products\UpdateRequest as UpdateProductRequest;
-use App\Http\Requests\Admin\products\UpdateCategoryRequest;
+use function alert;
+use function redirect;
+use function view;
 
 class ProductController extends Controller
 {

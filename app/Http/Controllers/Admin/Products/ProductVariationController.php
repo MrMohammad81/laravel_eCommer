@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Products;
 
 use App\Http\Controllers\Controller;
 use App\Models\ProductVariation;
-use Illuminate\Http\Request;
+use function convertShamsiDateToGregorian;
 
 class ProductVariationController extends Controller
 {

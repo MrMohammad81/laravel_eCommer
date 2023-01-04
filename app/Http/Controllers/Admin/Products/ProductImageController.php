@@ -1,15 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Products;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Products\AddImageRequest;
+use App\Http\Requests\Admin\Products\UpdateImagesNameRequest;
 use App\Models\Product;
 use App\Models\ProductImage;
-use App\Http\Requests\Admin\Products\UpdateImagesNameRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use function alert;
+use function env;
+use function generatiFileNameWithDate;
+use function public_path;
+use function redirect;
+use function view;
 
 class ProductImageController extends Controller
 {

@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Categories;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Categories\CreateRequest as CreateCategoryRequest;
+use App\Http\Requests\Admin\Categories\UpdateRequest as UpdateCategoryRequest;
 use App\Models\Attribute;
 use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
-use App\Http\Requests\Admin\Categories\CreateRequest as CreateCategoryRequest;
-use App\Http\Requests\Admin\Categories\UpdateRequest as UpdateCategoryRequest;
+use function redirect;
+use function view;
 
 class CategoryController extends Controller
 {

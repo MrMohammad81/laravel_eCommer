@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin')
 
 @section('title')
-    افزودن محصول
+    ویرایش دسته بندی و ویژگی
 @endsection
 
 
