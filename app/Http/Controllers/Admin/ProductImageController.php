@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Products\AddImageRequest;
 use App\Models\Product;
 use App\Models\ProductImage;
-use App\Http\Requests\Admin\Products\EditImagesRequest;
+use App\Http\Requests\Admin\Products\UpdateImagesNameRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -48,7 +48,7 @@ class ProductImageController extends Controller
         return view('admin.products.edit_images' , compact('product'));
     }
 
-    public static function destroy(EditImagesRequest $request)
+    public static function destroy(UpdateImagesNameRequest $request)
     {
         $request->validated();
 
@@ -59,7 +59,7 @@ class ProductImageController extends Controller
     }
 
     # select image in product_images  for primary_image
-    public function setPrimary(EditImagesRequest $request , Product $product)
+    public function setPrimary(UpdateImagesNameRequest $request , Product $product)
     {
         $request->validated();
 

@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductVariation;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\Products\StoreRequest as CreateProductRequest;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\Admin\Products\UpdateRequest as UpdateProductRequest;
+use App\Http\Requests\Admin\products\UpdateCategoryRequest;
 
 class ProductController extends Controller
 {
@@ -166,11 +168,14 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        Alert::success('حذف محصول', "محصول $product->name با موفقیت حذف شد");
+        return redirect()->back();
     }
 
     private function createProduct($request , $imageName)
@@ -198,6 +203,44 @@ class ProductController extends Controller
             'delivery_amount' => $request->delivery_amount,
             'delivery_amount_per_product' => $request->delivery_amount_per_product,
         ]);
+    }
+
+    # Edit category for product
+    public function editCategory(Product $product)
+    {
+        $categories = Category::where('parent_id' , '!=' , 0)->get();
+
+        return view('admin.products.edit_category' , compact('product' , 'categories'));
+    }
+
+    public function updateCategory(UpdateCategoryRequest $request , Product $product)
+    {
+        try
+        {
+            DB::beginTransaction();
+
+            $request->validated();
+
+            $product->update(['category_id' => $request->category_id]);
+
+            ProductAttributeController::change($request->attribute_ids , $product);
+
+            $category = Category::find($request->category_id);
+            $attributeID = $category->attributes()->wherePivot('is_variation' , 1)->first()->id;
+
+            ProductVariationController::change($request->variation_values ,$attributeID , $product);
+
+            DB::commit();
+
+            Alert::success('ایجاد محصول' , "محصول $request->name با موفقیت ایجاد شد");
+            return redirect()->route('admin.products.index');
+
+        }catch (\Exception $exception)
+        {
+            DB::rollBack();
+            alert()->error('خطا در ایجاد محصول' , $exception->getMessage());
+            return redirect()->back();
+        }
     }
 
 
