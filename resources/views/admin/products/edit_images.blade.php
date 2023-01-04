@@ -60,17 +60,17 @@
                             <img class="card-img-top" src="{{ url(env('PRODUCT_IMAGES_UPLOAD_PATCH') . $image->images) }}"
                                  alt="خطا در دریافت تصویر {{ $product->name }}">
                             <div class="card-body text-center">
-                                <form action="{{ route('admin.product.images.destroy') }}" method="post">
+                                <form action="{{ route('admin.product.images.destroy' , $product->id) }}" method="post">
                                     @csrf
                                     @method('delete')
                                     <input type="hidden" name="image_id" value="{{$image->id}}">
-                                    <button type="submit" class="btn btn-danger btn-sm mb-3">حذف</button>
+                                    <button type="submit" onclick="return confirm('آیا از حذف این تصویر اطمینان دارید ؟')" class="btn btn-danger btn-sm mb-3">حذف</button>
                                 </form>
                                 <form action="{{ route('admin.product.images.set_primary' , $product->id) }}" method="post">
                                     @csrf
                                     @method('put')
                                     <input type="hidden" name="image_id" value="{{$image->id}}">
-                                    <button type="submit" class="btn btn-primary btn-sm mb-3">انتخاب به عنوان تصویر اصلی</button>
+                                    <button type="submit" onclick="return confirm('آیا از ثبت این تصویر به عنوان تصویر اصلی محصول اطمینان دارید ؟')" class="btn btn-primary btn-sm mb-3">انتخاب به عنوان تصویر اصلی</button>
                                 </form>
                             </div>
                         </div>

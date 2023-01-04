@@ -32,7 +32,7 @@ Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
 
     // Edit Product Images
     Route::get('/products/{product}/images-edit' , [ProductImageController::class , 'edit'])->name('products.images.edit');
-    Route::delete('/products/images-destroy' , [ProductImageController::class , 'destroy'])->name('product.images.destroy');
+    Route::delete('/products/{product}/images-destroy' , [ProductImageController::class , 'destroy'])->name('product.images.destroy');
     Route::put('/products/{product}/images-set-primary' , [ProductImageController::class , 'setPrimary'])->name('product.images.set_primary');
     Route::post('/products/{product}/images-add' , [ProductImageController::class , 'add'])->name('products.images.add');
 
