@@ -26,13 +26,13 @@
             </div>
             <hr>
             @include('admin.sections.errors')
-            <form action="{{ route('admin.banners.store') }}" method="POST">
+            <form action="{{ route('admin.banners.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="name">انتخاب تصویر</label>
                         <div class="custom-file">
-                            <input type="file" name="primary_image" class="custom-file-input" id="primary_image">
+                            <input type="file" name="image" class="custom-file-input" id="primary_image">
                             <label class="custom-file-label" for="primary_image" title="">انتخاب فایل</label>
                         </div>
                     </div>
