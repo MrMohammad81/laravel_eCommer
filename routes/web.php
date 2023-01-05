@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Products\ProductImageController;
 use App\Http\Controllers\Admin\Tags\TagController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Banners\BannerController;
+use App\Http\Controllers\Home\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,5 +43,9 @@ Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
     // Edit Product Category
     Route::get('/products/{product}/category-edit' , [ProductController::class , 'editCategory'])->name('products.category.edit');
     Route::put('/products/{product}/category-update' , [ProductController::class , 'updateCategory'])->name('products.category.update');
-
 });
+
+/*--------------------------------------------------------------------*/
+
+// Home Route
+Route::get('/' , [HomeController::class , 'index']);
