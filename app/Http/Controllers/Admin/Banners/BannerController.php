@@ -14,11 +14,13 @@ class BannerController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        //
+        $banners = Banner::latest()->paginate(15);
+
+        return view('admin.banners.index', compact('banners'));
     }
 
     /**
@@ -81,7 +83,7 @@ class BannerController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
