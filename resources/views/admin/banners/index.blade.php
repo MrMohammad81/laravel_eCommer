@@ -57,7 +57,8 @@
                                 <form action="{{ route('admin.banners.destroy' , $banner->id) }}" method="post">
                                     @csrf
                                     @method('delete')
-                                    <button class="btn btn-sm btn-outline-danger" type="submit">حذف</button>
+                                    <button class="btn btn-sm btn-outline-danger"  type="submit"
+                                            onclick="return confirm('آیا از حذف بنر {{ $banner->title }} اطمینان دارید ؟')" >حذف</button>
                                 </form>
                                 <a class="btn btn-sm btn-outline-primary mt-2"
                                    href="{{ route('admin.banners.edit' , $banner->id) }}">ویرایش</a>

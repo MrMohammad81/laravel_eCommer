@@ -90,7 +90,7 @@
     <hr class="sidebar-divider d-none d-md-block">
     <div class="sidebar-heading">تنظیمات</div>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.banners.create') }}">
+        <a class="nav-link" href="{{ route('admin.banners.index') }}">
             <i class="fas fa-fw fa-table"></i>
             <span>بنرها</span></a>
     </li>
