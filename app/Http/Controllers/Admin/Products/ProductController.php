@@ -233,7 +233,7 @@ class ProductController extends Controller
 
             DB::commit();
 
-            Alert::success('ایجاد محصول' , "محصول $request->name با موفقیت ایجاد شد");
+            Alert::success('بروزرسانی محصول' , "محصول $request->name با موفقیت بروزرسانی شد");
             return redirect()->route('admin.products.index');
 
         }catch (\Exception $exception)

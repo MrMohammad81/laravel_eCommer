@@ -96,6 +96,10 @@ class BannerController extends Controller
            {
                $fileNameImage = '';
                $this->updateBanner($request , $banner , $fileNameImage);
+
+               DB::commit();
+               Alert::success('بروزرسانی بنر', " بنر $request->title با موفقیت بروزرسانی شد. ");
+               return redirect()->route('admin.banners.index');
            }
 
             $fileNameImage = generatiFileNameWithDate($request->image->getClientOriginalName());

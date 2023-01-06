@@ -48,4 +48,4 @@ Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
 /*--------------------------------------------------------------------*/
 
 // Home Route
-Route::get('/' , [HomeController::class , 'index']);
+Route::get('/' , [HomeController::class , 'index'])->name('home.index');

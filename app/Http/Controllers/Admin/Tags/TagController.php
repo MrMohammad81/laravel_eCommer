@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\Tags\UpdateRequest as UpdateTagRequest;
 use App\Models\Tag;
 use RealRashid\SweetAlert\Facades\Alert;
 use function redirect;
+use function Symfony\Component\Translation\t;
 use function view;
 
 class TagController extends Controller
@@ -20,7 +21,6 @@ class TagController extends Controller
     public function index()
     {
         $tags = Tag::latest()->paginate(15);
-
         return view('admin.tags.index' , compact('tags'));
     }
 

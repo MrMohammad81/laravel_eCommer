@@ -25,7 +25,7 @@ return new class extends Migration
 
             $table->string('slug')->unique()->nullable();
             $table->string('primary_image');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->integer('status')->default(1);
             $table->boolean('is_active')->default(1);
             $table->unsignedInteger('delivery_amount')->default(0);

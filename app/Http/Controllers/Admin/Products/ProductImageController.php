@@ -22,14 +22,14 @@ class ProductImageController extends Controller
     {
         $fileNameImagePrimary = generatiFileNameWithDate($primaryImage->getClientOriginalName());
 
-        $primaryImage->move(env('PRODUCT_IMAGES_UPLOAD_PATCH'), $fileNameImagePrimary);
+        $primaryImage->move(public_path(env('PRODUCT_IMAGES_UPLOAD_PATCH')), $fileNameImagePrimary);
 
         $fileNameImages = [];
         foreach ( $images as $image)
         {
             $fileNameImage = generatiFileNameWithDate($image->getClientOriginalName());
 
-            $image->move(env('PRODUCT_IMAGES_UPLOAD_PATCH'), $fileNameImage);
+            $image->move(public_path(env('PRODUCT_IMAGES_UPLOAD_PATCH')), $fileNameImage);
 
             $fileNameImages[] = $fileNameImage;
         }
