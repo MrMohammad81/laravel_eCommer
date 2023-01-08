@@ -24,69 +24,17 @@
                                     <a href="shop.html"> فروشگاه </a>
 
                                     <ul class="mega-menu">
+                                        @foreach($parentCategories as $parentCategory)
                                         <li>
-                                            <a class="menu-title" href="#">مردانه</a>
+                                            <a class="menu-title" href="#">{{ $parentCategory->name }}</a>
 
                                             <ul>
-                                                <li><a href="shop.html">پیراهن</a></li>
-
-                                                <li>
-                                                    <a href="#">تی شرت</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#">پالتو</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">لباس راحتی</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">لباس زیر </a>
-                                                </li>
+                                                @foreach($parentCategory->children as $childCategory)
+                                                <li><a href="#">{{ $childCategory->name }}</a></li>
+                                                @endforeach
                                             </ul>
                                         </li>
-
-                                        <li>
-                                            <a class="menu-title" href="#">زنانه</a>
-                                            <ul>
-                                                <li>
-                                                    <a href="shop.html">مانتو</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">شومیز</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">دامن</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">پالتو</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#"> لباس راحتی </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-
-                                        <li>
-                                            <a class="menu-title" href="#">بچه گانه</a>
-                                            <ul>
-                                                <li>
-                                                    <a href="product-details.html">ست لباس</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product-details-tab-2.html">شلوارک</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product-details-tab-3.html">ژاکت</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product-details-gallery.html">ست نوزاد</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product-details-gallery-right.html">پیراهن</a>
-                                                </li>
-                                            </ul>
-                                        </li>
+                                        @endforeach
                                     </ul>
                                 </li>
 
