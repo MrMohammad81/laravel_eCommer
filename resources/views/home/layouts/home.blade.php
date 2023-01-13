@@ -21,6 +21,7 @@
     <link href="{{ asset('home/css/_slider.css') }}" >
     <link href="{{ asset('home/css/_blog.css') }}" >
     <link href="{{ asset('home/css/_about-us.css') }}">
+    <link href="{{ asset('home/rating-star/awesomeRating.min.css') }}">
 
     @yield('style')
 
@@ -51,6 +52,7 @@
 <script src="{{ asset('home/js/plugins.js') }}"></script>
 <script src="{{ asset('home/js/ajax-mail.js') }}"></script>
 <script src="{{ asset('home/js/main.js') }}"></script>
+<script src="{{ asset('home/rating-star/dist/rating.js') }}"></script>
 
 @yield('script')
 @include('sweetalert::alert')

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -14,6 +15,7 @@ class Product extends Model
 
     protected $guarded = [];
     protected $table = 'products';
+    protected $appends = ['quantity_check'];
 
     /**
      * Return the sluggable configuration array for this model.
@@ -33,6 +35,8 @@ class Product extends Model
     {
         return $is_active ? 'فعال' : 'غیرفعال' ;
     }
+
+
 
     public function tags()
     {
@@ -62,5 +66,29 @@ class Product extends Model
     public function images()
     {
         return $this->hasMany(ProductImage::class);
+    }
+
+    public function rates()
+    {
+        return $this->hasMany(ProductRate::class);
+    }
+
+    public function QuantityCheckeProduct()
+    {
+        return $this->variations()->where('quantity' , '>' , 0)->first() ?? 0;
+    }
+
+    public function MinPriceCheckeProduct()
+    {
+        return $this->variations()->where('quantity' , '>' , 0)->orderBy('price')->first() ?? 0;
+    }
+
+    public function SaleCheckeProduct()
+    {
+        return $this->variations()->where('quantity' , '>' , 0)
+            ->where('sale_price' , '!=' , null)
+            ->where('date_on_sale_from' , '<=' , Carbon::now())
+            ->where('date_on_sale_to' , '>=' , Carbon::now())
+            ->orderBy('sale_price')->first() ?? false;
     }
 }

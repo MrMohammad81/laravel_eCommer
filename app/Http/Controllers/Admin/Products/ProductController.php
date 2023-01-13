@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\Products\UpdateRequest as UpdateProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductAttribute;
 use App\Models\Tag;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -27,7 +28,9 @@ class ProductController extends Controller
     {
         $products = Product::latest()->paginate(15);
 
-        return view('admin.products.index' , compact('products'));
+        $categories = Category::all();
+
+        return view('admin.products.index' , compact('products' , 'categories'));
 
     }
 

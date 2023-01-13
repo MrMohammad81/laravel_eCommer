@@ -109,7 +109,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div id="attributesContainer" class="col-md-12">
                         <div id="attributeInput" class="row attributeInput"></div>
                         <div class="col-md-12">

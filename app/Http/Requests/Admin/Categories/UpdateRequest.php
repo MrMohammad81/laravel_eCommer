@@ -31,7 +31,9 @@ class UpdateRequest extends FormRequest
             'parent_id' => 'required',
             'is_active' => 'required',
             'attribute_ids' => 'required',
+            'attribute_ids.*' => 'exists:attributes,id',
             'attribute_is_filter_ids' => 'required',
+            'attribute_is_filter_ids.*' => 'exists:attributes,id',
             'variation_id' => 'required',
         ];
     }
