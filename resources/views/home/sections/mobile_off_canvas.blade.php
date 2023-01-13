@@ -23,7 +23,7 @@
                             <a href="index.html"> صفحه ای اصلی </a>
                         </li>
                         <li class="menu-item-has-children">
-                            <a href="shop.html">فروشگاه</a>
+                            <a href="#">فروشگاه</a>
                             <ul class="dropdown">
                                 @php
                                     use App\Models\Category;$parentCategories = Category::where('parent_id' , 0)->get();
@@ -31,10 +31,10 @@
 
                                 @foreach($parentCategories as $parentCategory)
                                 <li class="menu-item-has-children">
-                                    <a href="#">{{ $parentCategory->name }}</a>
+                                    <a href="{{ route('home.categories.show' , $parentCategory->slug ) }}">{{ $parentCategory->name }}</a>
                                     <ul class="dropdown">
                                         @foreach($parentCategory->children as $child)
-                                            <li><a href="#"> {{ $child->name }} </a></li>
+                                            <li><a href="{{ route('home.categories.show' , $child->slug ) }}"> {{ $child->name }} </a></li>
                                         @endforeach
                                     </ul>
                                 </li>

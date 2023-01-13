@@ -11,8 +11,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $parentCategories = Category::where('parent_id' , 0)->get();;
-
         $sliders = Banner::where('type' , 'slider')->where('is_active' , 1)->orderBy('priority')->get();
 
         $indexTop = Banner::where('type' , 'index-top')->where('is_active' , 1)->orderBy('priority')->get();
@@ -23,10 +21,6 @@ class HomeController extends Controller
 
         $products = Product::where('is_active' , 1)->get()->take(10);
 
-//        $product = Product::find(1);
-//
-//        dd($product->getSaleCheckeProduct());
-
-        return view('home.index' , compact('parentCategories' , 'sliders' , 'indexBottomBanner' , 'indexTopBanner' , 'products'));
+        return view('home.index' , compact( 'sliders' , 'indexBottomBanner' , 'indexTopBanner' , 'products'));
     }
 }

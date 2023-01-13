@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Tags\TagController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Banners\BannerController;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,3 +50,4 @@ Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
 
 // Home Route
 Route::get('/' , [HomeController::class , 'index'])->name('home.index');
+Route::get('/categories/{category:slug}' , [HomeCategoryController::class , 'show'])->name('home.categories.show');

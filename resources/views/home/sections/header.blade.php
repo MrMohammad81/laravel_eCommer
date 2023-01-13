@@ -21,16 +21,19 @@
                                 <li><a href="contact-us.html"> تماس با ما </a></li>
 
                                 <li class="angle-shape">
-                                    <a href="shop.html"> فروشگاه </a>
+                                    <a href="#"> فروشگاه </a>
+
+                                    @php
+                                        use App\Models\Category;$parentCategories = Category::where('parent_id' , 0)->get();
+                                    @endphp
 
                                     <ul class="mega-menu">
                                         @foreach($parentCategories as $parentCategory)
                                         <li>
-                                            <a class="menu-title" href="#">{{ $parentCategory->name }}</a>
-
+                                            <a class="menu-title" href="{{ route('home.categories.show' , $parentCategory->slug ) }}">{{ $parentCategory->name }}</a>
                                             <ul>
                                                 @foreach($parentCategory->children as $childCategory)
-                                                <li><a href="#">{{ $childCategory->name }}</a></li>
+                                                <li><a href="{{ route('home.categories.show' , $childCategory->slug ) }}">{{ $childCategory->name }}</a></li>
                                                 @endforeach
                                             </ul>
                                         </li>
