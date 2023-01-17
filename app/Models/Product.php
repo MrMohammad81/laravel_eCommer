@@ -91,4 +91,25 @@ class Product extends Model
             ->where('date_on_sale_to' , '>=' , Carbon::now())
             ->orderBy('sale_price')->first() ?? false;
     }
+
+    public function scopeFilter($query)
+    {
+        if (request()->has('variation'))
+        {
+            $query->whereHas('variations' , function ($query)
+            {
+                foreach ( explode('-' , request()->variation) as $index => $variation)
+                {
+                    if ($index == 0)
+                    {
+                        $query->where('value' , $variation);
+                    }else {
+                        $query->orWhere('value' , $variation);
+                    }
+                }
+            });
+        }
+        dd($query->toSql());
+        return $query;
+    }
 }
