@@ -84,7 +84,7 @@
                 @foreach( $indexTopBanner->chunk(3)->first() as $banner)
                 <div class="col-lg-4 col-md-4">
                     <div class="single-banner mb-30 scroll-zoom">
-                        <a href="product-details.html">
+                        <a href="{{ $banner->button_link }}">
                             <img class="animated" src="{{ asset(env('BANNER_IMAGE_UPLOAD_PATCH') . $banner->image) }}"
                                  alt="{{ $banner->image }}" /></a>
                         <div class="banner-content-2 banner-position-5">
@@ -97,7 +97,7 @@
                     @foreach( $indexTopBanner->chunk(3)->last() as $banner)
                     <div class="col-lg-6 col-md-6">
                     <div class="single-banner mb-30 scroll-zoom">
-                        <a href="product-details.html">
+                        <a href="{{ $banner->button_link }}">
                             <img class="animated" src="{{ asset(env('BANNER_IMAGE_UPLOAD_PATCH') . $banner->image) }}" alt="{{ $banner->image }}" /></a>
                         <div class="{{ $loop->first ? 'banner-content banner-position-6 text-right' : 'banner-content-3 banner-position-7'  }}">
                             <h2>{{ $banner->title }}</h2>
@@ -138,7 +138,7 @@
                         <div class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
                             <div class="ht-product-inner">
                                 <div class="ht-product-image-wrap">
-                                    <a href="product-details.html" class="ht-product-image">
+                                    <a href="{{ route('home.products.show' , $product->slug) }}" class="ht-product-image">
                                         <img src="{{ asset(env('PRODUCT_IMAGES_UPLOAD_PATCH') . $product->primary_image) }}" alt="{{ $product->image }}" />
                                     </a>
                                     <div class="ht-product-action">
@@ -166,7 +166,7 @@
                                             <a href="#">{{ $product->category->name }}</a>
                                         </div>
                                         <h4 class="ht-product-title text-right">
-                                            <a href="product-details.html">{{ $product->name }}</a>
+                                            <a href="{{ route('home.products.show' , $product->slug) }}">{{ $product->name }}</a>
                                         </h4>
                                         <div class="ht-product-price">
                                             @if($product->QuantityCheckeProduct())

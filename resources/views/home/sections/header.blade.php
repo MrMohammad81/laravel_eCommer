@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-xl-2 col-lg-2">
                     <div class="logo pt-40">
-                        <a href="index.html">
+                        <a href="{{ route('home.index') }}">
                             <h3 class="font-weight-bold">WebProg.ir</h3>
                         </a>
                     </div>
@@ -30,7 +30,7 @@
                                     <ul class="mega-menu">
                                         @foreach($parentCategories as $parentCategory)
                                         <li>
-                                            <a class="menu-title" href="{{ route('home.categories.show' , $parentCategory->slug ) }}">{{ $parentCategory->name }}</a>
+                                            <a class="menu-title" href="#">{{ $parentCategory->name }}</a>
                                             <ul>
                                                 @foreach($parentCategory->children as $childCategory)
                                                 <li><a href="{{ route('home.categories.show' , $childCategory->slug ) }}">{{ $childCategory->name }}</a></li>
@@ -42,7 +42,7 @@
                                 </li>
 
                                 <li class="angle-shape">
-                                    <a href="index.html"> صفحه اصلی </a>
+                                    <a href="{{ route('home.index') }}"> صفحه اصلی </a>
                                 </li>
                             </ul>
                         </nav>
