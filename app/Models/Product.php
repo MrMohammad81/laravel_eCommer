@@ -94,6 +94,27 @@ class Product extends Model
 
     public function scopeFilter($query)
     {
+        # Attributes Filter
+        if (request()->has('attribute'))
+        {
+            foreach (request()->attribute as $attribute)
+            {
+                $query->whereHas('attributes' , function ($query) use ($attribute)
+                {
+                    foreach ( explode('-' , $attribute) as $index => $item)
+                    {
+                        if ($index == 0)
+                        {
+                            $query->where('value' , $item);
+                        }else {
+                            $query->orWhere('value' , $item);
+                        }
+                    }
+                });
+            }
+        }
+
+        # Variations Filter
         if (request()->has('variation'))
         {
             $query->whereHas('variations' , function ($query)
@@ -109,7 +130,55 @@ class Product extends Model
                 }
             });
         }
-        dd($query->toSql());
+
+        # SortBy Filter
+        if (request()->has('sortBy'))
+        {
+            $sortBy = request()->sortBy;
+
+            switch ($sortBy)
+            {
+                case 'max':
+                    $query->orderByDesc(
+                        ProductVariation::select('price')
+                        ->whereColumn('product_variations.product_id' , 'products.id')
+                        ->orderBy('sale_price' , 'desc')
+                        ->take(1)
+                    );
+                    break;
+
+                case 'min':
+                    $query->orderBy(
+                        ProductVariation::select('price')
+                            ->whereColumn('product_variations.product_id' , 'products.id')
+                            ->orderBy('sale_price' , 'asc')
+                            ->take(1)
+                    );
+                    break;
+
+                case 'latest':
+                    $query->latest();
+                    break;
+
+                case 'oldest':
+                    $query->oldest();
+                    break;
+
+                default :
+                    return $query;
+            }
+        }
+//        dd($query->toSql());
         return $query;
+    }
+
+    public function scopeSearch($query)
+    {
+        $keyWord = request()->search;
+
+        if (!request()->has('search'))
+            return $query;
+
+        $query->where('name' , 'LIKE' , '%' . trim($keyWord) . '%');
     }
 }

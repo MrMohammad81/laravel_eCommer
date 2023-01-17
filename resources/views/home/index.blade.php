@@ -195,6 +195,8 @@
                         </div>
                         <!--Product End-->
                         @endforeach
+                      <!--Product End-->
+
                     </div>
                 </div>
 
