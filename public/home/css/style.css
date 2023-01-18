@@ -1335,10 +1335,6 @@ textarea:focus {
               font-weight: 300;
               display: block;
               line-height: 1; }
-              .header-right-wrap .setting-wrap .setting-content ul li ul li a:hover {
-                color: #ff3535; }
-    .header-right-wrap .setting-wrap:hover {
-      color: #ff3535; }
 
 .cart-wrap {
   position: relative; }
@@ -5779,8 +5775,8 @@ h3.cart-page-title {
       text-transform: uppercase;
       transition: all 0.3s ease 0s; }
       .login-register-wrapper .login-form-container .login-register-form form .button-box button:hover {
-        background-color: #ff3535;
-        color: #fff; }
+        background-color: #ff3535 !important;
+        color: #fff !important; }
     .login-register-wrapper .login-form-container .login-register-form form .button-box .btn-google {
       background-color: #f2f2f2;
       border: medium none;
@@ -5793,8 +5789,8 @@ h3.cart-page-title {
       text-transform: uppercase;
       transition: all 0.3s ease 0s; }
       .login-register-wrapper .login-form-container .login-register-form form .button-box .btn-google:hover {
-        background-color: #ff3535;
-        color: #fff; }
+        background-color: #ff3535 !important;
+        color: #fff !important; }
 
 @media only screen and (max-width: 767px) {
   .login-register-area.pb-100 {
@@ -7179,4 +7175,22 @@ body {
     max-width: 960px !important;
     width: 960px;
     padding: 35px;
+}
+
+.header-right-wrap .setting-wrap button:hover {
+    color: #ff3535 !important;
+}
+
+.header-right-wrap .setting-wrap .setting-content {
+    background: #fff none repeat scroll 0 0;
+    padding: 26px 30px 32px;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    width: 200px;
+    z-index: 9999;
+    box-shadow: 0 0 20px 0.4px rgb(0 0 0 / 10%);
+    max-height: 636px;
+    overflow-y: auto;
+    display: none;
 }

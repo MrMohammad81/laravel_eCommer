@@ -1,7 +1,7 @@
 @extends('home.layouts.home')
 
 @section('title')
-    صفحه ای فروشگاه
+     محصول {{ $product->name }}
 @endsection
 
 @section('script')
