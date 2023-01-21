@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\Banners\BannerController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
 use App\Http\Controllers\Home\ProductController as HomeProductController;
-
+use Ghasedak\Laravel\GhasedakFacade;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -55,5 +55,10 @@ Route::get('/categories/{category:slug}' , [HomeCategoryController::class , 'sho
 Route::get('/products/show/{product:slug}' , [HomeProductController::class , 'show'])->name('home.products.show');
 
 Route::get('/test' , function (){
-   auth()->logout();
+    $response = GhasedakFacade::setVerifyType(Ghasedak\Laravel\GhasedakFacade::VERIFY_MESSAGE_TEXT)
+        ->Verify(
+            "09179430578", // receptor
+            "OTP", // name of the template which you've created in you account
+            "124565"      // parameters (supporting up to 10 parameters)
+        );
 });

@@ -558,7 +558,7 @@
                                     <div class="pro-details-meta">
                                         <span>دسته بندی :</span>
                                         <ul>
-                                            <li><a href="#">{{ $similarProduct->category->parent->name }} - {{ $similarProduct->category->name }} </a></li>
+                                            <li><a href="{{ route('home.categories.show' , $similarProduct->category->slug) }}">{{ $similarProduct->category->parent->name }} - {{ $similarProduct->category->name }} </a></li>
                                         </ul>
                                     </div>
                                     <div class="pro-details-meta">

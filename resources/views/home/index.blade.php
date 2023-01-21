@@ -81,7 +81,7 @@
     <div class="banner-area pt-100 pb-65">
         <div class="container">
             <div class="row">
-                @foreach( $indexTopBanner->chunk(3)->first() as $banner)
+                @foreach( $indexTopBanner->chunk(3)->first() ?? [] as $banner)
                 <div class="col-lg-4 col-md-4">
                     <div class="single-banner mb-30 scroll-zoom">
                         <a href="{{ $banner->button_link }}">
@@ -94,7 +94,7 @@
                 </div>
                 @endforeach
 
-                    @foreach( $indexTopBanner->chunk(3)->last() as $banner)
+                    @foreach( $indexTopBanner->chunk(3)->last() ?? [] as $banner)
                     <div class="col-lg-6 col-md-6">
                     <div class="single-banner mb-30 scroll-zoom">
                         <a href="{{ $banner->button_link }}">
@@ -436,7 +436,7 @@
                                     <div class="pro-details-meta">
                                         <span>دسته بندی :</span>
                                         <ul>
-                                            <li><a href="#">{{ $product->category->parent->name }} - {{ $product->category->name }} </a></li>
+                                            <li><a href="{{ route('home.categories.show' , $product->category->slug) }}">{{ $product->category->parent->name }} - {{ $product->category->name }} </a></li>
                                         </ul>
                                     </div>
                                     <div class="pro-details-meta">
