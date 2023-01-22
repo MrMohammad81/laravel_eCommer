@@ -53,6 +53,7 @@
 <script src="{{ asset('home/js/ajax-mail.js') }}"></script>
 <script src="{{ asset('home/js/main.js') }}"></script>
 <script src="{{ asset('home/rating-star/dist/rating.js') }}"></script>
+<script src="{{ asset('home/js/sweetalert2.all.min.js') }}"></script>
 
 @yield('script')
 @include('sweetalert::alert')

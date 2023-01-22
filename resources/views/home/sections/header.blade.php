@@ -5,7 +5,7 @@
                 <div class="col-xl-2 col-lg-2">
                     <div class="logo pt-40">
                         <a href="{{ route('home.index') }}">
-                            <h3 class="font-weight-bold">WebProg.ir</h3>
+                            <h3 class="font-weight-bold">KhoshStyle.ir</h3>
                         </a>
                     </div>
                 </div>
@@ -131,9 +131,7 @@
                                         <li><a href="my-account.html">پروفایل</a></li>
                                     @else
                                         <li><a href="{{ route('login') }}">ورود</a></li>
-                                        <li>
-                                            <a href="{{ route('register') }}">ایجاد حساب</a>
-                                        </li>
+
                                     @endauth
                                 </ul>
                             </div>

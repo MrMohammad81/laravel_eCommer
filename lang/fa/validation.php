@@ -247,7 +247,8 @@ return [
         'variation_values.8.date_on_sale_to' => 'تاریخ پایان حراجی',
         'variation_values.9.date_on_sale_to' => 'تاریخ پایان حراجی',
         'variation_values.10.date_on_sale_to' => 'تاریخ پایان حراجی',
-        'priority ' => 'اولویت',
+        'priority' => 'اولویت',
+        'cellphone' => 'شماره همراه',
     ],
 
 ];

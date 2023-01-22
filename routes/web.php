@@ -7,12 +7,14 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Products\ProductController;
 use App\Http\Controllers\Admin\Products\ProductImageController;
 use App\Http\Controllers\Admin\Tags\TagController;
+use App\Models\User;
+use App\Notifications\OTPSms;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Banners\BannerController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
 use App\Http\Controllers\Home\ProductController as HomeProductController;
-use Ghasedak\Laravel\GhasedakFacade;
+use App\Http\Controllers\Auth\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,11 +56,14 @@ Route::get('/' , [HomeController::class , 'index'])->name('home.index');
 Route::get('/categories/{category:slug}' , [HomeCategoryController::class , 'show'])->name('home.categories.show');
 Route::get('/products/show/{product:slug}' , [HomeProductController::class , 'show'])->name('home.products.show');
 
+Route::get('/login' , [AuthController::class , 'index'])->name('login');
+Route::any('/userRegister' , [AuthController::class , 'userRegister'])->name('auth.register');
+Route::any('/check-otp' , [AuthController::class , 'checkOtp']);
+
 Route::get('/test' , function (){
-    $response = GhasedakFacade::setVerifyType(Ghasedak\Laravel\GhasedakFacade::VERIFY_MESSAGE_TEXT)
-        ->Verify(
-            "09179430578", // receptor
-            "OTP", // name of the template which you've created in you account
-            "124565"      // parameters (supporting up to 10 parameters)
-        );
+    $otpCode = mt_rand(100000, 999999);
+
+    $user = User::find(1);
+    $user->notify(new OTPSms($otpCode));
+ // \Illuminate\Support\Facades\Auth::logout();
 });
