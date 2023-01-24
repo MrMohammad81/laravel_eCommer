@@ -21,6 +21,8 @@ return new class extends Migration
             $table->integer('status')->default(1);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->bigInteger('otp')->unsigned();
+            $table->char('login_token');
             $table->string('password');
             $table->string('provider_name');
             $table->rememberToken();

@@ -249,6 +249,7 @@ return [
         'variation_values.10.date_on_sale_to' => 'تاریخ پایان حراجی',
         'priority' => 'اولویت',
         'cellphone' => 'شماره همراه',
+        'otp' => 'رمز یکبار مصرف',
     ],
 
 ];

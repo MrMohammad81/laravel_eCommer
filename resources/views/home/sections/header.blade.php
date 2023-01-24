@@ -130,7 +130,7 @@
                                     @auth
                                         <li><a href="my-account.html">پروفایل</a></li>
                                     @else
-                                        <li><a href="{{ route('login') }}">ورود</a></li>
+                                        <li><a href="{{ route('auth.index') }}">ورود</a></li>
 
                                     @endauth
                                 </ul>

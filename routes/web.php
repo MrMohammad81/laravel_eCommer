@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Products\ProductImageController;
 use App\Http\Controllers\Admin\Tags\TagController;
 use App\Models\User;
 use App\Notifications\OTPSms;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Banners\BannerController;
 use App\Http\Controllers\Home\HomeController;
@@ -56,14 +57,19 @@ Route::get('/' , [HomeController::class , 'index'])->name('home.index');
 Route::get('/categories/{category:slug}' , [HomeCategoryController::class , 'show'])->name('home.categories.show');
 Route::get('/products/show/{product:slug}' , [HomeProductController::class , 'show'])->name('home.products.show');
 
-Route::get('/login' , [AuthController::class , 'index'])->name('login');
+
+
+
+Route::get('/auth' , [AuthController::class , 'index'])->name('auth.index');
+Route::any('/login' , [AuthController::class , 'login'])->name('auth.login');
 Route::any('/userRegister' , [AuthController::class , 'userRegister'])->name('auth.register');
-Route::any('/check-otp' , [AuthController::class , 'checkOtp']);
+Route::any('/check-otp' , [AuthController::class , 'checkOtp'])->name('auth.checkOTP');
 
 Route::get('/test' , function (){
-    $otpCode = mt_rand(100000, 999999);
-
-    $user = User::find(1);
-    $user->notify(new OTPSms($otpCode));
- // \Illuminate\Support\Facades\Auth::logout();
+//    $otpCode = mt_rand(100000, 999999);
+//
+//   $user = User::find(88);
+//    $user->notify(new OTPSms($otpCode));
+  Illuminate\Support\Facades\Auth::logout();
 });
+

@@ -7,6 +7,8 @@
 @section('script')
     <script>
 
+         var loginToken;
+
         $('#checkOTPForm').hide();
 
         $('#registerForm').submit(function (event){
@@ -23,22 +25,20 @@
                 'cellphone' : cellphone,
                 'email' : email,
                 'password' : password
-            }, function (response , status)
+            }, function (response)
             {
-                console.log(response , status)
+                loginToken = response.login_token;
                 Swal.fire({
                     icon : 'success',
-                    text : 'رمز یکبار مصرف برای شما ارسال شد',
+                    text : 'ثبت نام شما با موفقیت انجام شد',
                     doneButtonText : 'تایید',
                     timer : 5000
                 });
 
-                $('#registerForm').fadeOut();
+                $(location).attr('href' , "{{ route('home.index') }}");
 
-                $('#checkOTPForm').fadeIn();
             }).fail(function (response)
             {
-
                     $('#phone').addClass('mb-1 mt-3');
                     $('#phoneError').fadeIn();
                     $('#phoneInputError').html(response.responseJSON.errors ['cellphone'] ?? '');
@@ -58,24 +58,73 @@
             })
         })
 
-        $('#checkOTPForm').submit(function (event){
+        $('#loginForm').submit(function (event){
             event.preventDefault();
 
+            var logEmail = $('#loginEmail').val();
+            var logPassword = $('#loginPassword').val();
+
+            $.post("{{ route('auth.login') }}" ,
+                {
+                    '_token' : "{{ csrf_token() }}",
+                    'email' : logEmail,
+                    'password' : logPassword,
+                } , function (response)
+                {
+                    console.log(response)
+                    Swal.fire({
+                        icon : 'success',
+                        text : 'رمز یکبار مصرف برای شما ارسال شد',
+                        doneButtonText : 'تایید',
+                        timer : 5000
+                    });
+
+                    $('#loginForm').fadeOut();
+
+                    $('#checkOTPForm').fadeIn();
+
+                }).fail(function (response)
+            {
+                console.log(response)
+                $('#loginEmail').addClass('mb-1 mt-3');
+                $('#loginEmailError').fadeIn();
+                $('#loginEmailInputError').html(response.responseJSON.errors ['email'] ?? '');
+
+                $('#loginPassword').addClass('mb-1 mt-3');
+                $('#loginPasswordError').fadeIn();
+                $('#loginPasswordInputError').html(response.responseJSON.errors ['password'] ?? '');
+
+                $('#loginPassword').addClass('mb-1 mt-3');
+                $('#loginPasswordError').fadeIn();
+                $('#loginPasswordInputError').html(response.responseJSON.errors);
+            })
+        })
+
+        $('#checkOTPForm').submit(function (event){
+            event.preventDefault();
             var otp = $('#checkOTPInput').val();
 
-            $.post( "{{ url('/check-otp') }}" ,
+            $.post( "{{ route('auth.checkOTP') }}" ,
                 {
                     '_token' : "{{ csrf_token() }}",
                     'otp' : otp,
 
-                } , function (data , status)
+                } , function (response)
                 {
-                    console.log(data , status)
+                    $(location).attr('href' , "{{ route('home.index') }}");
+
+                    Swal.fire({
+                        icon : 'success',
+                        text : 'ورود با موفقیت انجام شد',
+                        doneButtonText : 'تایید',
+                        timer : 5000
+                    });
+
                 }).fail(function (response)
             {
                 $('#checkOTPInput').addClass('mb-1 mt-3');
                 $('#checkOTPInputError').fadeIn();
-                $('#checkOTPInputErrorText').html(response.responseJSON.errors[0]);
+                $('#checkOTPInputErrorText').html(response.responseJSON.errors['otp']);
             });
         })
 
@@ -114,22 +163,18 @@
                             <div id="lg1" class="tab-pane active">
                                 <div class="login-form-container">
                                     <div class="login-register-form">
-                                        <form action="{{ route('login') }}" method="post">
-                                            @csrf
+                                        <form id="loginForm">
 
-                                            @error('email')
-                                            <div class="input-error-validation">
-                                                <strong>{{ $message }}</strong>
+                                            <input type="email" id="loginEmail" placeholder="ایمیل" value="{{ old('email') }}">
+                                            <div id="loginEmailError" class="input-error-validation">
+                                                <strong id="loginEmailInputError"></strong>
                                             </div>
-                                            @enderror
-                                            <input type="email" name="email" placeholder="ایمیل" value="{{ old('email') }}">
 
-                                            @error('password')
-                                            <div class="input-error-validation">
-                                                <strong>{{ $message }}</strong>
+
+                                            <input type="password" id="loginPassword" placeholder="رمز عبور">
+                                            <div id="loginPasswordError" class="input-error-validation">
+                                                <strong id="loginPasswordInputError"></strong>
                                             </div>
-                                            @enderror
-                                            <input type="password" name="password" placeholder="رمز عبور">
 
                                             <div class="button-box">
                                                 <div class="login-toggle-btn d-flex justify-content-between">
@@ -139,9 +184,24 @@
                                                     </div>
                                                     <a href="{{ route('password.request') }}"> فراموشی رمز عبور ! </a>
                                                 </div>
-                                                <button type="submit">ورود</button>
+                                                <button type="submit">ارسال</button>
                                             </div>
                                         </form>
+
+                                        <form id="checkOTPForm" method="post">
+
+                                            <input id="checkOTPInput" placeholder="رمز یکبار مصرف" type="text">
+                                            <div id="checkOTPInputError" class="input-error-validation">
+                                                <strong id="checkOTPInputErrorText"></strong>
+                                            </div>
+
+                                            <div id="submitCheckOTPForm" class="button-box">
+                                                <button type="submit">ورود</button>
+                                            </div>
+
+                                        </form>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -175,24 +235,10 @@
                                             </div>
 
                                             <div id="submitRegisterForm" class="button-box">
-                                                <button type="submit">ارسال</button>
-                                            </div>
-
-                                        </form>
-
-                                        <form id="checkOTPForm" method="post">
-
-                                            <input id="checkOTPInput" placeholder="رمز یکبار مصرف" type="text">
-                                            <div id="checkOTPInputError" class="input-error-validation">
-                                                <strong id="checkOTPInputErrorText"></strong>
-                                            </div>
-
-                                            <div id="submitCheckOTPForm" class="button-box">
                                                 <button type="submit">عضویت</button>
                                             </div>
 
                                         </form>
-
                                     </div>
                                 </div>
                             </div>
