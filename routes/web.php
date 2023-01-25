@@ -61,9 +61,10 @@ Route::get('/products/show/{product:slug}' , [HomeProductController::class , 'sh
 
 
 Route::get('/auth' , [AuthController::class , 'index'])->name('auth.index');
-Route::any('/login' , [AuthController::class , 'login'])->name('auth.login');
-Route::any('/userRegister' , [AuthController::class , 'userRegister'])->name('auth.register');
-Route::any('/check-otp' , [AuthController::class , 'checkOtp'])->name('auth.checkOTP');
+Route::post('/login' , [AuthController::class , 'login'])->name('auth.login');
+Route::post('/register' , [AuthController::class , 'register'])->name('auth.register');
+Route::post('/check-otp' , [AuthController::class , 'checkOtp'])->name('auth.checkOTP');
+Route::post('/resend-otp' , [AuthController::class , 'resendOTP'])->name('auth.resendOTP');
 
 Route::get('/test' , function (){
 //    $otpCode = mt_rand(100000, 999999);

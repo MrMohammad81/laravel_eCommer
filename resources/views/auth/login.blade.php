@@ -7,8 +7,9 @@
 @section('script')
     <script>
 
-         var loginToken;
+         let loginToken;
 
+        $('#resendOTPButton').hide();
         $('#checkOTPForm').hide();
 
         $('#registerForm').submit(function (event){
@@ -27,6 +28,7 @@
                 'password' : password
             }, function (response)
             {
+                window.localStorage.setItem('login_token' , response.login_token)
                 loginToken = response.login_token;
                 Swal.fire({
                     icon : 'success',
@@ -71,7 +73,9 @@
                     'password' : logPassword,
                 } , function (response)
                 {
-                    console.log(response)
+                    //console.log(response)
+                    console.log(window.localStorage.getItem('login_token'));
+
                     Swal.fire({
                         icon : 'success',
                         text : 'رمز یکبار مصرف برای شما ارسال شد',
@@ -80,8 +84,8 @@
                     });
 
                     $('#loginForm').fadeOut();
-
                     $('#checkOTPForm').fadeIn();
+                    timer();
 
                 }).fail(function (response)
             {
@@ -127,6 +131,65 @@
                 $('#checkOTPInputErrorText').html(response.responseJSON.errors['otp']);
             });
         })
+
+         $('#resendOTPButton').click(function (event)
+         {
+             event.preventDefault();
+
+             $.post("{{ route('auth.resendOTP') }}" , {
+                 '_token' : "{{ csrf_token() }}" ,
+                 'login_token' : window.localStorage.getItem('login_token')
+             } , function (response)
+             {
+                 console.log(response);
+
+                 Swal.fire({
+                     icon : 'success',
+                     text : 'رمز یکبار مصرف برای شما ارسال شد',
+                     doneButtonText : 'تایید',
+                     timer : 5000
+                 });
+
+                 $('#resendOTPButton').fadeOut();
+                 $('#resendOTPTimer').fadeIn();
+                 timer();
+
+             }).fail(function (response)
+             {
+                 console.log(response)
+                 // Swal.fire({
+                 //     icon : 'error',
+                 //     text : 'خطا در ارسال رمز یکبار مصرف ، مجدادا تلاش نمایید',
+                 //     doneButtonText : 'تایید',
+                 //     timer : 5000
+                 // });
+                 //$('#resendOTPTimer').html(response.responseJSON.errors);
+             })
+         })
+
+
+         function timer()
+         {
+             let time = "0:3";
+             let interval = setInterval(function() {
+                 let countdown = time.split(':');
+                 let minutes = parseInt(countdown[0], 10);
+                 let seconds = parseInt(countdown[1], 10);
+                 --seconds;
+                 minutes = (seconds < 0) ? --minutes : minutes;
+                 if (minutes < 0)
+                 {
+                     clearInterval(interval);
+                     $('#resendOTPTimer').hide();
+                     $('#resendOTPButton').fadeIn();
+                 }
+                 seconds = (seconds < 0) ? 59 : seconds;
+                 seconds = (seconds < 10) ? '0' + seconds : seconds;
+                 //minutes = (minutes < 10) ?  minutes : minutes;
+                 $('#resendOTPTimer').html(minutes + ':' + seconds);
+                 time = minutes + ':' + seconds;
+             }, 1000);
+         }
 
     </script>
 @endsection
@@ -195,13 +258,15 @@
                                                 <strong id="checkOTPInputErrorText"></strong>
                                             </div>
 
-                                            <div id="submitCheckOTPForm" class="button-box">
+                                            <div id="submitCheckOTPForm" class="button-box d-flex justify-content-between">
                                                 <button type="submit">ورود</button>
+                                                <div>
+                                                    <button id="resendOTPButton" type="submit">ارسال مجدد</button>
+                                                    <span id="resendOTPTimer"></span>
+                                                </div>
                                             </div>
 
                                         </form>
-
-
                                     </div>
                                 </div>
                             </div>

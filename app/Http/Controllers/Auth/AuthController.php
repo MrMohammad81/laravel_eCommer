@@ -4,15 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Notifications\OTPSms;
-use http\Encoding\Stream\Deflate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
-use Laravel\Fortify\Fortify;
-use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Facades\Auth;
 
 
 class AuthController extends Controller
@@ -22,11 +17,9 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function userRegister(Request $request)
+    public function register(Request $request)
     {
-
-        if ($request->method() != 'POST')
-            return response(['UNDEFINED METHOD REQUEST' => 400]);
+        $this->checkMethodRequest($request);
 
         DB::beginTransaction();
 
@@ -45,6 +38,8 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        $this->checkMethodRequest($request);
+
         $this->validateUserForLogin($request);
 
         $user = User::where('email' , $request->email)->first();
@@ -63,6 +58,8 @@ class AuthController extends Controller
 
     public function checkOtp(Request $request)
     {
+        $this->checkMethodRequest($request);
+
         $this->validatedOTPCode($request);
 
         $user = User::where('otp' , $request->otp)->first() ?? false;
@@ -76,6 +73,12 @@ class AuthController extends Controller
         }
     }
 
+    public function resendOTP(Request $request)
+    {
+        $request->validate([
+            'login_token' => 'required'
+        ]);
+    }
 
     private function validatedRegisterParams($request)
     {
@@ -116,5 +119,11 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
         return $this;
+    }
+
+    private function checkMethodRequest($request)
+    {
+        if ($request->method() != 'POST')
+            return response(['UNDEFINED METHOD REQUEST' => 400]);
     }
 }
