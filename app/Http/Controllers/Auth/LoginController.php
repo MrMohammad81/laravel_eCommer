@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\SendMessage\SendOTPController;
 use App\Models\User;
 use App\Utilities\Validators\AuthValidator;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class LoginController
             return response(['errors' => 'اطلاعات وارد شده صحیح نمیباشد'] , 403);
         }
 
-        return SendOTPController::sendOTP($request , 'OTPSms');
+        return SendOTPController::sendOTP($request);
     }
 
     public function checkOtp(Request $request)
@@ -33,14 +34,13 @@ class LoginController
 
         $user = User::where('otp' , $request->otp)->where('login_token' , $request->loginToken)->first() ?? false;
 
-        if ($user)
+        if (!$user)
         {
-            auth()->login($user, $remember = true);
-
-            return response(['ورود با موفقیت انجام شد'], 200);
-        } else {
             return response(['errors' => ['otp' => ['کد تاییدیه نادرست است']]], 422);
         }
+
+        auth()->login($user, $remember = true);
+        return response(['ورود با موفقیت انجام شد'], 200);
     }
 
     public function resendOTP(Request $request)

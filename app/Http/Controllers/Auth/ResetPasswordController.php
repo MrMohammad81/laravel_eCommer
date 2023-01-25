@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\SendMessage\SendOTPController;
 use App\Models\User;
 use App\Utilities\Validators\AuthValidator;
 use Illuminate\Http\Request;

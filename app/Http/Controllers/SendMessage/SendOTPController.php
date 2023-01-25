@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\SendMessage;
 
 use App\Models\User;
 use App\Notifications\OTPSms;
 use App\Notifications\ResetPasswordWithOTP;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use function response;
 
 class SendOTPController
 {
