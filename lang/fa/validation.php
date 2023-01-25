@@ -250,6 +250,9 @@ return [
         'priority' => 'اولویت',
         'cellphone' => 'شماره همراه',
         'otp' => 'رمز یکبار مصرف',
+        'reset_pass_otp' => 'کد بازیابی',
+        'newPassword' => 'رمز عبور جدید',
+        'confirm_password' => 'تایید رمز عبور',
     ],
 
 ];

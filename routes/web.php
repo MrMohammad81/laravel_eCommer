@@ -9,7 +9,9 @@ use App\Http\Controllers\Admin\Products\ProductImageController;
 use App\Http\Controllers\Admin\Tags\TagController;
 use App\Models\User;
 use App\Notifications\OTPSms;
+use App\Notifications\ResetPasswordWithOTP;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Banners\BannerController;
 use App\Http\Controllers\Home\HomeController;
@@ -65,12 +67,20 @@ Route::post('/login' , [AuthController::class , 'login'])->name('auth.login');
 Route::post('/register' , [AuthController::class , 'register'])->name('auth.register');
 Route::post('/check-otp' , [AuthController::class , 'checkOtp'])->name('auth.checkOTP');
 Route::post('/resend-otp' , [AuthController::class , 'resendOTP'])->name('auth.resendOTP');
+Route::post('/check-user-reset-password' , [AuthController::class , 'checkUserForResetPassword'])->name('auth.checkUser.resetPass');
+Route::post('/check-otp-reset-password' , [AuthController::class , 'checkOtpResetPass'])->name('auth.checkOTP.resetPass');
+Route::post('/resend-otp-reset-password' , [AuthController::class , 'resendOTPResetPass'])->name('auth.resendOTP.resetPass');
+Route::post('/change-password' , [AuthController::class , 'changePassword'])->name('auth.change.password');
 
 Route::get('/test' , function (){
 //    $otpCode = mt_rand(100000, 999999);
 //
-//   $user = User::find(88);
+       $user = User::find(95);
 //    $user->notify(new OTPSms($otpCode));
-  Illuminate\Support\Facades\Auth::logout();
+    $newPassword = Hash::make("12Fisaghores34");
+
+    $user->update(['password' => $newPassword]);
+    //$user->notify(new OTPSms(123123));
+ // Illuminate\Support\Facades\Auth::logout();
 });
 

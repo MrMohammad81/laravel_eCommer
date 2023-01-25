@@ -2,17 +2,19 @@
 
 namespace App\Notifications;
 
+use App\Channels\SmsLoginChannel;
+use App\Channels\SmsResetPassChannel;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Channels\SmsLoginChannel;
+use function url;
 
-class OTPSms extends Notification
+class ResetPasswordWithOTP extends Notification
 {
     use Queueable;
 
     public $code;
+
 
     /**
      * Create a new notification instance.
@@ -32,7 +34,7 @@ class OTPSms extends Notification
      */
     public function via($notifiable)
     {
-        return [SmsLoginChannel::class];
+        return [SmsResetPassChannel::class];
     }
 
     /**

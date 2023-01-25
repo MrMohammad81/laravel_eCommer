@@ -11,6 +11,10 @@
 
         $('#resendOTPButton').hide();
         $('#checkOTPForm').hide();
+        $('#resetPasswordForm').hide();
+        $('#checkOTPResetPassForm').hide();
+        $('#resendOTPResetPassButton').hide();
+        $('#changePasswordForm').hide();
 
         $('#registerForm').submit(function (event){
             event.preventDefault();
@@ -26,10 +30,8 @@
                 'cellphone' : cellphone,
                 'email' : email,
                 'password' : password
-            }, function (response)
+            }, function ()
             {
-                window.localStorage.setItem('login_token' , response.login_token)
-                loginToken = response.login_token;
                 Swal.fire({
                     icon : 'success',
                     text : 'ثبت نام شما با موفقیت انجام شد',
@@ -56,7 +58,6 @@
                     $('#registerEmail').addClass('mb-1 mt-3');
                     $('#registerEmailError').fadeIn();
                     $('#registerEmailInputError').html(response.responseJSON.errors ['email'] ?? ['']);
-
             })
         })
 
@@ -73,8 +74,7 @@
                     'password' : logPassword,
                 } , function (response)
                 {
-                    //console.log(response)
-                    console.log(window.localStorage.getItem('login_token'));
+                    loginToken = response.login_token;
 
                     Swal.fire({
                         icon : 'success',
@@ -85,7 +85,7 @@
 
                     $('#loginForm').fadeOut();
                     $('#checkOTPForm').fadeIn();
-                    timer();
+                    timer($('#resendOTPTimer') , $('#resendOTPButton'));
 
                 }).fail(function (response)
             {
@@ -101,10 +101,11 @@
                 $('#loginPassword').addClass('mb-1 mt-3');
                 $('#loginPasswordError').fadeIn();
                 $('#loginPasswordInputError').html(response.responseJSON.errors);
+
             })
         })
 
-        $('#checkOTPForm').submit(function (event){
+         $('#checkOTPForm').submit(function (event){
             event.preventDefault();
             var otp = $('#checkOTPInput').val();
 
@@ -112,8 +113,9 @@
                 {
                     '_token' : "{{ csrf_token() }}",
                     'otp' : otp,
+                    'loginToken' : loginToken
 
-                } , function (response)
+                } , function ()
                 {
                     $(location).attr('href' , "{{ route('home.index') }}");
 
@@ -138,37 +140,174 @@
 
              $.post("{{ route('auth.resendOTP') }}" , {
                  '_token' : "{{ csrf_token() }}" ,
-                 'login_token' : window.localStorage.getItem('login_token')
+                 'loginToken' : loginToken
              } , function (response)
              {
                  console.log(response);
 
                  Swal.fire({
                      icon : 'success',
-                     text : 'رمز یکبار مصرف برای شما ارسال شد',
+                     text : 'رمز یکبار مصرف به شماره ثبت شده شما ارسال شد',
                      doneButtonText : 'تایید',
                      timer : 5000
                  });
 
                  $('#resendOTPButton').fadeOut();
                  $('#resendOTPTimer').fadeIn();
-                 timer();
+                 timer($('#resendOTPTimer') , $('#resendOTPButton'));
 
              }).fail(function (response)
              {
-                 console.log(response)
-                 // Swal.fire({
-                 //     icon : 'error',
-                 //     text : 'خطا در ارسال رمز یکبار مصرف ، مجدادا تلاش نمایید',
-                 //     doneButtonText : 'تایید',
-                 //     timer : 5000
-                 // });
-                 //$('#resendOTPTimer').html(response.responseJSON.errors);
+                 Swal.fire({
+                     icon : 'error',
+                     text : 'خطا در ارسال رمز یکبار مصرف ، مجدادا تلاش نمایید',
+                     doneButtonText : 'تایید',
+                     timer : 5000
+                 });
+                 $('#resendOTPTimer').html(response.responseJSON.errors);
              })
          })
 
+         $('#resetPassword').click(function (event)
+         {
+             $('#loginForm').fadeOut();
+             $('#resetPasswordForm').fadeIn()
+         })
 
-         function timer()
+         $('#resetPasswordForm').submit(function (event)
+         {
+             event.preventDefault();
+
+             var emailForResPass = $('#inputEmailForResetPass').val();
+
+             $.post("{{ route('auth.checkUser.resetPass') }}" ,
+                 {
+                     '_token' : "{{ csrf_token() }}",
+                     'email' : emailForResPass
+                 } , function (response)
+                 {
+                     loginToken = response.login_token;
+
+                     Swal.fire({
+                         icon : 'success',
+                         text : 'کد بازیابی به شماره ثبت شده شما ارسال شد',
+                         doneButtonText : 'تایید',
+                         timer : 5000
+                     });
+                     $('#resetPasswordForm').fadeOut();
+                     $('#checkOTPResetPassForm').fadeIn()
+                     timer($('#resendOTPResetPassTimer') , $('#resendOTPResetPassButton'));
+
+                 }).fail(function (response)
+             {
+                 $('#inputEmailForResetPass').addClass('mb-1 mt-3');
+                 $('#inputEmailForResetPassError').fadeIn();
+                 $('#inputEmailForResetPassErrorText').html(response.responseJSON.errors['email']);
+             });
+
+             $('#checkOTPResetPassForm').submit(function (event)
+             {
+                 event.preventDefault();
+
+                 var resetPassOTP = $('#checkOTPResetPassInput').val();
+
+                 $.post("{{ route('auth.checkOTP.resetPass') }}" ,
+                     {
+                         '_token' : "{{ csrf_token() }}",
+                         'reset_pass_otp' : resetPassOTP,
+                         'loginToken' : loginToken
+                     } , function (response)
+                     {
+                         Swal.fire({
+                             icon : 'success',
+                             text : 'کد بازیابی تایید شد',
+                             doneButtonText : 'تایید',
+                             timer : 5000
+                         });
+
+                         $('#checkOTPResetPassForm').fadeOut();
+
+                         $('#changePasswordForm').fadeIn();
+
+                     }).fail(function (response)
+                 {
+                     $('#checkOTPResetPassInput').addClass('mb-1 mt-3');
+                     $('#checkOTPResetPassInputError').fadeIn();
+                     $('#checkOTPResetPassInputErrorText').html(response.responseJSON.errors['reset_pass_otp']);
+                 })
+             })
+         })
+
+         $('#resendOTPResetPassButton').click(function (event)
+         {
+             event.preventDefault();
+
+             $.post("{{ route('auth.resendOTP.resetPass') }}" ,
+                 {
+                     '_token' : "{{ csrf_token() }}",
+                     'loginToken' : loginToken
+                 } , function ()
+                 {
+                     Swal.fire({
+                         icon : 'success',
+                         text : 'کد بازیابی مجددا ارسال شد',
+                         doneButtonText : 'تایید',
+                         timer : 5000
+                     });
+
+                     $('#resendOTPResetPassButton').fadeOut();
+                     $('#resendOTPResetPassTimer').fadeIn();
+                     timer($('#resendOTPResetPassTimer') , $('#resendOTPResetPassButton'));
+
+                 }).fail(function (response)
+             {
+                 Swal.fire({
+                     icon : 'error',
+                     text : 'خطا در ارسال کد بازیابی ، مجدادا تلاش نمایید',
+                     doneButtonText : 'تایید',
+                     timer : 5000
+                 });
+                 $('#resendOTPResetPassTimer').html(response.responseJSON.errors);
+             })
+         })
+
+         $('#changePasswordForm').submit(function (event)
+         {
+             event.preventDefault();
+
+             var newPassword = $('#newPasswordInput').val();
+             var confirmationPassword = $('#confirmationPasswordInput').val();
+
+             $.post("{{ route('auth.change.password') }}" ,
+                 {
+                     '_token' : "{{ csrf_token() }}" ,
+                     'loginToken' : loginToken,
+                     'password' : newPassword,
+                     'confirm_password' : confirmationPassword
+                 }, function (response)
+                 {
+                     Swal.fire({
+                         icon : 'success',
+                         text : 'رمز عبو شما با موفقیت تغیر کرد',
+                         doneButtonText : 'تایید',
+                         timer : 5000
+                     });
+
+                     $(location).attr('href' , "{{ route('home.index') }}");
+
+                 }).fail(function (response)
+             {
+                 $('#newPasswordInput').addClass('mb-1 mt-3');
+                 $('#newPasswordError').fadeIn();
+                 $('#newPasswordErrorText').html(response.responseJSON.errors ['password'] ?? '');
+
+                 $('#confirmationPasswordInput').addClass('mb-1 mt-3');
+                 $('#confirmPasswordError').fadeIn();
+                 $('#confirmPasswordErrorText').html(response.responseJSON.errors ['confirm_password'] ?? '');
+             });
+         })
+
+         function timer(timer , button)
          {
              let time = "0:3";
              let interval = setInterval(function() {
@@ -180,13 +319,13 @@
                  if (minutes < 0)
                  {
                      clearInterval(interval);
-                     $('#resendOTPTimer').hide();
-                     $('#resendOTPButton').fadeIn();
+                     timer.hide();
+                     button.fadeIn();
                  }
                  seconds = (seconds < 0) ? 59 : seconds;
                  seconds = (seconds < 10) ? '0' + seconds : seconds;
                  //minutes = (minutes < 10) ?  minutes : minutes;
-                 $('#resendOTPTimer').html(minutes + ':' + seconds);
+                 timer.html(minutes + ':' + seconds);
                  time = minutes + ':' + seconds;
              }, 1000);
          }
@@ -245,14 +384,13 @@
                                                         <input name="remember" type="checkbox" {{ old('remember') ? 'checked' : ''}}>
                                                         <label> مرا بخاطر بسپار </label>
                                                     </div>
-                                                    <a href="{{ route('password.request') }}"> فراموشی رمز عبور ! </a>
+                                                    <a id="resetPassword"> فراموشی رمز عبور ! </a>
                                                 </div>
                                                 <button type="submit">ارسال</button>
                                             </div>
                                         </form>
 
                                         <form id="checkOTPForm" method="post">
-
                                             <input id="checkOTPInput" placeholder="رمز یکبار مصرف" type="text">
                                             <div id="checkOTPInputError" class="input-error-validation">
                                                 <strong id="checkOTPInputErrorText"></strong>
@@ -265,8 +403,54 @@
                                                     <span id="resendOTPTimer"></span>
                                                 </div>
                                             </div>
+                                        </form>
+
+                                        <form id="resetPasswordForm" method="post">
+
+                                            <input id="inputEmailForResetPass" placeholder="ایمیل" type="text">
+                                            <div id="inputEmailForResetPassError" class="input-error-validation">
+                                                <strong id="inputEmailForResetPassErrorText"></strong>
+                                            </div>
+
+                                            <div id="submitCheckOTPForm" class="button-box d-flex justify-content-between">
+                                                <button type="submit">ارسال کد بازیابی</button>
+                                            </div>
+                                        </form>
+
+                                        <form id="checkOTPResetPassForm" method="post">
+
+                                            <input id="checkOTPResetPassInput" placeholder="کد بازیابی" type="text">
+                                            <div id="checkOTPResetPassInputError" class="input-error-validation">
+                                                <strong id="checkOTPResetPassInputErrorText"></strong>
+                                            </div>
+
+                                            <div id="submitCheckOTPForm" class="button-box d-flex justify-content-between">
+                                                <button id="checkOTPResetPass" type="submit">تایید</button>
+                                                <div>
+                                                    <button id="resendOTPResetPassButton" type="submit">ارسال مجدد</button>
+                                                    <span id="resendOTPResetPassTimer"></span>
+                                                </div>
+                                            </div>
 
                                         </form>
+
+                                        <form id="changePasswordForm" method="post">
+
+                                            <input id="newPasswordInput" placeholder="رمز عبور جدید" type="password">
+                                            <div id="newPasswordError" class="input-error-validation">
+                                                <strong id="newPasswordErrorText"></strong>
+                                            </div>
+
+                                            <input id="confirmationPasswordInput" placeholder="تایید رمز عبور" type="password" required>
+                                            <div id="confirmPasswordError" class="input-error-validation">
+                                                <strong id="confirmPasswordErrorText"></strong>
+                                            </div>
+
+                                            <div class="button-box d-flex justify-content-between">
+                                                <button type="submit">تغیر رمز</button>
+                                            </div>
+                                        </form>
+
                                     </div>
                                 </div>
                             </div>

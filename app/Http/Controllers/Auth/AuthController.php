@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\OTPSms;
+use App\Notifications\ResetPasswordWithOTP;
+use App\Utilities\Validators\AuthValidator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
-
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -19,28 +21,29 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $this->checkMethodRequest($request);
+        AuthValidator::checkMethodRequest($request);
 
         DB::beginTransaction();
 
-        $this->validatedRegisterParams($request);
+        AuthValidator::validatedRegisterParams($request);
 
         $otpCode = mt_rand(100000, 999999);
-        $loginToken = Hash::make('DCDCojncd@cdjn%!!ghnjrgtn&&');
+        $loginToken = Hash::make(Str::random());
 
         $user = $this->createUser($request, $otpCode , $loginToken);
 
         auth()->login($user ,  $remember = true);
-        DB::commit();
-        return response(['login_token' => $loginToken], 200);
 
+        DB::commit();
+
+        return response(['login_token' => $loginToken] , 200);
     }
 
     public function login(Request $request)
     {
-        $this->checkMethodRequest($request);
+        AuthValidator::checkMethodRequest($request);
 
-        $this->validateUserForLogin($request);
+        AuthValidator::validateUserForLogin($request);
 
         $user = User::where('email' , $request->email)->first();
 
@@ -49,24 +52,28 @@ class AuthController extends Controller
             return response(['errors' => 'اطلاعات وارد شده صحیح نمیباشد'] , 403);
         }
 
-        $OTPCode = mt_rand(100000, 999999);
+        $otpCode = mt_rand(100000, 999999);
+        $loginToken = Hash::make(Str::random());
 
-        $user->update(['otp' => $OTPCode]);
+        $user->update(['otp' => $otpCode , 'login_token' => $loginToken]);
 
-       // $user->notify(new OTPSms($user->otp));
+        //$user->notify(new OTPSms($user->otp));
+
+        return response(['login_token' => $loginToken] , 200);
     }
 
     public function checkOtp(Request $request)
     {
-        $this->checkMethodRequest($request);
+        AuthValidator::checkMethodRequest($request);
 
-        $this->validatedOTPCode($request);
+        AuthValidator::validatedOTPCode($request);
 
-        $user = User::where('otp' , $request->otp)->first() ?? false;
+        $user = User::where('otp' , $request->otp)->where('login_token' , $request->loginToken)->first() ?? false;
 
-        if ($user == true)
+        if ($user)
         {
             auth()->login($user, $remember = true);
+
             return response(['ورود با موفقیت انجام شد'], 200);
         } else {
             return response(['errors' => ['otp' => ['کد تاییدیه نادرست است']]], 422);
@@ -75,20 +82,91 @@ class AuthController extends Controller
 
     public function resendOTP(Request $request)
     {
-        $request->validate([
-            'login_token' => 'required'
-        ]);
+        AuthValidator::checkMethodRequest($request);
+
+        $request->validate(['loginToken' => 'required']);
+
+        $user = User::where('login_token' , $request->loginToken)->first() ?? false;
+
+        if (!$user)
+        {
+            return response(['errors' => 'خطا در ارسال مجدد'], 422);
+        }
+
+        $otpCode = mt_rand(100000, 999999);
+
+        $user->update(['otp' => $otpCode]);
+
+     //   $user->notify(new OTPSms($user->otp));
+
+        return response('کد تایید مجددا ارسال شد' , 200);
     }
 
-    private function validatedRegisterParams($request)
+    public function checkUserForResetPassword(Request $request)
     {
-        $request->validate([
-            'name' => 'required|min:2',
-            'cellphone' => 'required|iran_mobile|unique:users,cellphone',
-            'email' => 'required|email|unique:users,email',
-            'password' => ['required' , Password::min(8)->mixedCase()->numbers()],
-        ]);
-        return $this;
+        AuthValidator::validatedEmailForResetPassword($request);
+
+        $user = User::where('email' , $request->email)->first();
+
+        $otpCode =  mt_rand(100000, 999999);
+        $loginToken = Hash::make(Str::random());
+
+        $user->update(['otp' => $otpCode , 'login_token' => $loginToken]);
+
+      //  $user->notify(new ResetPasswordWithOTP($otpCode));
+
+        return response(['login_token' => $loginToken] , 200);
+    }
+
+    public function checkOtpResetPass(Request $request)
+    {
+        AuthValidator::checkOtpResetPass($request);
+
+        return response('کد بازیابی تایید شد' , 200);
+    }
+
+    public function resendOTPResetPass(Request $request)
+    {
+        $request->validate(['loginToken' => 'required']);
+
+        $user = User::where('login_token' , $request->loginToken)->first() ?? false;
+
+        if (!$user)
+        {
+            return response(['errors' => 'خطا در ارسال مجدد کد بازیابی'] , 422);
+        }
+
+        $otpCode =  mt_rand(100000, 999999);
+
+        $user->update(['otp' => $otpCode]);
+
+     //   $user->notify(new ResetPasswordWithOTP($user->otp));
+
+        return response('کد بازیابی ارسال شد' , 200);
+    }
+
+    public function changePassword(Request $request)
+    {
+        AuthValidator::validateNewPassword($request);
+
+        DB::beginTransaction();
+
+        $user = User::where('login_token' , $request->loginToken)->first() ?? false;
+
+        if (!$user)
+        {
+            return response(['errors' => 'خطا در تغیر رمز عبور'] , 401);
+        }
+
+        $newPassword = Hash::make($request->password);
+
+        $user->update(['password' => $newPassword]);
+
+        auth()->login($user ,  $remember = true);
+
+        DB::commit();
+
+        return response('رمز عبور شما با موفقیت تغیر کرد' , 200);
     }
 
     private function createUser($request , $otpCode , $loginToken)
@@ -102,28 +180,5 @@ class AuthController extends Controller
             'password' => Hash::make($request->password)
         ]);
         return $user;
-    }
-
-    private function validatedOTPCode($request)
-    {
-        $request->validate([
-            'otp' => 'required|digits:6|numeric',
-        ]);
-        return $this;
-    }
-
-    private function validateUserForLogin($request)
-    {
-        $request->validate([
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required',
-        ]);
-        return $this;
-    }
-
-    private function checkMethodRequest($request)
-    {
-        if ($request->method() != 'POST')
-            return response(['UNDEFINED METHOD REQUEST' => 400]);
     }
 }

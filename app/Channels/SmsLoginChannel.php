@@ -5,7 +5,7 @@ namespace App\Channels;
 use Ghasedak\GhasedakApi;
 use Illuminate\Notifications\Notification;
 
-class SmsChannel
+class SmsLoginChannel
 {
     public function send($notifiable , Notification $notification)
     {
