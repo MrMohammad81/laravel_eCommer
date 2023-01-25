@@ -157,7 +157,8 @@
                  timer($('#resendOTPTimer') , $('#resendOTPButton'));
 
              }).fail(function (response)
-             {
+             {                 console.log(response);
+
                  Swal.fire({
                      icon : 'error',
                      text : 'خطا در ارسال رمز یکبار مصرف ، مجدادا تلاش نمایید',

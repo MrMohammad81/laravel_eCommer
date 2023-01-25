@@ -18,6 +18,9 @@ use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
 use App\Http\Controllers\Home\ProductController as HomeProductController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -63,24 +66,17 @@ Route::get('/products/show/{product:slug}' , [HomeProductController::class , 'sh
 
 
 Route::get('/auth' , [AuthController::class , 'index'])->name('auth.index');
-Route::post('/login' , [AuthController::class , 'login'])->name('auth.login');
-Route::post('/register' , [AuthController::class , 'register'])->name('auth.register');
-Route::post('/check-otp' , [AuthController::class , 'checkOtp'])->name('auth.checkOTP');
-Route::post('/resend-otp' , [AuthController::class , 'resendOTP'])->name('auth.resendOTP');
-Route::post('/check-user-reset-password' , [AuthController::class , 'checkUserForResetPassword'])->name('auth.checkUser.resetPass');
-Route::post('/check-otp-reset-password' , [AuthController::class , 'checkOtpResetPass'])->name('auth.checkOTP.resetPass');
-Route::post('/resend-otp-reset-password' , [AuthController::class , 'resendOTPResetPass'])->name('auth.resendOTP.resetPass');
-Route::post('/change-password' , [AuthController::class , 'changePassword'])->name('auth.change.password');
+Route::post('/register' , [RegisterController::class , 'register'])->name('auth.register');
+Route::post('/login' , [LoginController::class , 'login'])->name('auth.login');
+Route::post('/check-otp' , [LoginController::class , 'checkOtp'])->name('auth.checkOTP');
+Route::post('/resend-otp' , [LoginController::class , 'resendOTP'])->name('auth.resendOTP');
+Route::post('/check-user-reset-password' , [ResetPasswordController::class , 'checkUserForResetPassword'])->name('auth.checkUser.resetPass');
+Route::post('/check-otp-reset-password' , [ResetPasswordController::class , 'checkOtpResetPass'])->name('auth.checkOTP.resetPass');
+Route::post('/resend-otp-reset-password' , [ResetPasswordController::class , 'resendOTPResetPass'])->name('auth.resendOTP.resetPass');
+Route::post('/change-password' , [ResetPasswordController::class , 'changePassword'])->name('auth.change.password');
 
 Route::get('/test' , function (){
-//    $otpCode = mt_rand(100000, 999999);
-//
-       $user = User::find(95);
-//    $user->notify(new OTPSms($otpCode));
-    $newPassword = Hash::make("12Fisaghores34");
 
-    $user->update(['password' => $newPassword]);
-    //$user->notify(new OTPSms(123123));
- // Illuminate\Support\Facades\Auth::logout();
+  Illuminate\Support\Facades\Auth::logout();
 });
 
