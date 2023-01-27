@@ -217,7 +217,7 @@
                          '_token' : "{{ csrf_token() }}",
                          'reset_pass_otp' : resetPassOTP,
                          'loginToken' : loginToken
-                     } , function (response)
+                     } , function ()
                      {
                          Swal.fire({
                              icon : 'success',

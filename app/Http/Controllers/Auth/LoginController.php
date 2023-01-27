@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\SendMessage\SendOTPController;
 use App\Models\User;
+use App\Notifications\OTPSms;
 use App\Utilities\Validators\AuthValidator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -48,6 +49,6 @@ class LoginController
         $messegIfFalse = 'خطا در ارسال رمز یکبار مصرف';
         $messegIfTrue = 'رمز یکبار مصرف با موفقیت ارسال شد';
 
-        SendOTPController::resendOTP($request , $messegIfFalse , $messegIfTrue , 'OTPSms' );
+        SendOTPController::resendOTP($request , $messegIfFalse , $messegIfTrue);
     }
 }

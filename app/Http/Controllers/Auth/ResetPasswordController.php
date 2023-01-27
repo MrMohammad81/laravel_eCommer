@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\SendMessage\SendOTPController;
 use App\Models\User;
+use App\Notifications\ResetPasswordWithOTP;
 use App\Utilities\Validators\AuthValidator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,7 @@ class ResetPasswordController
     {
         AuthValidator::validatedEmailForResetPassword($request);
 
-        return SendOTPController::sendOTP($request,'ResetPassword');
+        return SendOTPController::sendOTP($request,ResetPasswordWithOTP::class);
     }
 
     public function checkOtpResetPass(Request $request)
@@ -30,7 +31,7 @@ class ResetPasswordController
         $messegIfFalse = 'خطا در ارسال کد بازیابی';
         $messegIfTrue = 'کد بازیابی ارسال شد';
 
-        SendOTPController::resendOTP($request , $messegIfFalse , $messegIfTrue , 'ResetPassword' );
+        SendOTPController::resendOTP($request , $messegIfFalse , $messegIfTrue , ResetPasswordWithOTP::class );
     }
 
     public function changePassword(Request $request)

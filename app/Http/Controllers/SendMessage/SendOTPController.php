@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\SendMessage;
 
+use App\Exceptions\SmsServiceNotFound;
 use App\Models\User;
 use App\Notifications\OTPSms;
-use App\Notifications\ResetPasswordWithOTP;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use function response;
 
 class SendOTPController
 {
-    public static function sendOTP($request , $notifyType = 'OTPSms')
+    public static function sendOTP($request , $smsService = OTPSms::class )
     {
         $otpCode =  mt_rand(100000, 999999);
         $loginToken = Hash::make(Str::random());
@@ -20,21 +20,17 @@ class SendOTPController
 
         $user->update(['otp' => $otpCode , 'login_token' => $loginToken]);
 
-        if ($notifyType = 'OTPSms')
+        if(!new $smsService($otpCode))
         {
-            $user->notify(new OTPSms($user->otp));
+            throw new SmsServiceNotFound('Sms service not found' , 404);
         }
-        elseif ($notifyType = 'ResetPassword')
-        {
-            $user->notify(new ResetPasswordWithOTP($user->otp));
-        }else{
-            return response(['errors' => 'Notify service not found'] , 404);
-        }
+
+       // $user->notify(new $smsService($otpCode));
 
         return response(['login_token' => $loginToken] , 200);
     }
 
-    public static function resendOTP($request , $messegIfFalse , $messegIfTrue , $notifyType = 'OTPSms')
+    public static function resendOTP($request , $messegIfFalse , $messegIfTrue , $smsService = OTPSms::class)
     {
         $request->validate(['loginToken' => 'required']);
 
@@ -49,16 +45,12 @@ class SendOTPController
 
         $user->update(['otp' => $otpCode]);
 
-        if ($notifyType = 'OTPSms')
+        if (!new $smsService($otpCode))
         {
-            $user->notify(new OTPSms($user->otp));
+            throw new SmsServiceNotFound('Sms service not found' , 404);
         }
-        elseif ($notifyType = 'ResetPassword')
-        {
-            $user->notify(new ResetPasswordWithOTP($user->otp));
-        }else{
-            return response(['errors' => 'Notify service not found'] , 404);
-        }
+
+        //$user->notify(new $smsService($otpCode));
 
         return response($messegIfTrue , 200);
     }

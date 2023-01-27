@@ -309,44 +309,23 @@
                                 <div class="ratting-form-wrapper text-right">
                                     <span> نوشتن دیدگاه </span>
 
-                                    <div class="star-box-wrap">
-                                        <div class="single-ratting-star">
-                                            <i class="sli sli-star"></i>
-                                        </div>
-                                        <div class="single-ratting-star">
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                        </div>
-                                        <div class="single-ratting-star">
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                        </div>
-                                        <div class="single-ratting-star">
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                        </div>
-                                        <div class="single-ratting-star">
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                            <i class="sli sli-star"></i>
-                                        </div>
+                                    <div
+                                         data-rating-stars="5"
+                                         data-rating-value="0"
+                                         data-rating-input="#rateInput">
                                     </div>
 
                                     <div class="ratting-form">
-                                        <form action="#">
+                                        <form action="{{ route('home.comments.store' , $product->id) }}" method="post">
+                                            @csrf
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="rating-form-style mb-20">
                                                         <label> متن دیدگاه : </label>
-                                                        <textarea name="Your Review"></textarea>
+                                                        <textarea name="Text"></textarea>
                                                     </div>
                                                 </div>
-
+                                                <input id="rateInput" type="hidden" name="rate" value="0">
                                                 <div class="col-lg-12">
                                                     <div class="form-submit">
                                                         <input type="submit" value="ارسال">
