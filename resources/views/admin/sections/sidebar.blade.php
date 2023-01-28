@@ -72,6 +72,7 @@
                 <a class="collapse-item" href="{{ route('admin.tags.index') }}"> تگ ها</a>
                 <a class="collapse-item" href="{{ route('admin.categories.index') }}">دسته بندی ها</a>
                 <a class="collapse-item" href="{{ route('admin.products.index') }}"> محصولات </a>
+                <a class="collapse-item" href="{{ route('admin.comments.index') }}"> نظرات </a>
             </div>
         </div>
     </li>

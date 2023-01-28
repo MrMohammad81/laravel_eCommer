@@ -12,4 +12,19 @@ class Comment extends Model
     protected $guarded = [];
 
     protected $table = 'comments';
+
+    public function getApprovedAttribute($approved)
+    {
+        return $approved ? 'تایید شده' : 'در انتظار تایید' ;
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
