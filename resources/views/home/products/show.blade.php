@@ -202,15 +202,15 @@
                 <div class="col-lg-8 col-md-8">
                     <div class="description-review-wrapper">
                         <div class="description-review-topbar nav">
-                            <a class="active" data-toggle="tab" href="#des-details1"> توضیحات </a>
+                            <a class="{{ count($errors) > 0 ? '' : 'active' }}" data-toggle="tab" href="#des-details1"> توضیحات </a>
                             <a data-toggle="tab" href="#des-details3"> اطلاعات بیشتر </a>
-                            <a data-toggle="tab" href="#des-details2">
+                            <a class="{{ count($errors) > 0 ? 'active' : '' }}" data-toggle="tab" href="#des-details2">
                                 دیدگاه
                                 (3)
                             </a>
                         </div>
                         <div class="tab-content description-review-bottom">
-                            <div id="des-details1" class="tab-pane active">
+                            <div id="des-details1" class="tab-pane {{ count($errors) > 0 ? '' : 'active' }}">
                                 <div class="product-description-wrapper">
                                         <p class="text-justify text-right">
                                            {{ $product->description }}
@@ -230,7 +230,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div id="des-details2" class="tab-pane">
+                            <div id="des-details2" class="tab-pane {{ count($errors) > 0 ? 'active' : '' }}">
 
                                 <div class="review-wrapper">
                                     <div class="single-review">
@@ -306,7 +306,7 @@
                                     </div>
                                 </div>
 
-                                <div class="ratting-form-wrapper text-right">
+                                <div id="comments" class="ratting-form-wrapper text-right">
                                     <span> نوشتن دیدگاه </span>
 
                                     <div
@@ -322,7 +322,7 @@
                                                 <div class="col-md-12">
                                                     <div class="rating-form-style mb-20">
                                                         <label> متن دیدگاه : </label>
-                                                        <textarea name="Text"></textarea>
+                                                        <textarea name="text"></textarea>
                                                     </div>
                                                 </div>
                                                 <input id="rateInput" type="hidden" name="rate" value="0">
@@ -330,6 +330,9 @@
                                                     <div class="form-submit">
                                                         <input type="submit" value="ارسال">
                                                     </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    @include('home.sections.errors')
                                                 </div>
                                             </div>
                                         </form>

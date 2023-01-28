@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Utilities\Validators;
+namespace App\Utilities\Validators\Auth;
 
 use Illuminate\Validation\Rules\Password;
+use function response;
 
 class AuthValidator
 {

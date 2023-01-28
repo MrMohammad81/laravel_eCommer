@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\SendMessage\SendOTPController;
 use App\Models\User;
-use App\Notifications\OTPSms;
-use App\Utilities\Validators\AuthValidator;
+use App\Utilities\Validators\Auth\AuthValidator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 

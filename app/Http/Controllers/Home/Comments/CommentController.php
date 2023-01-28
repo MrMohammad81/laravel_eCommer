@@ -3,9 +3,82 @@
 namespace App\Http\Controllers\Home\Comments;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
+use App\Models\Product;
+use App\Models\ProductRate;
+use App\Utilities\Validators\Comments\CommentValidator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class CommentController extends Controller
 {
-    //
+    public function store(Request $request , Product $product)
+    {
+        $validatedData = CommentValidator::storeCommentValidator($request->all());
+
+        if ($validatedData->fails())
+        {
+            return redirect()->to(url()->previous() . '#comments')->withErrors($validatedData);
+        }
+
+        if (!CommentValidator::checkUserLogin())
+        {
+            alert()->warning('' , 'برای ثبت نظر ابتدا وارد سایت شوید')->persistent('تایید');
+            return  redirect()->route('auth.index');
+        }
+
+        try
+        {
+            DB::beginTransaction();
+
+            $this->createComment($request,$product);
+
+            if ($product->rates()->where('user_id' , auth()->id())->exists())
+            {
+                $productRate = $product->rates()->where('user_id' , auth()->id())->first();
+                $this->updateProductRate($productRate , $request);
+            }else{
+                $this->createProductRate($request,$product);
+            }
+            DB::commit();
+
+            alert()->success('با تشکر' , "نظر ارزشمند شما برای محصول $product->name با موفقیت ثبت شد")->persistent('تایید');
+            return redirect()->back();
+        }catch (\Exception $exception)
+        {
+            DB::rollBack();
+            alert()->error('' , $exception->getMessage())->persistent('تایید');
+            return redirect()->back();
+        }
+    }
+
+    private function createComment($request , $product)
+    {
+       $createdData = Comment::create([
+            'user_id' => auth()->id(),
+            'product_id' => $product->id,
+            'text' => $request->text,
+        ]);
+
+       return $createdData;
+    }
+
+    private function createProductRate($request , $product)
+    {
+       $createdData =  ProductRate::create([
+            'user_id' => auth()->id(),
+            'product_id' => $product->id,
+            'rate' => $request->rate
+        ]);
+       return $createdData;
+    }
+
+    private function updateProductRate( $productRate , $request)
+    {
+        $updatedData = $productRate->update(['rate' => $request->rate]);
+
+        return $updatedData;
+    }
+
 }
