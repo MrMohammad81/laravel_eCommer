@@ -6421,11 +6421,11 @@ h3.cart-page-title {
     padding: 10px 15px;
     text-transform: uppercase; }
     .myaccount-tab-menu a:last-child {
-      border-bottom: 1px solid #ccc; }
+      border-bottom: 1px solid #ccc !important; }
     .myaccount-tab-menu a:hover, .myaccount-tab-menu a.active {
-      background-color: #ff3535;
-      border-color: #ff3535;
-      color: #ffffff; }
+      background-color: #ff3535 !important;
+      border-color: #ff3535 !important;
+      color: #ffffff !important; }
     .myaccount-tab-menu a i.fa {
       font-size: 14px;
       text-align: center;
@@ -6448,10 +6448,10 @@ h3.cart-page-title {
     margin-bottom: 25px;
     font-weight: 600; }
   .myaccount-content .welcome a:hover {
-    color: #ff3535; }
+    color: #ff3535 !important; }
   .myaccount-content .welcome strong {
     font-weight: 600;
-    color: #ff3535; }
+    color: #ff3535 !important; }
   .myaccount-content fieldset {
     margin-top: 20px; }
     .myaccount-content fieldset legend {
@@ -6482,14 +6482,14 @@ h3.cart-page-title {
           background-color: #f6f6f6; }
       .myaccount-content .account-details-form .single-input-item button {
         border: none;
-        background-color: #ff3535;
+        background-color: #ff3535 !important;
         text-transform: uppercase;
         font-weight: 600;
         padding: 9px 25px;
-        color: #fff;
+        color: #fff !important;
         font-size: 13px; }
         .myaccount-content .account-details-form .single-input-item button:hover {
-          background-color: #1f2226; }
+          background-color: #1f2226 !important; }
 
 .myaccount-table {
   white-space: nowrap;

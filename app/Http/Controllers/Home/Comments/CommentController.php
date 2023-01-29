@@ -53,6 +53,13 @@ class CommentController extends Controller
         }
     }
 
+    public function usersProfileIndex()
+    {
+        $comments = Comment::where('user_id' , auth()->id())->where('approved' , 1)->get();
+
+        return view('home.user_profile.comments' , compact('comments'));
+    }
+
     private function createComment($request , $product)
     {
        $createdData = Comment::create([

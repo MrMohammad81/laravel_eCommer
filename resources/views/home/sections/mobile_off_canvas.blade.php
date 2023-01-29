@@ -20,7 +20,7 @@
                 <nav>
                     <ul class="mobile-menu text-right">
                         <li class="menu-item-has-children">
-                            <a href="index.html"> صفحه ای اصلی </a>
+                            <a href="{{ route('home.index') }}"> صفحه ای اصلی </a>
                         </li>
                         <li class="menu-item-has-children">
                             <a href="#">فروشگاه</a>
@@ -56,12 +56,9 @@
             <div class="single-mobile-curr-lang">
                 <ul class="text-right">
                     @auth
-                        <li><a href="my-account.html">پروفایل</a></li>
+                        <li><a href="{{ route('home.users_profile.index') }}">پروفایل</a></li>
                     @else
-                        <li><a href="{{ route('login') }}">ورود</a></li>
-                        <li>
-                            <a href="{{ route('register') }}">ایجاد حساب</a>
-                        </li>
+                        <li><a href="{{ route('auth.index') }}">ورود</a></li>
                     @endauth
                 </ul>
             </div>

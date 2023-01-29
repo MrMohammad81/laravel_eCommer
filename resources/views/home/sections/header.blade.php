@@ -128,10 +128,9 @@
                             <div class="setting-content show">
                                 <ul class="text-right">
                                     @auth
-                                        <li><a href="my-account.html">پروفایل</a></li>
+                                        <li><a href="{{ route('home.users_profile.index') }}">پروفایل</a></li>
                                     @else
                                         <li><a href="{{ route('auth.index') }}">ورود</a></li>
-
                                     @endauth
                                 </ul>
                             </div>

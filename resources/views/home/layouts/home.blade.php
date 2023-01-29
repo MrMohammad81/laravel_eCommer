@@ -41,7 +41,6 @@
     {{-- Footer --}}
     @include('home.sections.footer')
 
-
 </div>
 
 

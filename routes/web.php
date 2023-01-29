@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home\Categories\CategoryController as HomeCategoryController;
 use App\Http\Controllers\Home\Products\ProductController as HomeProductController;
 use App\Http\Controllers\Home\Comments\CommentController as HomeCommentController;
+use App\Http\Controllers\Home\Profile\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,7 @@ Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
     Route::get('/products/{product}/images-edit' , [ProductImageController::class , 'edit'])->name('products.images.edit');
     Route::delete('/products/{product}/images-destroy' , [ProductImageController::class , 'destroy'])->name('product.images.destroy');
     Route::put('/products/{product}/images-set-primary' , [ProductImageController::class , 'setPrimary'])->name('product.images.set_primary');
+    Route::post('/products/{product}/images-add', [ProductImageController::class, 'add'])->name('products.images.add');
 
     // Edit Product Category
     Route::get('/products/{product}/category-edit' , [ProductController::class , 'editCategory'])->name('products.category.edit');
@@ -75,6 +77,15 @@ Route::post('/check-user-reset-password' , [ResetPasswordController::class , 'ch
 Route::post('/check-otp-reset-password' , [ResetPasswordController::class , 'checkOtpResetPass'])->name('auth.checkOTP.resetPass');
 Route::post('/resend-otp-reset-password' , [ResetPasswordController::class , 'resendOTPResetPass'])->name('auth.resendOTP.resetPass');
 Route::post('/change-password' , [ResetPasswordController::class , 'changePassword'])->name('auth.change.password');
+
+
+/************************* Profile Routes **************************/
+Route::prefix('profile')->name('home.')->group(function ()
+{
+    Route::get('/' , [UserProfileController::class , 'index'])->name('users_profile.index');
+    Route::get('/comments' , [HomeCommentController::class , 'usersProfileIndex'])->name('comments.users_profile.index');
+});
+
 
 Route::get('/test' , function (){
 

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin\Products;
 
+use App\Exceptions\ImageNotFound;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Products\AddImageRequest;
-use App\Http\Requests\Admin\Products\UpdateImagesNameRequest;
+use App\Http\Requests\Admin\Products\DeleteImagesRequest;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use RealRashid\SweetAlert\Facades\Alert;
 use function alert;
 use function env;
@@ -53,7 +55,7 @@ class ProductImageController extends Controller
         return view('admin.products.edit_images' , compact('product'));
     }
 
-    public static function destroy(UpdateImagesNameRequest $request)
+    public static function destroy(DeleteImagesRequest $request)
     {
         $request->validated();
 
@@ -64,7 +66,7 @@ class ProductImageController extends Controller
     }
 
     # select image in product_images  for primary_image
-    public function setPrimary(UpdateImagesNameRequest $request , Product $product)
+    public function setPrimary(DeleteImagesRequest $request , Product $product)
     {
         $request->validated();
 

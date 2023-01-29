@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Utilities\Filters\ProductFilters\AttributeFilters;
+use App\Utilities\Filters\ProductFilters\SearchFilter;
+use App\Utilities\Filters\ProductFilters\SortByFilters;
+use App\Utilities\Filters\ProductFilters\VariationFilters;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -83,6 +87,11 @@ class Product extends Model
         return $this->variations()->where('quantity' , '>' , 0)->orderBy('price')->first() ?? 0;
     }
 
+    public function approvedComments()
+    {
+        return $this->hasMany(Comment::class)->where('approved' , 1);
+    }
+
     public function SaleCheckeProduct()
     {
         return $this->variations()->where('quantity' , '>' , 0)
@@ -97,38 +106,13 @@ class Product extends Model
         # Attributes Filter
         if (request()->has('attribute'))
         {
-            foreach (request()->attribute as $attribute)
-            {
-                $query->whereHas('attributes' , function ($query) use ($attribute)
-                {
-                    foreach ( explode('-' , $attribute) as $index => $item)
-                    {
-                        if ($index == 0)
-                        {
-                            $query->where('value' , $item);
-                        }else {
-                            $query->orWhere('value' , $item);
-                        }
-                    }
-                });
-            }
+           AttributeFilters::applyAttributeFilter($query);
         }
 
         # Variations Filter
         if (request()->has('variation'))
         {
-            $query->whereHas('variations' , function ($query)
-            {
-                foreach ( explode('-' , request()->variation) as $index => $variation)
-                {
-                    if ($index == 0)
-                    {
-                        $query->where('value' , $variation);
-                    }else {
-                        $query->orWhere('value' , $variation);
-                    }
-                }
-            });
+            VariationFilters::applyVariationFilter($query);
         }
 
         # SortBy Filter
@@ -139,46 +123,30 @@ class Product extends Model
             switch ($sortBy)
             {
                 case 'max':
-                    $query->orderByDesc(
-                        ProductVariation::select('price')
-                        ->whereColumn('product_variations.product_id' , 'products.id')
-                        ->orderBy('sale_price' , 'desc')
-                        ->take(1)
-                    );
+                    SortByFilters::sortByMax($query);
                     break;
 
                 case 'min':
-                    $query->orderBy(
-                        ProductVariation::select('price')
-                            ->whereColumn('product_variations.product_id' , 'products.id')
-                            ->orderBy('sale_price' , 'asc')
-                            ->take(1)
-                    );
+                   SortByFilters::sortByMin($query);
                     break;
 
                 case 'latest':
-                    $query->latest();
+                    SortByFilters::sortByLatest($query);
                     break;
 
                 case 'oldest':
-                    $query->oldest();
+                   SortByFilters::sortByOldest($query);
                     break;
 
                 default :
                     return $query;
             }
         }
-//        dd($query->toSql());
         return $query;
     }
 
     public function scopeSearch($query)
     {
-        $keyWord = request()->search;
-
-        if (!request()->has('search'))
-            return $query;
-
-        $query->where('name' , 'LIKE' , '%' . trim($keyWord) . '%');
+        SearchFilter::scopeSearch($query);
     }
 }
