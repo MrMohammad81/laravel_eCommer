@@ -96,7 +96,6 @@ class AttributeController extends Controller
      */
     public function destroy(Attribute $attribute)
     {
-
          $attribute->delete();
          Alert::success('حذف ویژگی', "ویژگی $attribute->name با موفقیت حذف شد");
          return redirect()->route('admin.attributes.index');

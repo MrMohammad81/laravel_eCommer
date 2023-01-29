@@ -19,4 +19,34 @@ class CommentController extends Controller
     {
         return view('admin.comments.show' , compact('comment'));
     }
+
+    public function changeApprove(Comment $comment)
+    {
+        if ($comment->getRawOriginal('approved')) {
+            $this->updateCommentApproved($comment, 0);
+        }
+        else{
+            $this->updateCommentApproved($comment,1);
+        }
+
+        alert()->success('' , 'وضعیت کامنت مورد نظر با موفقیت تغیر کرد')->persistent('تایید');
+        return redirect()->route('admin.comments.index');
+
+    }
+
+    public function destroy(Comment $comment)
+    {
+        $comment->delete();
+
+        alert()->success('' , "کامنت مورد نظر با موفقیت حذف شد")->persistent('تایید');
+        return redirect()->back();
+    }
+
+    private function updateCommentApproved( $comment , $status)
+    {
+       $status = $comment->update([
+            'approved' => $status
+        ]);
+       return $status;
+    }
 }

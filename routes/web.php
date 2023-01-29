@@ -43,6 +43,9 @@ Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
     Route::resource('banners', BannerController::class);
     Route::resource('comments', CommentController::class);
 
+    Route::get('/comments/{comment}/change-approve' , [CommentController::class , 'changeApprove'])->name('comments.changeApprove');
+
+
     // Edit Product Images
     Route::get('/products/{product}/images-edit' , [ProductImageController::class , 'edit'])->name('products.images.edit');
     Route::delete('/products/{product}/images-destroy' , [ProductImageController::class , 'destroy'])->name('product.images.destroy');

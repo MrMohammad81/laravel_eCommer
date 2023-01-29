@@ -43,10 +43,10 @@
                             </th>
                             <th>
                                 <a href="{{ route('admin.comments.show' , $comment->id) }}" class="btn btn-sm btn-outline-success">نمایش</a>
-                                <form action="" method="post" style="display: inline">
+                                <form action="{{ route('admin.comments.destroy' , $comment->id) }}" method="post" style="display: inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button onclick="return confirm('آیا از حذف ویژگی  اطمینان دارید ؟')" class="btn btn-sm btn-outline-danger mr-3" type="submit">حذف</button>
+                                    <button onclick="return confirm('آیا از حذف نظر {{ $comment->user->name }}  اطمینان دارید ؟')" class="btn btn-sm btn-outline-danger mr-3" type="submit">حذف</button>
                                 </form>
                             </th>
                         </tr>
