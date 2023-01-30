@@ -67,4 +67,12 @@ class AuthValidator
         ]);
         return $validatedDate;
     }
+
+    public static function checkUserLogin()
+    {
+        if (!auth()->check())
+            return  false;
+        return true;
+
+    }
 }

@@ -271,66 +271,6 @@
 
 <!-- Single Tab Content Start -->
 <div class="tab-pane fade" id="wishlist" role="tabpanel">
-    <div class="myaccount-content">
-        <h3> لیست علاقه مندی ها </h3>
-        <form class="mt-3" action="#">
-            <div class="table-content table-responsive cart-table-content">
-                <table>
-                    <thead>
-                    <tr>
-                        <th> تصویر محصول </th>
-                        <th> نام محصول </th>
-                        <th> حذف </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class="product-thumbnail">
-                            <a href="#"><img
-                                    src="assets/img/cart/cart-3.svg"
-                                    alt=""></a>
-                        </td>
-                        <td class="product-name"><a href="#"> لورم ایپسوم
-                            </a>
-                        </td>
-                        <td class="product-name">
-                            <a href="#"> <i class="sli sli-trash" style="font-size: 20px"></i> </a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="product-thumbnail">
-                            <a href="#"><img
-                                    src="assets/img/cart/cart-4.svg"
-                                    alt=""></a>
-                        </td>
-                        <td class="product-name"><a href="#"> لورم ایپسوم
-                                متن
-                            </a>
-                        </td>
-                        <td class="product-name">
-                            <a href="#"> <i class="sli sli-trash" style="font-size: 20px"></i> </a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="product-thumbnail">
-                            <a href="#"><img
-                                    src="assets/img/cart/cart-5.svg"
-                                    alt=""></a>
-                        </td>
-                        <td class="product-name"><a href="#"> لورم ایپسوم
-                            </a>
-                        </td>
-                        <td class="product-name">
-                            <a href="#"> <i class="sli sli-trash" style="font-size: 20px"></i> </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </form>
-    </div>
 </div>
 <!-- Single Tab Content End -->
 

@@ -12,7 +12,7 @@
                     <li>
                         <a href="{{ route('home.index') }}">صفحه ای اصلی</a>
                     </li>
-                    <li class="active"> پروفایل </li>
+                    <li class="active"> نظرات </li>
                 </ul>
             </div>
         </div>
@@ -41,7 +41,12 @@
                                         <div class="myaccount-content">
                                             <h3> نظرات </h3>
                                             <div class="review-wrapper">
-                                                @foreach($comments as $comment)
+                                                @if($comments->isEmpty())
+                                                    <div class="alert alert-warning">
+                                                        لیست نظرات شما خالی می باشد
+                                                    </div>
+                                                @else
+                                                  @foreach($comments as $comment)
                                                     <div class="single-review">
                                                         <div class="review-img">
                                                             <img src="{{ $comment->user->avatar == null ? '/home/img/user.png' : $comment->user->avatar }}" alt="">
@@ -67,6 +72,8 @@
                                                     </div>
 
                                                 @endforeach
+
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

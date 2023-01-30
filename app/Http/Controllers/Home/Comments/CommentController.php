@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Product;
 use App\Models\ProductRate;
+use App\Utilities\Validators\Auth\AuthValidator;
 use App\Utilities\Validators\Comments\CommentValidator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +23,7 @@ class CommentController extends Controller
             return redirect()->to(url()->previous() . '#comments')->withErrors($validatedData);
         }
 
-        if (!CommentValidator::checkUserLogin())
+        if (!AuthValidator::checkUserLogin())
         {
             alert()->warning('' , 'برای ثبت نظر ابتدا وارد سایت شوید')->persistent('تایید');
             return  redirect()->route('auth.index');

@@ -19,6 +19,7 @@ use App\Http\Controllers\Home\Categories\CategoryController as HomeCategoryContr
 use App\Http\Controllers\Home\Products\ProductController as HomeProductController;
 use App\Http\Controllers\Home\Comments\CommentController as HomeCommentController;
 use App\Http\Controllers\Home\Profile\UserProfileController;
+use App\Http\Controllers\Home\Wishlist\WishlistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,9 +64,14 @@ Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
 // Home Route
 Route::get('/' , [HomeController::class , 'index'])->name('home.index');
 Route::get('/categories/{category:slug}' , [HomeCategoryController::class , 'show'])->name('home.categories.show');
+
 Route::get('/products/show/{product:slug}' , [HomeProductController::class , 'show'])->name('home.products.show');
 Route::get('/products/show/{product:slug}' , [HomeProductController::class , 'show'])->name('home.products.show');
+
 Route::post('/comments/{product}' , [HomeCommentController::class , 'store'])->name('home.comments.store');
+
+Route::get('/add-to-wishlist/{product}' , [WishlistController::class , 'add'])->name('home.wishlist.add');
+Route::get('/remove-from-wishlist/{product}' , [WishlistController::class , 'remove'])->name('home.wishlist.remove');
 
 /****************** Auth Routes ***********************************/
 Route::get('/auth' , [AuthController::class , 'index'])->name('auth.index');
@@ -84,6 +90,7 @@ Route::prefix('profile')->name('home.')->group(function ()
 {
     Route::get('/' , [UserProfileController::class , 'index'])->name('users_profile.index');
     Route::get('/comments' , [HomeCommentController::class , 'usersProfileIndex'])->name('comments.users_profile.index');
+    Route::get('/wishlist' , [WishlistController::class , 'usersProfileIndex'])->name('wishlist.users_profile.index');
 });
 
 
