@@ -160,7 +160,9 @@
                                                 @endauth
                                             </li>
                                             <li>
-                                                <a href="#"><i class="sli sli-refresh"></i><span class="ht-product-action-tooltip"> مقایسه</span></a>
+                                                <a href="{{ route('home.compare.add' , $product->id) }}"><i class="sli sli-refresh"></i>
+                                                    <span class="ht-product-action-tooltip"> افزودن به لیست مقایسه</span>
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>

@@ -25,7 +25,7 @@ class CommentController extends Controller
 
         if (!AuthValidator::checkUserLogin())
         {
-            alert()->warning('' , 'برای ثبت نظر ابتدا وارد سایت شوید')->persistent('تایید');
+            alert()->warning('' , 'برای ثبت نظر ابتدا وارد سایت شوید')->showConfirmButton('تایید');
             return  redirect()->route('auth.index');
         }
 
@@ -44,12 +44,12 @@ class CommentController extends Controller
             }
             DB::commit();
 
-            alert()->success('با تشکر' , "نظر ارزشمند شما برای محصول $product->name با موفقیت ثبت شد")->persistent('تایید');
+            alert()->success('با تشکر' , "نظر ارزشمند شما برای محصول $product->name با موفقیت ثبت شد")->showConfirmButton('تایید');
             return redirect()->back();
         }catch (\Exception $exception)
         {
             DB::rollBack();
-            alert()->error('' , $exception->getMessage())->persistent('تایید');
+            alert()->error('' , $exception->getMessage())->showConfirmButton('تایید');
             return redirect()->back();
         }
     }
