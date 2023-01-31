@@ -21,6 +21,7 @@ use App\Http\Controllers\Home\Comments\CommentController as HomeCommentControlle
 use App\Http\Controllers\Home\Profile\UserProfileController;
 use App\Http\Controllers\Home\Wishlist\WishlistController;
 use App\Http\Controllers\Home\Compare\CompareController;
+use App\Http\Controllers\Home\Cart\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,10 +77,12 @@ Route::get('/add-to-wishlist/{product}' , [WishlistController::class , 'add'])->
 Route::get('/remove-from-wishlist/{product}' , [WishlistController::class , 'remove'])->name('home.wishlist.remove');
 
 /************* compare route ***************/
-
-
 Route::get('/add-to-compare/{product}' , [CompareController::class , 'add'])->name('home.compare.add');
 Route::get('/remove-from-compare/{product}' , [CompareController::class , 'remove'])->name('home.compare.remove');
+
+/******************* Cart Routes **************************/
+Route::post('/add-to-cart' , [CartController::class , 'add'])->name('home.cart.add');
+
 
 /****************** Auth Routes ***********************************/
 Route::get('/auth' , [AuthController::class , 'index'])->name('auth.index');
@@ -104,9 +107,7 @@ Route::prefix('profile')->name('home.')->group(function ()
 
 
 Route::get('/test' , function (){
-
-//  dd( session()->get('compareProducts'));
-   session()->remove('compareProducts');
- // Illuminate\Support\Facades\Auth::logout();
+//    \Cart::clear();
+    dd(\Cart::getContent());
 });
 

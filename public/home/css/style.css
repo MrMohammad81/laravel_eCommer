@@ -3054,7 +3054,7 @@ textarea:focus {
                 margin-left: -10px;
                 transition: all 0.5s ease; }
               .ht-products .ht-product .ht-product-inner .ht-product-image-wrap .ht-product-action ul li a:hover {
-                color: #ff3535; }
+                color: #ff3535 !important; }
                 .ht-products .ht-product .ht-product-inner .ht-product-image-wrap .ht-product-action ul li a:hover .ht-product-action-tooltip {
                   opacity: 1;
                   visibility: visible;
@@ -3088,7 +3088,7 @@ textarea:focus {
             line-height: 1;
             transition: all 0.3s ease; }
             .ht-products .ht-product .ht-product-inner .ht-product-content .ht-product-content-inner .ht-product-categories a:hover {
-              color: #ff3535; }
+              color: #ff3535 !important; }
         .ht-products .ht-product .ht-product-inner .ht-product-content .ht-product-content-inner .ht-product-title {
           font-size: 18px;
           line-height: 1.2;
@@ -3688,18 +3688,19 @@ textarea:focus {
       .product-details-content .pro-details-quality .pro-details-cart {
         margin: 0 17px 0 10px; } }
     .product-details-content .pro-details-quality .pro-details-cart button {
-      color: #fff;
+      color: #000000 !important;
       font-weight: 600;
       font-size: 13px;
       text-transform: uppercase;
-      background-color: #1f2226;
+      background-color: #fff;
       display: inline-block;
       line-height: 1;
       padding: 23px 38px 23px;
       border: none;
       z-index: 99; }
       .product-details-content .pro-details-quality .pro-details-cart button:hover {
-        background-color: #ff3535; }
+          color: #fff!important;
+          background-color: #ff3535; }
       @media only screen and (max-width: 767px) {
         .product-details-content .pro-details-quality .pro-details-cart button {
           padding: 23px 12px 23px; } }

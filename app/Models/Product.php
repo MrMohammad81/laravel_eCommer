@@ -40,7 +40,10 @@ class Product extends Model
         return $is_active ? 'فعال' : 'غیرفعال' ;
     }
 
-
+    public function getQuantityCheckAttribute()
+    {
+        return $this->variations()->where('quantity', '>', 0)->first() ?? 0;
+    }
 
     public function tags()
     {
