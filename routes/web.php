@@ -76,7 +76,10 @@ Route::get('/add-to-wishlist/{product}' , [WishlistController::class , 'add'])->
 Route::get('/remove-from-wishlist/{product}' , [WishlistController::class , 'remove'])->name('home.wishlist.remove');
 
 /************* compare route ***************/
+
+
 Route::get('/add-to-compare/{product}' , [CompareController::class , 'add'])->name('home.compare.add');
+Route::get('/remove-from-compare/{product}' , [CompareController::class , 'remove'])->name('home.compare.remove');
 
 /****************** Auth Routes ***********************************/
 Route::get('/auth' , [AuthController::class , 'index'])->name('auth.index');
@@ -96,13 +99,14 @@ Route::prefix('profile')->name('home.')->group(function ()
     Route::get('/' , [UserProfileController::class , 'index'])->name('users_profile.index');
     Route::get('/comments' , [HomeCommentController::class , 'usersProfileIndex'])->name('comments.users_profile.index');
     Route::get('/wishlist' , [WishlistController::class , 'usersProfileIndex'])->name('wishlist.users_profile.index');
+    Route::get('/compare' , [CompareController::class , 'index'])->name('compare.users_profile.index');
 });
 
 
 Route::get('/test' , function (){
 
-  dd( session()->get('compareProducts'));
-//   session()->remove('compareProducts');
+//  dd( session()->get('compareProducts'));
+   session()->remove('compareProducts');
  // Illuminate\Support\Facades\Auth::logout();
 });
 

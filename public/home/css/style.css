@@ -6376,7 +6376,7 @@ h3.cart-page-title {
     .compare-table .table tbody tr td.product-image-title .category {
       float: right;
       clear: both;
-      color: #ff3535;
+      color: #ff3535 !important;
       text-transform: capitalize;
       letter-spacing: 0.5px; }
     .compare-table .table tbody tr td.product-image-title .title {

@@ -20,6 +20,11 @@
         لیست علاقه مندی ها
     </a>
 
+    <a href="{{ route('home.compare.users_profile.index') }}" class="{{ request()->is('profile/compare') ? 'active' : '' }}">
+        <i class="sli sli-compass ml-1"></i>
+        مقایسه محصولات
+    </a>
+
     <a href="{{ route('home.comments.users_profile.index') }}"  class="{{ request()->is('profile/comments') ? 'active' : '' }}">
         <i class="sli sli-bubble ml-1"></i>
         نظرات

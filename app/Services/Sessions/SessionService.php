@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Utilities\Sessions\Products;
+namespace App\Services\Sessions;
 
-class ProductSessions
+use App\Exceptions\SessionNotFound;
+use function session;
+
+class SessionService
 {
     public static function findSession($sessionName)
     {
@@ -26,5 +29,20 @@ class ProductSessions
     public static function addToSession( $sessionName , $data)
     {
         session()->push( $sessionName , $data);
+    }
+
+    public static function getSession($sessionName)
+    {
+        return session()->get("$sessionName");
+    }
+
+    public static function pullSession($sessionName , $key)
+    {
+        session()->pull("$sessionName." . $key);
+    }
+
+    public static function forgetSession($sessionName)
+    {
+        session()->forget("$sessionName");
     }
 }
