@@ -1538,9 +1538,9 @@ textarea:focus {
               padding: 12px 40px 13px;
               font-size: 14px; } }
           .cart-wrap .shopping-cart-content .shopping-cart-bottom .shopping-cart-btn a:hover {
-            background-color: #ff3535;
-            color: #ffffff;
-            border: 1px solid #ff3535; }
+            background-color: #ff3535!important;
+            color: #ffffff!important;
+            border: 1px solid #ff3535!important; }
           .cart-wrap .shopping-cart-content .shopping-cart-bottom .shopping-cart-btn a:last-child {
             margin-bottom: 0; }
     .cart-wrap .shopping-cart-content .shopping-cart-btn {

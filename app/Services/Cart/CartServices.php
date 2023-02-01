@@ -16,11 +16,20 @@ class CartServices
         ));
     }
 
-
     public static function checkProductInCart($rowId)
     {
         $data = \Cart::get($rowId);
 
         return $data;
+    }
+
+    public static function isEmpty()
+    {
+        \Cart::isEmpty();
+    }
+
+    public static function getContent()
+    {
+        \Cart::getContent();
     }
 }

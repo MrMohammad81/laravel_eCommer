@@ -107,7 +107,7 @@ Route::prefix('profile')->name('home.')->group(function ()
 
 
 Route::get('/test' , function (){
-//    \Cart::clear();
-    dd(\Cart::getContent());
+    \Cart::clear();
+//    dd(\Cart::getContent());
 });
 
