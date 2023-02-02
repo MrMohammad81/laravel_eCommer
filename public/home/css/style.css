@@ -5449,7 +5449,7 @@ h3.cart-page-title {
     .cart-shiping-update-wrapper .cart-clear > button:hover,
     .cart-shiping-update-wrapper .cart-clear > a:hover {
       background-color: #ff3535;
-      color: #fff; }
+      color: #fff!important; }
   .cart-shiping-update-wrapper .cart-clear > button {
     border: medium none;
     cursor: pointer;
@@ -7195,3 +7195,41 @@ body {
     overflow-y: auto;
     display: none;
 }
+
+.clear-cart{
+    border: medium none;
+    cursor: pointer;
+    margin-left: 27px;
+    transition: all 0.3s ease 0s;
+}
+
+.clear-cart {
+    background-color: #f2f2f2;
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    padding: 18px 40px 17px;
+    text-transform: uppercase; }
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .clear-cart {
+        padding: 18px 25px 17px;
+        font-size: 13px; } }
+@media only screen and (max-width: 767px) {
+    .clear-cart {
+        padding: 18px 40px 17px;
+        margin: 0 0 15px; } }
+
+ .cart-clear-form > button:hover {
+    background-color: #ff3535!important;
+    color: #fff!important; }
+
+ .clear-cart > button {
+    border: medium none;
+    cursor: pointer;
+    margin-left: 27px;
+    transition: all 0.3s ease 0s; }
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+ .clear-cart > button {
+        margin-right: 15px; } }

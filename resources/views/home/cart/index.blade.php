@@ -36,7 +36,9 @@
             <h3 class="cart-page-title"> سبد خرید شما </h3>
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                    <form action="#">
+                    <form action="{{ route('home.cart.update') }}" method="post">
+                        @csrf
+                        @method('put')
                         <div class="table-content table-responsive cart-table-content">
                             <table>
                                 <thead>
@@ -80,7 +82,7 @@
                                         </td>
                                         <td class="product-quantity">
                                             <div class="cart-plus-minus">
-                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="{{ $item->quantity }}"
+                                                <input class="cart-plus-minus-box" type="text" name="qtybutton[{{ $item->id }}]" value="{{ $item->quantity }}"
                                                        data-max="{{ $item->attributes->quantity }}">
                                             </div>
                                         </td>
@@ -89,7 +91,11 @@
                                             تومان
                                         </td>
                                         <td class="product-remove">
-                                            <a href="#"><i class="sli sli-close"></i></a>
+                                            <form action="{{ route('home.cart.remove' , $item->id) }}" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <button class="btn btn-outline-danger sli sli-close" type="submit"></button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -100,11 +106,15 @@
                             <div class="col-lg-12">
                                 <div class="cart-shiping-update-wrapper">
                                     <div class="cart-shiping-update">
-                                        <a href="#"> ادامه خرید </a>
+                                        <a href="{{ route('home.index') }}"> ادامه خرید </a>
                                     </div>
                                     <div class="cart-clear">
-                                        <button> به روز رسانی سبد خرید </button>
-                                        <a href="#"> پاک کردن سبد خرید </a>
+                                        <button type="submit"> به روز رسانی سبد خرید </button>
+                                        <form class="cart-clear-form" style="display: inline;" action="{{ route('home.cart.clear') }}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="clear-cart" type="submit">پاک کردن سبد خرید</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
