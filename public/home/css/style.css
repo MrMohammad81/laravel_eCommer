@@ -5573,7 +5573,7 @@ h3.cart-page-title {
     .discount-code-wrapper .discount-code form button.cart-btn-2 {
       background-color: #1f2226;
       border: medium none;
-      color: #fff;
+      color: #fff !important;
       cursor: pointer;
       font-size: 13px;
       font-weight: 600;
@@ -5582,11 +5582,11 @@ h3.cart-page-title {
       transition: all 0.3s ease 0s; }
       .cart-tax .discount-code form button.cart-btn-2:hover,
       .discount-code-wrapper .discount-code form button.cart-btn-2:hover {
-        background-color: #ff3535; }
+        background-color: #ff3535!important; }
 
 .grand-totall {
-  background-color: #f9f9f9;
-  border: 1px solid #ebebeb;
+  background-color: #f9f9f9!important;
+  border: 1px solid #ebebeb!important;
   border-radius: 5px;
   padding: 45px 30px 50px; }
   @media only screen and (min-width: 992px) and (max-width: 1199px) {
@@ -5598,7 +5598,7 @@ h3.cart-page-title {
   .grand-totall .title-wrap {
     position: relative; }
     .grand-totall .title-wrap::before {
-      background-color: #e3e1e1;
+      background-color: #e3e1e1!important;
       content: "";
       height: 1px;
       left: 0;
@@ -5662,8 +5662,8 @@ h3.cart-page-title {
     .grand-totall h4.grand-totall-title span {
       float: left; }
   .grand-totall a {
-    background-color: #1f2226;
-    color: #fff;
+    background-color: #353030 !important;
+    color: #fff!important;
     display: block;
     font-size: 13px;
     font-weight: 600;
@@ -5672,7 +5672,7 @@ h3.cart-page-title {
     text-align: center;
     text-transform: uppercase; }
     .grand-totall a:hover {
-      background-color: #ff3535; }
+      background-color: #ff3535 !important; }
 
 @media only screen and (max-width: 767px) {
   .discount-code-wrapper {
@@ -5682,9 +5682,9 @@ h3.cart-page-title {
   font-size: 100px; }
 
 .cart-empty-content a {
-  background-color: #1f2226;
+  background-color: #1f2226!important;
   border: medium none;
-  color: #fff;
+  color: #fff!important;
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
@@ -5692,7 +5692,7 @@ h3.cart-page-title {
   text-transform: uppercase;
   transition: all 0.3s ease 0s; }
   .cart-empty-content a:hover {
-    background-color: #ff3535; }
+    background-color: #ff3535!important; }
 
 /*-------- 17. Login register style ---------*/
 .login-register-wrapper .login-register-tab-list {

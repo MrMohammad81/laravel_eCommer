@@ -309,7 +309,7 @@
                 newVal = 1;
             }
         }
-        
+
         $button.parent().find("input").val(newVal);
     });
 
@@ -731,7 +731,7 @@
     $(window).load(function() {
         $(".main-search-active").css('display','flex');
     });
-    
+
     window.number_format = function (number, decimals, dec_point, thousands_point) {
 
         if (number == null || !isFinite(number)) {

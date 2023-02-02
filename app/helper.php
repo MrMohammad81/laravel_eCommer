@@ -30,3 +30,28 @@ function generatiFileNameWithDate($name)
 
      return implode('-' , $arrayGregorian) . ' ' . $shamsiDateSplit[3];
  }
+
+ function cartTotalSameAmount()
+ {
+     $cartTotalSameAmount = 0;
+
+     foreach (\Cart::getContent() as $item)
+     {
+         if ($item->attributes->is_sale)
+         {
+             $cartTotalSameAmount += $item->quantity * ($item->attributes->price - $item->attributes->sale_price );
+         }
+     }
+     return $cartTotalSameAmount;
+ }
+
+ function cartTotalDeliveryAmount()
+ {
+     $cartTotalDeliveryAmount = 0;
+
+     foreach (\Cart::getContent() as $item)
+     {
+         $cartTotalDeliveryAmount += $item->associatedModel->delivery_amount;
+     }
+     return $cartTotalDeliveryAmount;
+ }

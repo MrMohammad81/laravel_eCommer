@@ -280,11 +280,7 @@
                                             @endauth
                                         </li>
                                         <li>
-                                            <a href="#"><i class="sli sli-refresh"></i><span class="ht-product-action-tooltip"> مقایسه</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ route('home.cart.add') }}"><i class="sli sli-bag"></i><span class="ht-product-action-tooltip"> افزودن به سبد خرید </span>
+                                            <a href="{{ route('home.compare.add' ,$newestProduct->id ) }}"><i class="sli sli-refresh"></i><span class="ht-product-action-tooltip">افزودن به لیست مقایسه</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -459,9 +455,6 @@
                                             </div>
                                         @endif
                                     </form>
-
-
-
 
                                     <div class="pro-details-meta">
                                         <span>دسته بندی :</span>

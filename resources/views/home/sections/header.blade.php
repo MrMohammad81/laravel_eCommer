@@ -83,7 +83,7 @@
                             @else
                                 <div class="shopping-cart-content">
                                     <div class="shopping-cart-top">
-                                        <a class="cart-close" href="#"><i class="sli sli-close"></i></a>
+                                        <a class="cart-close" href="{{ route('home.cart.index') }}"><i class="sli sli-close"></i></a>
                                         <h4>سبد خرید</h4>
                                     </div>
                                     <ul>
@@ -133,7 +133,7 @@
                                             <a class="default-btn" href="checkout.html">
                                                 ثبت سفارش
                                             </a>
-                                            <a class="default-btn" href="cart-page.html">
+                                            <a class="default-btn" href="{{ route('home.cart.index') }}">
                                                 سبد خرید
                                             </a>
                                         </div>

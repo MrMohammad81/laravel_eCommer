@@ -11,6 +11,11 @@ use App\Http\Requests\Home\Cart\AddToCartRequest;
 
 class CartController extends Controller
 {
+    public function index()
+    {
+        return view('home.cart.index');
+    }
+
     public function add(AddToCartRequest $request)
     {
         $request->validated();
@@ -39,6 +44,5 @@ class CartController extends Controller
         alert()->success('' , "محصول $product->name به سبد خرید شما اضافه شد")->showConfirmButton('تایید');
         return redirect()->back();
     }
-
 
 }
