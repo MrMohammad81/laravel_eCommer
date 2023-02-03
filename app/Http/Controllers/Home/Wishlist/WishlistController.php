@@ -50,10 +50,9 @@ class WishlistController extends Controller
 
     private function addToWishlist($product)
     {
-        $createdData = Wishlist::create([
+        Wishlist::create([
             'user_id' => auth()->id(),
             'product_id' => $product->id
         ]);
-        return $createdData;
     }
 }

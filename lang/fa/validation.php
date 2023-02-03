@@ -253,6 +253,11 @@ return [
         'reset_pass_otp' => 'کد بازیابی',
         'newPassword' => 'رمز عبور جدید',
         'confirm_password' => 'تایید رمز عبور',
+        'code' => 'کد',
+        'amount' => 'مبلغ',
+        'expire_at' => 'تاریخ انقضا',
+        'percentage' => 'درصد',
+        'max_percentage_amount' => 'حداکثر مبلغ برای نوع درصدی',
     ],
 
 ];
