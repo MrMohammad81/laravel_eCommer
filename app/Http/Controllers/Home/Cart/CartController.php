@@ -8,6 +8,9 @@ use App\Models\ProductVariation;
 use App\Services\Cart\CartServices;
 use App\Http\Requests\Home\Cart\AddToCartRequest;
 use App\Http\Requests\Home\Cart\UpdateCartRequest;
+use App\Http\Requests\Home\Cart\CheckCouponRequest;
+use App\Services\Coupons\CouponServices;
+use App\Utilities\Validators\Auth\AuthValidator;
 //use http\Env\Request;
 use Illuminate\Http\Request;
 
@@ -90,6 +93,34 @@ class CartController extends Controller
         CartServices::cartClear();
 
         alert()->warning('' , 'سبد خرید شما خالی شد')->showConfirmButton('تایید');
+        return redirect()->back();
+    }
+
+    public function checkCoupon(CheckCouponRequest $request)
+    {
+        if (!AuthValidator::checkUserLogin())
+        {
+            alert()->error('' , 'برای استاده از کد تخفیف ابتدا باید وارد وبسایت شوید')->showConfirmButton('تایید');
+            return redirect()->back();
+        }
+
+        $checkedCouponExists = CouponServices::checkCoupon($request->coupon);
+        if (array_key_exists('error' , (array)$checkedCouponExists))
+        {
+            alert()->error('' , $checkedCouponExists['error'])->showConfirmButton('تایید');
+            return redirect()->back();
+        }
+
+        $checkUsedCoupon = CouponServices::checkUsedCouponForThisUser($request->coupon);
+        if (array_key_exists('error' , (array)$checkUsedCoupon))
+        {
+            alert()->error('' , $checkUsedCoupon['error'])->showConfirmButton('تایید');
+            return redirect()->back();
+        }
+
+        $applyCoupon = CouponServices::applyCouponCode($request->coupon);
+
+        alert()->success('' , $applyCoupon['success'])->showConfirmButton('تایید');
         return redirect()->back();
     }
 

@@ -21,9 +21,9 @@ class SessionService
         return false;
     }
 
-    public static function storeSession( $sessionName , $data)
+    public static function storeSession( $sessionName , array $data)
     {
-        session()->put("$sessionName" , [$data]);
+        session()->put("$sessionName" , $data);
     }
 
     public static function addToSession( $sessionName , $data)

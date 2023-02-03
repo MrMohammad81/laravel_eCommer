@@ -90,9 +90,10 @@ Route::get('/remove-from-compare/{product}' , [CompareController::class , 'remov
 /******************* Cart Routes **************************/
 Route::get('/cart' , [CartController::class , 'index'])->name('home.cart.index');
 Route::post('/add-to-cart' , [CartController::class , 'add'])->name('home.cart.add');
-Route::delete('/remove-from-cart/{rowId}' , [CartController::class , 'remove'])->name('home.cart.remove');
+Route::get('/remove-from-cart/{rowId}' , [CartController::class , 'remove'])->name('home.cart.remove');
 Route::put('/cart-update' , [CartController::class , 'update'])->name('home.cart.update');
-Route::delete('/clear-cart' , [CartController::class , 'clear'])->name('home.cart.clear');
+Route::get('/clear-cart' , [CartController::class , 'clear'])->name('home.cart.clear');
+Route::post('/check-coupon' , [CartController::class , 'checkCoupon'])->name('home.coupon.check');
 
 
 /****************** Auth Routes ***********************************/
@@ -119,6 +120,8 @@ Route::prefix('profile')->name('home.')->group(function ()
 
 Route::get('/test' , function (){
 //    \Cart::clear();
-    dd(\Cart::getContent());
+   // dd(\Cart::getContent());
+//    auth()->logout();
+   dd( \App\Services\Sessions\SessionService::getSession('coupon'));
 });
 

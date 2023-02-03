@@ -65,4 +65,9 @@ class CartServices
         \Cart::clear();
     }
 
+    public static function getTotal()
+    {
+        return \Cart::getTotal();
+    }
+
 }

@@ -73,6 +73,10 @@ class AuthValidator
         if (!auth()->check())
             return  false;
         return true;
+    }
 
+    public static function getUserId()
+    {
+        return auth()->id();
     }
 }

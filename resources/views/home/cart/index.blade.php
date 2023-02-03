@@ -91,11 +91,7 @@
                                             تومان
                                         </td>
                                         <td class="product-remove">
-                                            <form action="{{ route('home.cart.remove' , $item->id) }}" method="post">
-                                                @csrf
-                                                @method('delete')
-                                                <button class="btn btn-outline-danger sli sli-close" type="submit"></button>
-                                            </form>
+                                            <a href="{{ route('home.cart.remove' , $item->id) }}" class="btn btn-outline-danger sli sli-close" type="submit"></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -110,11 +106,7 @@
                                     </div>
                                     <div class="cart-clear">
                                         <button type="submit"> به روز رسانی سبد خرید </button>
-                                        <form class="cart-clear-form" style="display: inline;" action="{{ route('home.cart.clear') }}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <button class="clear-cart" type="submit">پاک کردن سبد خرید</button>
-                                        </form>
+                                        <a href="{{ route('home.cart.clear') }}" class="clear-cart" type="submit">پاک کردن سبد خرید</a>
                                     </div>
                                 </div>
                             </div>
@@ -130,8 +122,9 @@
                                 </div>
                                 <div class="discount-code">
                                     <p> لورم ایپسوم متن ساختگی با تولید سادگی </p>
-                                    <form>
-                                        <input type="text" required="" name="name">
+                                    <form action="{{ route('home.coupon.check') }}" method="post">
+                                        @csrf
+                                        <input type="text" required="" name="coupon">
                                         <button class="cart-btn-2" type="submit"> ثبت </button>
                                     </form>
                                 </div>
@@ -160,6 +153,18 @@
                                     </span>
                                 </h5>
                                 @endif
+
+                                @if( session()->has('coupon'))
+                                <hr>
+                                <h5>
+                                    مبلغ کد تخفیف :
+                                    <span style="color: red">
+                                        {{ number_format( session()->get('coupon.amount') ) }}
+                                        تومان
+                                    </span>
+                                </h5>
+                                @endif
+
                                 <div class="total-shipping">
                                     <h5>
                                         هزینه ارسال :
@@ -177,7 +182,7 @@
                                 <h4 class="grand-totall-title">
                                     جمع کل:
                                     <span>
-                                        {{ number_format(\Cart::getTotal() + cartTotalDeliveryAmount()) }}
+                                        {{ number_format( cartTotalAmount() ) }}
                                         تومان
                                     </span>
                                 </h4>

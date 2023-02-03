@@ -55,3 +55,20 @@ function generatiFileNameWithDate($name)
      }
      return $cartTotalDeliveryAmount;
  }
+
+ function cartTotalAmount()
+ {
+     if (!session()->has('coupon'))
+     {
+         return \Cart::getTotal() + cartTotalDeliveryAmount();
+     }
+     else{
+         if (session()->get('coupon.amount') > \Cart::getTotal() + cartTotalDeliveryAmount())
+         {
+             return cartTotalDeliveryAmount();
+         }
+         else{
+             return \Cart::getTotal() + cartTotalDeliveryAmount() - session()->get('coupon.amount');
+         }
+     }
+ }
