@@ -11,7 +11,9 @@ class CouponController extends Controller
 {
     public function index()
     {
-        return view('admin.coupons.index');
+        $coupons = Coupon::latest()->paginate(15);
+
+        return view('admin.coupons.index' , compact('coupons'));
     }
 
     public function create()
@@ -26,8 +28,20 @@ class CouponController extends Controller
         $this->createCoupon($request);
 
         alert()->success('ایجاد کد تخفیف',"کد تخفیف $request->name با موفقیت ایجاد شد")->showConfirmButton('تایید');
+        return redirect()->route('admin.coupons.index');
+    }
+
+    public function show(Coupon $coupon)
+    {
+        return view('admin.coupons.show' , compact('coupon'));
+    }
+
+    public function destroy(Coupon $coupon)
+    {
+        $coupon->delete();
+
+        alert()->success('حذف کد تخفیف',"کد تخفیف $coupon->name با موفقیت حذف شد")->showConfirmButton('تایید');
         return redirect()->back();
-//            ->route('admin.coupons.index');
     }
 
     private function createCoupon($request)
