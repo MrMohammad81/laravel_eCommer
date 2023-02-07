@@ -48,7 +48,7 @@
 @section('content')
     <div class="slider-area section-padding-1">
         <div class="slider-active owl-carousel nav-style-1">
-            @foreach($sliders as $slider)
+            @foreach($sliders ?? [] as $slider)
             <div class="single-slider slider-height-1 bg-paleturquoise">
                 <div class="container">
                     <div class="row align-items-center">
@@ -280,11 +280,7 @@
                                             @endauth
                                         </li>
                                         <li>
-                                            <a href="#"><i class="sli sli-refresh"></i><span class="ht-product-action-tooltip"> مقایسه</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ route('home.cart.add') }}"><i class="sli sli-bag"></i><span class="ht-product-action-tooltip"> افزودن به سبد خرید </span>
+                                            <a href="{{ route('home.compare.add' ,$newestProduct->id ) }}"><i class="sli sli-refresh"></i><span class="ht-product-action-tooltip">افزودن به لیست مقایسه</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -450,7 +446,7 @@
                                                     @endauth
                                                 </div>
                                                 <div class="pro-details-compare">
-                                                    <a title="Add To Compare" href="#"><i class="sli sli-refresh"></i></a>
+                                                    <a title="Add To Compare" href="{{ route('home.compare.add' , $product->id) }}"><i class="sli sli-refresh"></i></a>
                                                 </div>
                                             </div>
                                         @else
@@ -459,9 +455,6 @@
                                             </div>
                                         @endif
                                     </form>
-
-
-
 
                                     <div class="pro-details-meta">
                                         <span>دسته بندی :</span>

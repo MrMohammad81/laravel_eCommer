@@ -105,6 +105,9 @@
                                 </tr>
                                 </tbody>
                             </table>
+                            <div class="justify-content-center text-center mt-15">
+                                <a href="{{ route('home.users_profile.index') }}">بازگشت</a>
+                            </div>
                         </div>
                     </div>
                     <!-- Compare Page Content End -->

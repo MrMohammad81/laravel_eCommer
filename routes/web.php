@@ -1,5 +1,7 @@
 <?php
+use Illuminate\Support\Facades\Route;
 
+/************** Admin Namespaces **************/
 use App\Http\Controllers\Admin\Attributes\AttributeController;
 use App\Http\Controllers\Admin\Banners\BannerController;
 use App\Http\Controllers\Admin\Brands\BrandController;
@@ -9,12 +11,16 @@ use App\Http\Controllers\Admin\Products\ProductController;
 use App\Http\Controllers\Admin\Products\ProductImageController;
 use App\Http\Controllers\Admin\Tags\TagController;
 use App\Http\Controllers\Admin\Comments\CommentController;
+use App\Http\Controllers\Admin\Coupons\CouponController;
+
+/************** Auth Namespaces **************/
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+
+/************** Home Namespaces **************/
 use App\Http\Controllers\Home\HomeController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home\Categories\CategoryController as HomeCategoryController;
 use App\Http\Controllers\Home\Products\ProductController as HomeProductController;
 use App\Http\Controllers\Home\Comments\CommentController as HomeCommentController;
@@ -46,6 +52,7 @@ Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
     Route::resource('products', ProductController::class);
     Route::resource('banners', BannerController::class);
     Route::resource('comments', CommentController::class);
+    Route::resource('coupons', CouponController::class);
 
     Route::get('/comments/{comment}/change-approve' , [CommentController::class , 'changeApprove'])->name('comments.changeApprove');
 
@@ -81,7 +88,12 @@ Route::get('/add-to-compare/{product}' , [CompareController::class , 'add'])->na
 Route::get('/remove-from-compare/{product}' , [CompareController::class , 'remove'])->name('home.compare.remove');
 
 /******************* Cart Routes **************************/
+Route::get('/cart' , [CartController::class , 'index'])->name('home.cart.index');
 Route::post('/add-to-cart' , [CartController::class , 'add'])->name('home.cart.add');
+Route::get('/remove-from-cart/{rowId}' , [CartController::class , 'remove'])->name('home.cart.remove');
+Route::put('/cart-update' , [CartController::class , 'update'])->name('home.cart.update');
+Route::get('/clear-cart' , [CartController::class , 'clear'])->name('home.cart.clear');
+Route::post('/check-coupon' , [CartController::class , 'checkCoupon'])->name('home.coupon.check');
 
 
 /****************** Auth Routes ***********************************/
@@ -108,6 +120,8 @@ Route::prefix('profile')->name('home.')->group(function ()
 
 Route::get('/test' , function (){
 //    \Cart::clear();
-    dd(\Cart::getContent());
+   // dd(\Cart::getContent());
+//    auth()->logout();
+   dd( \App\Services\Sessions\SessionService::getSession('coupon'));
 });
 

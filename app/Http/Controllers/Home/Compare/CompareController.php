@@ -26,7 +26,7 @@ class CompareController extends Controller
     {
        if (!SessionService::findSession('compareProducts'))
        {
-           SessionService::storeSession('compareProducts' , $product->id);
+           SessionService::storeSession('compareProducts' , [$product->id]);
 
            alert()->success('' , 'محصول به مقایسه اضافه شد')->showConfirmButton('تایید');
            return redirect()->back();

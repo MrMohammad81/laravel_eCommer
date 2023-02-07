@@ -7,10 +7,21 @@ use App\Models\Product;
 use App\Models\ProductVariation;
 use App\Services\Cart\CartServices;
 use App\Http\Requests\Home\Cart\AddToCartRequest;
+use App\Http\Requests\Home\Cart\UpdateCartRequest;
+use App\Http\Requests\Home\Cart\CheckCouponRequest;
+use App\Services\Coupons\CouponServices;
+use App\Utilities\Validators\Auth\AuthValidator;
+//use http\Env\Request;
+use Illuminate\Http\Request;
 
 
 class CartController extends Controller
 {
+    public function index()
+    {
+        return view('home.cart.index');
+    }
+
     public function add(AddToCartRequest $request)
     {
         $request->validated();
@@ -40,5 +51,77 @@ class CartController extends Controller
         return redirect()->back();
     }
 
+    public function update(UpdateCartRequest $request)
+    {
+        CartServices::checkUpdateMethodRequest($request);
+
+        $request->validated();
+
+        foreach ($request->qtybutton as $rowId => $quantity)
+        {
+            $item = CartServices::checkProductInCart($rowId);
+
+            if (CartServices::checkQuantity($quantity , $item->attributes->quantity))
+            {
+                $productName = Product::findOrFail($item->attributes->product_id);
+
+                alert()->error('' , "تعداد وارد شده $productName->name بیشتر از موجودی می باشد")->showConfirmButton('تایید');
+                return redirect()->back();
+            }
+
+            CartServices::cartUpdate($rowId,$quantity);
+
+        }
+        alert()->success('' , 'سبد خرید شما بروزرسانی شد')->showConfirmButton('تایید');
+        return redirect()->back();
+    }
+
+    public function remove($rowId)
+    {
+        $item = CartServices::checkProductInCart($rowId);
+
+        $productName = Product::findOrFail($item->attributes->product_id);
+
+        \Cart::remove($rowId);
+
+        alert()->success('' , "$productName->name از سبد خرید شما حذف شد")->showConfirmButton('تایید');
+        return redirect()->back();
+    }
+
+    public function clear()
+    {
+        CartServices::cartClear();
+
+        alert()->warning('' , 'سبد خرید شما خالی شد')->showConfirmButton('تایید');
+        return redirect()->back();
+    }
+
+    public function checkCoupon(CheckCouponRequest $request)
+    {
+        if (!AuthValidator::checkUserLogin())
+        {
+            alert()->error('' , 'برای استاده از کد تخفیف ابتدا باید وارد وبسایت شوید')->showConfirmButton('تایید');
+            return redirect()->back();
+        }
+
+        $checkedCouponExists = CouponServices::checkCoupon($request->coupon);
+        if (array_key_exists('error' , (array)$checkedCouponExists))
+        {
+            alert()->error('' , $checkedCouponExists['error'])->showConfirmButton('تایید');
+            return redirect()->back();
+        }
+
+        $checkUsedCoupon = CouponServices::checkUsedCouponForThisUser($request->coupon);
+        if (array_key_exists('error' , (array)$checkUsedCoupon))
+        {
+            alert()->error('' , $checkUsedCoupon['error'])->showConfirmButton('تایید');
+            return redirect()->back();
+        }
+
+        $applyCoupon = CouponServices::applyCouponCode($request->coupon);
+
+        alert()->success('' , $applyCoupon['success'])->showConfirmButton('تایید');
+        return redirect()->back();
+    }
 
 }
