@@ -28,6 +28,7 @@ use App\Http\Controllers\Home\Profile\UserProfileController;
 use App\Http\Controllers\Home\Wishlist\WishlistController;
 use App\Http\Controllers\Home\Compare\CompareController;
 use App\Http\Controllers\Home\Cart\CartController;
+use App\Http\Controllers\Home\Address\AddressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +96,8 @@ Route::put('/cart-update' , [CartController::class , 'update'])->name('home.cart
 Route::get('/clear-cart' , [CartController::class , 'clear'])->name('home.cart.clear');
 Route::post('/check-coupon' , [CartController::class , 'checkCoupon'])->name('home.coupon.check');
 
+/************************** Order Routes ***********************/
+
 
 /****************** Auth Routes ***********************************/
 Route::get('/auth' , [AuthController::class , 'index'])->name('auth.index');
@@ -115,6 +118,7 @@ Route::prefix('profile')->name('home.')->group(function ()
     Route::get('/comments' , [HomeCommentController::class , 'usersProfileIndex'])->name('comments.users_profile.index');
     Route::get('/wishlist' , [WishlistController::class , 'usersProfileIndex'])->name('wishlist.users_profile.index');
     Route::get('/compare' , [CompareController::class , 'index'])->name('compare.users_profile.index');
+    Route::get('/address' , [AddressController::class , 'index'])->name('address.users_profile.index');
 });
 
 

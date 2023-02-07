@@ -10,7 +10,7 @@
         سفارشات
     </a>
 
-    <a href="#address" data-toggle="tab">
+    <a href="{{ route('home.address.users_profile.index') }}" class="{{ request()->is('profile/address') ? 'active' : '' }}">
         <i class="sli sli-map ml-1"></i>
         آدرس ها
     </a>
