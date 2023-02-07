@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\Categories\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Home\Address\AddressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Admin Routes
 #<------------------------ category route --------------->
 Route::get('/category-attributes/{category}' , [CategoryController::class , 'getCategoryAttributeForStoreProduct']);
+
+// Order Route
+Route::get('/get-province-cities-list' , [AddressController::class , 'getProvinceCitiesList']);
+

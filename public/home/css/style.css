@@ -6579,9 +6579,9 @@ h3.cart-page-title {
   -o-transition: all 0.3s ease 0s;
   transition: all 0.3s ease 0s; }
 
-.address-content button:hover {
-  background-color: #ff3535;
-  color: #fff; }
+.address-content button:hover{
+  background-color: #ff3535 !important;
+  color: #fff !important; }
 
 .collapse-address-update-content {
   margin: 20px 0 0;
@@ -7125,7 +7125,7 @@ h3.cart-page-title {
     text-transform: uppercase;
     font-weight: 600; }
     .collapse-address-create-content button:hover {
-      background-color: #212529; }
+      background-color: #212529 !important; }
 
 body {
   font-family: "Vazir" !important; }

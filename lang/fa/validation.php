@@ -258,6 +258,9 @@ return [
         'expire_at' => 'تاریخ انقضا',
         'percentage' => 'درصد',
         'max_percentage_amount' => 'حداکثر مبلغ برای نوع درصدی',
+        'postal_code' => 'کد پستی',
+        'store_title' => 'عنوان',
+        'province_id' => 'استان',
+        'city_id' => 'شهر',
     ],
-
 ];

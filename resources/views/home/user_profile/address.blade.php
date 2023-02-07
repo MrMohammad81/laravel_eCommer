@@ -1,8 +1,42 @@
 @extends('home.layouts.home')
 
 @section('title')
-    یروفایل
+    آدرس
 @endsection
+
+@section('script')
+    <script>
+        $('.province-select').change(function() {
+
+            var provinceID = $(this).val();
+
+            if (provinceID) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url('/api/get-province-cities-list') }}?province_id=" + provinceID,
+                    success: function(res) {
+                        if (res) {
+                            $(".city-select").empty();
+
+                            $.each(res, function(key , city) {
+
+                                $(".city-select").append('<option value="' + city.id + '">' +
+                                    city.name + '</option>');
+                            });
+
+                        } else {
+                            $(".city-select").empty();
+                        }
+                    }
+                });
+            } else {
+                $(".city-select").empty();
+            }
+        });
+    </script>
+@endsection
+
+
 
 @section('content')
     <div class="breadcrumb-area pt-35 pb-35 bg-gray" style="direction: rtl;">
@@ -172,75 +206,97 @@
 
                                             <button class="collapse-address-create mt-3" type="submit"> ایجاد آدرس
                                                 جدید </button>
-                                            <div class="collapse-address-create-content">
+                                            <div class="collapse-address-create-content"
+                                            style="{{ count($errors->addressStore) > 0  ? 'display:block' : '' }}">
 
-                                                <form action="#">
-
+                                                <form action="{{ route('home.address.users_profile.store') }}" method="post">
+                                                    @csrf
                                                     <div class="row">
 
                                                         <div class="tax-select col-lg-6 col-md-6">
                                                             <label>
                                                                 عنوان
                                                             </label>
-                                                            <input type="text" required="" name="title">
+                                                            <input type="text"  name="store_title" value="{{ old('store_title') }}">
+                                                            @error( 'store_title' , 'addressStore')
+                                                            <p class="input-error-validation">
+                                                                <strong>{{ $message }}</strong>
+                                                            </p>
+                                                            @enderror
                                                         </div>
                                                         <div class="tax-select col-lg-6 col-md-6">
                                                             <label>
                                                                 شماره تماس
                                                             </label>
-                                                            <input type="text">
+                                                            <input name="mobile" type="text" value="{{ old('mobile') }}">
+                                                            @error( 'mobile' , 'addressStore')
+                                                            <p class="input-error-validation">
+                                                                <strong>{{ $message }}</strong>
+                                                            </p>
+                                                            @enderror
                                                         </div>
                                                         <div class="tax-select col-lg-6 col-md-6">
                                                             <label>
                                                                 استان
                                                             </label>
-                                                            <select class="email s-email s-wid">
-                                                                <option>Bangladesh</option>
-                                                                <option>Albania</option>
-                                                                <option>Åland Islands</option>
-                                                                <option>Afghanistan</option>
-                                                                <option>Belgium</option>
+
+                                                            <select name="province_id" class="email s-email s-wid province-select">
+                                                                @foreach($provinces as $province)
+                                                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                                                @endforeach
                                                             </select>
+
+                                                            @error( 'province_id' , 'addressStore')
+                                                            <p class="input-error-validation">
+                                                                <strong>{{ $message }}</strong>
+                                                            </p>
+                                                            @enderror
                                                         </div>
+
                                                         <div class="tax-select col-lg-6 col-md-6">
                                                             <label>
                                                                 شهر
                                                             </label>
-                                                            <select class="email s-email s-wid">
-                                                                <option>Bangladesh</option>
-                                                                <option>Albania</option>
-                                                                <option>Åland Islands</option>
-                                                                <option>Afghanistan</option>
-                                                                <option>Belgium</option>
+                                                            <select name="city_id" class="email s-email s-wid city-select">
                                                             </select>
+                                                            @error( 'city_id' , 'addressStore')
+                                                            <p class="input-error-validation">
+                                                                <strong>{{ $message }}</strong>
+                                                            </p>
+                                                            @enderror
+
                                                         </div>
                                                         <div class="tax-select col-lg-6 col-md-6">
                                                             <label>
                                                                 آدرس
                                                             </label>
-                                                            <input type="text">
+                                                            <input name="address" type="text">
+                                                            @error( 'address' , 'addressStore')
+                                                            <p class="input-error-validation">
+                                                                <strong>{{ $message }}</strong>
+                                                            </p>
+                                                            @enderror
                                                         </div>
+
                                                         <div class="tax-select col-lg-6 col-md-6">
                                                             <label>
                                                                 کد پستی
                                                             </label>
-                                                            <input type="text">
+                                                            <input name="postal_code" type="text">
+                                                            @error( 'postal_code' , 'addressStore')
+                                                            <p class="input-error-validation">
+                                                                <strong>{{ $message }}</strong>
+                                                            </p>
+                                                            @enderror
                                                         </div>
 
                                                         <div class=" col-lg-12 col-md-12">
-
                                                             <button class="cart-btn-2" type="submit"> ثبت آدرس
                                                             </button>
                                                         </div>
-
-
-
                                                     </div>
-
                                                 </form>
-
                                             </div>
-
                                         </div>
                                     </div>
                                     <!-- Single Tab Content End -->

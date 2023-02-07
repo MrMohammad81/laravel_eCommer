@@ -115,10 +115,15 @@ Route::post('/change-password' , [ResetPasswordController::class , 'changePasswo
 Route::prefix('profile')->name('home.')->group(function ()
 {
     Route::get('/' , [UserProfileController::class , 'index'])->name('users_profile.index');
+
     Route::get('/comments' , [HomeCommentController::class , 'usersProfileIndex'])->name('comments.users_profile.index');
+
     Route::get('/wishlist' , [WishlistController::class , 'usersProfileIndex'])->name('wishlist.users_profile.index');
+
     Route::get('/compare' , [CompareController::class , 'index'])->name('compare.users_profile.index');
-    Route::get('/address' , [AddressController::class , 'index'])->name('address.users_profile.index');
+
+    Route::get('/addresses' , [AddressController::class , 'index'])->name('address.users_profile.index');
+    Route::post('/addresses' , [AddressController::class, 'store'])->name('address.users_profile.store');
 });
 
 
@@ -126,6 +131,6 @@ Route::get('/test' , function (){
 //    \Cart::clear();
    // dd(\Cart::getContent());
 //    auth()->logout();
-   dd( \App\Services\Sessions\SessionService::getSession('coupon'));
+//   dd( \App\Services\Sessions\SessionService::getSession('coupon'));
 });
 
