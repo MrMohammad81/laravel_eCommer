@@ -48,7 +48,7 @@
 @section('content')
     <div class="slider-area section-padding-1">
         <div class="slider-active owl-carousel nav-style-1">
-            @foreach($sliders as $slider)
+            @foreach($sliders ?? [] as $slider)
             <div class="single-slider slider-height-1 bg-paleturquoise">
                 <div class="container">
                     <div class="row align-items-center">
