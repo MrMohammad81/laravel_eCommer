@@ -27,7 +27,8 @@ class CartServices
 
     public static function isEmpty()
     {
-        \Cart::isEmpty();
+        return \Cart::isEmpty();
+
     }
 
     public static function getContent()

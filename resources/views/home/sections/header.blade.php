@@ -113,11 +113,8 @@
                                                     <img alt="" src="{{ asset(env('PRODUCT_IMAGES_UPLOAD_PATCH').$item->associatedModel->primary_image) }}" />
                                                 </a>
                                                 <div class="item-close">
-                                                    <form action="{{ route('home.cart.remove' , $item->id) }}" method="post">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button class="btn btn-outline-danger sli sli-close" type="submit"></button>
-                                                    </form>
+                                                    <a href="{{ route('home.cart.remove' , $item->id) }}"
+                                                       class="btn btn-outline-danger sli sli-close" type="submit"></a>
                                                 </div>
                                             </div>
                                         </li>
@@ -134,7 +131,7 @@
                                         </span>
                                         </div>
                                         <div class="shopping-cart-btn btn-hover text-center">
-                                            <a class="default-btn" href="checkout.html">
+                                            <a class="default-btn" href="{{ route('home.checkout.index') }}">
                                                 ثبت سفارش
                                             </a>
                                             <a class="default-btn" href="{{ route('home.cart.index') }}">
@@ -255,11 +252,8 @@
                                                         <img alt="" src="{{ asset(env('PRODUCT_IMAGES_UPLOAD_PATCH').$item->associatedModel->primary_image) }}" />
                                                     </a>
                                                     <div class="item-close">
-                                                        <form action="{{ route('home.cart.remove' , $item->id) }}" method="post">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button class="btn btn-outline-danger sli sli-close" type="submit"></button>
-                                                        </form>
+                                                        <a href="{{ route('home.cart.remove' , $item->id) }}"
+                                                           class="btn btn-outline-danger sli sli-close" type="submit"></a>
                                                     </div>
                                                 </div>
                                             </li>
@@ -276,7 +270,7 @@
                                         </span>
                                         </div>
                                         <div class="shopping-cart-btn btn-hover text-center">
-                                            <a class="default-btn" href="checkout.html">
+                                            <a class="default-btn" href="{{ route('home.checkout.index') }}">
                                                 ثبت سفارش
                                             </a>
                                             <a class="default-btn" href="{{ route('home.cart.index') }}">

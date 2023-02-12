@@ -7032,7 +7032,7 @@ h3.cart-page-title {
       .your-order-area .your-order-wrap .payment-method .sin-payment.sin-payment-3 input {
         margin-top: 18px; }
   .your-order-area .Place-order button {
-    background-color: #ff3535;
+    background-color: #ff3535 !important;
     font-size: 12px;
     display: block;
     cursor: pointer;
@@ -7040,22 +7040,22 @@ h3.cart-page-title {
     text-transform: uppercase;
     font-weight: 700;
     width: 100%;
-    color: #fff;
+    color: #fff !important;
     font-size: 13px;
     font-weight: 600l;
     text-align: center;
     border: none; }
     .your-order-area .Place-order button:hover {
-      background-color: #212529; }
+      background-color: #212529!important; }
 
 @media only screen and (max-width: 767px) {
   .checkout-main-area.pb-70 {
     padding-bottom: 50px; } }
 
 .billing-info-wrap .collapse-address-create {
-  background: #1f2226 none repeat scroll 0 0;
+  background: #1f2226 none repeat scroll 0 0 !important;
   border: medium none;
-  color: #fff;
+  color: #fff !important;
   height: 50px;
   margin-right: 6px;
   padding: 5px 30px;
@@ -7064,7 +7064,7 @@ h3.cart-page-title {
   font-weight: 600;
   width: inherit; }
   .billing-info-wrap .collapse-address-create:hover {
-    background-color: #ff3535; }
+    background-color: #ff3535 !important; }
 
 .tax-select {
   margin: 0 0 26px; }

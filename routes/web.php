@@ -29,6 +29,7 @@ use App\Http\Controllers\Home\Wishlist\WishlistController;
 use App\Http\Controllers\Home\Compare\CompareController;
 use App\Http\Controllers\Home\Cart\CartController;
 use App\Http\Controllers\Home\Address\AddressController;
+use App\Http\Controllers\Home\Checkout\CheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,10 +95,12 @@ Route::post('/add-to-cart' , [CartController::class , 'add'])->name('home.cart.a
 Route::get('/remove-from-cart/{rowId}' , [CartController::class , 'remove'])->name('home.cart.remove');
 Route::put('/cart-update' , [CartController::class , 'update'])->name('home.cart.update');
 Route::get('/clear-cart' , [CartController::class , 'clear'])->name('home.cart.clear');
+
+// coupon
 Route::post('/check-coupon' , [CartController::class , 'checkCoupon'])->name('home.coupon.check');
 
-/************************** Order Routes ***********************/
-
+/************************** Checkout Routes ***********************/
+Route::get('/checkout' , [CheckoutController::class , 'index'])->name('home.checkout.index');
 
 /****************** Auth Routes ***********************************/
 Route::get('/auth' , [AuthController::class , 'index'])->name('auth.index');
@@ -124,6 +127,7 @@ Route::prefix('profile')->name('home.')->group(function ()
 
     Route::get('/addresses' , [AddressController::class , 'index'])->name('address.users_profile.index');
     Route::post('/addresses' , [AddressController::class, 'store'])->name('address.users_profile.store');
+    Route::put('/addresses/{address}' , [AddressController::class, 'update'])->name('address.users_profile.update');
 });
 
 

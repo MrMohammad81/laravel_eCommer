@@ -1,6 +1,8 @@
 <?php
 
 use Hekmatinasser\Verta\Facades\Verta;
+use App\Models\Province;
+use App\Models\City;
 
 function generatiFileNameWithDate($name)
  {
@@ -71,4 +73,14 @@ function generatiFileNameWithDate($name)
              return \Cart::getTotal() + cartTotalDeliveryAmount() - session()->get('coupon.amount');
          }
      }
+ }
+
+ function getProvinceName($provinceId)
+ {
+     return Province::findOrFail($provinceId)->name;
+ }
+
+ function getCityName($cityId)
+ {
+     return City::findOrFail($cityId)->name;
  }
