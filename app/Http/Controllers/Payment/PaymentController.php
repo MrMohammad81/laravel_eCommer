@@ -3,10 +3,17 @@
 namespace App\Http\Controllers\Payment;
 
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Transaction;
 use App\Services\Cart\CartServices;
+use App\Services\Sessions\SessionService;
 use App\Utilities\CheckPaymentInformation\CheckPaymentInformation;
+use App\Utilities\Validators\Auth\AuthValidator;
 use Illuminate\Http\Request;
 use App\Utilities\Validators\Payments\PayGetWay\PayValidator;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
@@ -27,20 +34,27 @@ class PaymentController extends Controller
             return redirect()->back();
         }
 
-        $amount = CheckPaymentInformation::getAmounts();
-        if (array_key_exists('error' , $amount ?? []))
+        $amounts = CheckPaymentInformation::getAmounts();
+        if (array_key_exists('error' , $amounts ?? []))
         {
-            alert()->warning('' , $amount['error']);
+            alert()->warning('' , $amounts['error']);
             return redirect()->back();
         }
-        dd($amount);
 
         $api = 'test';
-        $amount = 10000;
+        $amount = $amounts['paying_amount'];
         $redirect = route('home.paymentVerify');
         $result = $this->send($api, $amount, $redirect);
         $result = json_decode($result);
         if($result->status) {
+
+            $createdOrder = $this->createOrder($request->address_id,$amounts,$result->token,'pay');
+            if (array_key_exists('error' , $createdOrder ?? []))
+            {
+                alert()->warning('' , $createdOrder['error']);
+                return redirect()->back();
+            }
+
             $go = "https://pay.ir/pg/$result->token";
             return redirect()->to($go);
         } else {
@@ -68,7 +82,7 @@ class PaymentController extends Controller
         }
     }
 
-    private  function send($api, $amount, $redirect)
+    private function send($api, $amount, $redirect)
     {
         return $this->curl_post('https://pay.ir/pg/send', [
             'api' => $api,
@@ -99,5 +113,52 @@ class PaymentController extends Controller
             'api' => $api,
             'token' => $token,
         ]);
+    }
+
+    private function createOrder($addressId , $amount , $token , $gatewayName)
+    {
+        try {
+            DB::beginTransaction();
+
+           $order = Order::create([
+                'user_id' => AuthValidator::getUserId(),
+                'user_ip' => AuthValidator::getUserIp(),
+                'address_id' => $addressId,
+                'coupon_id' => SessionService::findSession('coupon') ? SessionService::getSession('coupon.id') : null,
+                'total_amount' => $amount['total_amount'],
+                'delivery_amount' => $amount['delivery_amount'],
+                'paying_amount' => $amount['paying_amount'],
+                'payment_type' => 'online'
+            ]);
+
+           foreach (\Cart::getContent() as $item)
+           {
+               OrderItem::create([
+                   'order_id' => $order->id,
+                   'product_id' =>  $item->associatedModel->id,
+                   'product_variation_id' => $item->attributes->id,
+                   'price' => $item->price,
+                   'quantity' => $item->quantity,
+                   'subtotal' => $item->quantity * $item->price,
+            ]);
+
+               Transaction::create([
+                   'user_id' => AuthValidator::getUserId(),
+                   'user_ip' => AuthValidator::getUserIp(),
+                   'order_id' => $order->id,
+                   'amount' => $amount['paying_amount'],
+                   'token' => $token,
+                   'gateway_name' => $gatewayName
+               ]);
+           }
+
+            DB::commit();
+        }catch (\Exception $exception)
+        {
+            DB::rollBack();
+
+            return ['error' => $exception->getMessage()];
+        }
+        return ['success' => 'success!!'];
     }
 }

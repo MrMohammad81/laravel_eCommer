@@ -39,7 +39,7 @@ class CouponServices
 
         if ($coupon->getRawOriginal('type') == 'amount')
         {
-            SessionService::storeSession('coupon' ,  ['code' => $coupon->code , 'amount' => $coupon->amount]);
+            SessionService::storeSession('coupon' ,  [ 'id' => $coupon->id ,'code' => $coupon->code , 'amount' => $coupon->amount]);
             return ['success' => 'کد تخفیف با موفقیت اعمال شد'];
         }
 
@@ -49,7 +49,7 @@ class CouponServices
             ? $coupon->max_percentage_amount
             : ($total * $coupon->percentage) / 100 ;
 
-        SessionService::storeSession('coupon' , ['code' => $coupon->code , 'amount' => $amount]);
+        SessionService::storeSession('coupon' , [ 'id' => $coupon->id , 'code' => $coupon->code , 'amount' => $amount]);
 
         return ['success' => 'کد تخفیف با موفقیت اعمال شد'];
     }

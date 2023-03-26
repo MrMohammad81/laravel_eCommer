@@ -15,12 +15,12 @@ class CheckPaymentInformation
            if (array_key_exists('error', $checkCoupon ?? [])) {
                return $checkCoupon;
            }
-           return [
-               'total_amount' => CartServices::getTotal() + cartTotalSameAmount(),
-               'delivery_amount' => cartTotalDeliveryAmount(),
-               'coupon_amount' => SessionService::findSession('coupon') ? SessionService::getSession('coupon.amount') : 0,
-               'paying_amount' => cartTotalAmount(),
-           ];
        }
+       return [
+           'total_amount' => CartServices::getTotal() + cartTotalSameAmount(),
+           'delivery_amount' => cartTotalDeliveryAmount(),
+           'coupon_amount' => SessionService::findSession('coupon') ? SessionService::getSession('coupon.amount') : 0,
+           'paying_amount' => cartTotalAmount(),
+       ];
    }
 }

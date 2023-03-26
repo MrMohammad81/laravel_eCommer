@@ -1,4 +1,6 @@
 <?php
+
+use App\Services\Cart\CartServices;
 use Illuminate\Support\Facades\Route;
 
 /************** Admin Namespaces **************/
@@ -143,5 +145,6 @@ Route::get('/test' , function (){
    // dd(\Cart::getContent());
 //    auth()->logout();
 //   dd( \App\Services\Sessions\SessionService::getSession('coupon'));
+    dd(\Cart::getContent());
 });
 

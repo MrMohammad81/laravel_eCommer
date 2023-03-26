@@ -79,4 +79,9 @@ class AuthValidator
     {
         return auth()->id();
     }
+
+    public static function getUserIp()
+    {
+        return request()->ip();
+    }
 }
