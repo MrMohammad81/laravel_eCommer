@@ -31,6 +31,9 @@ use App\Http\Controllers\Home\Cart\CartController;
 use App\Http\Controllers\Home\Address\AddressController;
 use App\Http\Controllers\Home\Checkout\CheckoutController;
 
+/************** Home Namespaces **************/
+use App\Http\Controllers\Payment\PaymentController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -101,6 +104,10 @@ Route::post('/check-coupon' , [CartController::class , 'checkCoupon'])->name('ho
 
 /************************** Checkout Routes ***********************/
 Route::get('/checkout' , [CheckoutController::class , 'index'])->name('home.checkout.index');
+
+/***********************  Payment Routes *********************/
+Route::post('/payment' , [PaymentController::class , 'payment'])->name('home.payment');
+Route::get('/payment-verify' , [PaymentController::class , 'paymentVerify'])->name('home.paymentVerify');
 
 /****************** Auth Routes ***********************************/
 Route::get('/auth' , [AuthController::class , 'index'])->name('auth.index');

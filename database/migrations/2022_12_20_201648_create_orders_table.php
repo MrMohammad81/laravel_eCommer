@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
+            $table->char('user_ip');
+
             $table->foreignId('address_id');
             $table->foreign('address_id')->references('id')->on('user_addresses')->onDelete('cascade');
 

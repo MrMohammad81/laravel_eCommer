@@ -17,6 +17,7 @@ class CouponServices
 
         if ($coupon == null)
         {
+            SessionService::forgetSession('coupon');
             return ['error' => 'کد تخفیف وارد شده صحیح نمیباشد'];
         }
     }
@@ -27,6 +28,7 @@ class CouponServices
 
         if (Order::where('user_id' , AuthValidator::getUserId())->where('coupon_id' , $coupon->id)->where('payment_status' , 1)->exists())
         {
+            SessionService::forgetSession('coupon');
             return ['error' => ' شما قبلا از این کد تخفیف استفاده کرده اید'];
         }
     }

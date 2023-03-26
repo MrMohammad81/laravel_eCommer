@@ -17,7 +17,6 @@ function generatiFileNameWithDate($name)
      return $year.'_'.$month.'_'.$day.' '.$hour.'-'.$minute.'-'.$second.'-'.$microsecond.' '.$name;
  }
 
-
  function convertShamsiDateToGregorian($date)
  {
      if ($date == null)
@@ -84,3 +83,4 @@ function generatiFileNameWithDate($name)
  {
      return City::findOrFail($cityId)->name;
  }
+

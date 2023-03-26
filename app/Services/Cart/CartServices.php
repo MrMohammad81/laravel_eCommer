@@ -3,6 +3,7 @@
 namespace App\Services\Cart;
 
 use App\Models\Product;
+use App\Models\ProductVariation;
 
 class CartServices
 {
@@ -69,6 +70,33 @@ class CartServices
     public static function getTotal()
     {
         return \Cart::getTotal();
+    }
+
+    public static function checkCart()
+    {
+        if (\Cart::isEmpty())
+        {
+            return ['error' => 'سبد خرید شما خالی میباشد'];
+        }
+
+        foreach (\Cart::getContent() as $item)
+        {
+            $variation = ProductVariation::find($item->attributes->id);
+
+            $price = $variation->is_sale ? $variation->sale_price : $variation->price;
+
+            if ($item->price != $price)
+            {
+                return ['error' => "قیمت محصول $item->name تغیر یافته است.لطفا سفارش خود را دوباره ثبت کنید"];
+            }
+
+            if ($item->quantity > $variation->quantity)
+            {
+                return ['error' => "موجودی محصول  $item->name کمتر از سفارش شما می باشد.لطفا سفارش خود را بروزرسانی کنید"];
+            }
+
+            return ['success' => 'success'];
+        }
     }
 
 }
