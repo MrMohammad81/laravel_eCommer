@@ -3,17 +3,11 @@
 namespace App\Http\Controllers\Payment;
 
 use App\Http\Controllers\Controller;
-use App\Models\Coupon;
-use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\Transaction;
 use App\Services\Cart\CartServices;
-use App\Services\Sessions\SessionService;
-use App\Utilities\CheckPaymentInformation\CheckPaymentInformation;
-use App\Utilities\Validators\Auth\AuthValidator;
-use Illuminate\Http\Request;
+use App\Utilities\Payments\CheckPaymentInformation\CheckPaymentInformation;
+use App\Utilities\Payments\OrderFeatures\OrderFeatures;
 use App\Utilities\Validators\Payments\PayGetWay\PayValidator;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
@@ -42,13 +36,14 @@ class PaymentController extends Controller
         }
 
         $api = 'test';
-        $amount = $amounts['paying_amount'];
+        $amount = $amounts['paying_amount'] * 10;
         $redirect = route('home.paymentVerify');
         $result = $this->send($api, $amount, $redirect);
         $result = json_decode($result);
         if($result->status) {
 
-            $createdOrder = $this->createOrder($request->address_id,$amounts,$result->token,'pay');
+            $createdOrder = OrderFeatures::createOrder($request->address_id,$amounts,$result->token,'pay');
+
             if (array_key_exists('error' , $createdOrder ?? []))
             {
                 alert()->warning('' , $createdOrder['error']);
@@ -58,7 +53,8 @@ class PaymentController extends Controller
             $go = "https://pay.ir/pg/$result->token";
             return redirect()->to($go);
         } else {
-            echo $result->errorMessage;
+            alert()->error('' , $result->errorMessage);
+            return redirect()->back();
         }
 
     }
@@ -70,14 +66,26 @@ class PaymentController extends Controller
         $result = json_decode($this->verify($api, $token));
         if(isset($result->status))
         {
-            if($result->status == 1) {
-                echo "<h1>تراکنش با موفقیت انجام شد</h1>";
+            if($result->status == 1)
+            {
+               $updateOrder = OrderFeatures::updateOrder($token , $result->transId);
+                if (array_key_exists('error' , $updateOrder ?? []))
+                {
+                    alert()->warning('' , $updateOrder['error']);
+                    return redirect()->back();
+                }
+
+                CartServices::cartClear();
+                alert()->success('' , "پرداخت با موفقیت انجام شد. شماره تراکنش : $result->transId")->persistent('تایید');
+                return redirect()->route('home.index');
             } else {
-                echo "<h1>تراکنش با خطا مواجه شد</h1>";
+                alert()->error('' , 'تراکنش با خطا مواجه شد')->persistent('تایید');
+                return redirect()->back();
             }
         } else {
-            if ($_GET['status'] == 0) {
-                echo "<h1>تراکنش با خطا مواجه شد</h1>";
+            if ($request->status == 0) {
+                alert()->error('' , 'تراکنش با خطا مواجه شد')->persistent('تایید');
+                return redirect()->back();
             }
         }
     }
@@ -113,52 +121,5 @@ class PaymentController extends Controller
             'api' => $api,
             'token' => $token,
         ]);
-    }
-
-    private function createOrder($addressId , $amount , $token , $gatewayName)
-    {
-        try {
-            DB::beginTransaction();
-
-           $order = Order::create([
-                'user_id' => AuthValidator::getUserId(),
-                'user_ip' => AuthValidator::getUserIp(),
-                'address_id' => $addressId,
-                'coupon_id' => SessionService::findSession('coupon') ? SessionService::getSession('coupon.id') : null,
-                'total_amount' => $amount['total_amount'],
-                'delivery_amount' => $amount['delivery_amount'],
-                'paying_amount' => $amount['paying_amount'],
-                'payment_type' => 'online'
-            ]);
-
-           foreach (\Cart::getContent() as $item)
-           {
-               OrderItem::create([
-                   'order_id' => $order->id,
-                   'product_id' =>  $item->associatedModel->id,
-                   'product_variation_id' => $item->attributes->id,
-                   'price' => $item->price,
-                   'quantity' => $item->quantity,
-                   'subtotal' => $item->quantity * $item->price,
-            ]);
-
-               Transaction::create([
-                   'user_id' => AuthValidator::getUserId(),
-                   'user_ip' => AuthValidator::getUserIp(),
-                   'order_id' => $order->id,
-                   'amount' => $amount['paying_amount'],
-                   'token' => $token,
-                   'gateway_name' => $gatewayName
-               ]);
-           }
-
-            DB::commit();
-        }catch (\Exception $exception)
-        {
-            DB::rollBack();
-
-            return ['error' => $exception->getMessage()];
-        }
-        return ['success' => 'success!!'];
     }
 }

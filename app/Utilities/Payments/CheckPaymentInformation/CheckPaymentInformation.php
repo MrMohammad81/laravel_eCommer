@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Utilities\CheckPaymentInformation;
+namespace App\Utilities\Payments\CheckPaymentInformation;
 
 use App\Services\Cart\CartServices;
 use App\Services\Coupons\CouponServices;
 use App\Services\Sessions\SessionService;
+use function cartTotalAmount;
+use function cartTotalDeliveryAmount;
+use function cartTotalSameAmount;
 
 class CheckPaymentInformation
 {
