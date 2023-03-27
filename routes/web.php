@@ -27,13 +27,14 @@ use App\Http\Controllers\Home\Categories\CategoryController as HomeCategoryContr
 use App\Http\Controllers\Home\Products\ProductController as HomeProductController;
 use App\Http\Controllers\Home\Comments\CommentController as HomeCommentController;
 use App\Http\Controllers\Home\Profile\UserProfileController;
+use App\Http\Controllers\Home\Orders\OrderController;
 use App\Http\Controllers\Home\Wishlist\WishlistController;
 use App\Http\Controllers\Home\Compare\CompareController;
 use App\Http\Controllers\Home\Cart\CartController;
 use App\Http\Controllers\Home\Address\AddressController;
 use App\Http\Controllers\Home\Checkout\CheckoutController;
 
-/************** Home Namespaces **************/
+/************** Payment Namespaces **************/
 use App\Http\Controllers\Payment\PaymentController;
 
 /*
@@ -81,7 +82,6 @@ Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
 Route::get('/' , [HomeController::class , 'index'])->name('home.index');
 Route::get('/categories/{category:slug}' , [HomeCategoryController::class , 'show'])->name('home.categories.show');
 Route::get('/products/show/{product:slug}' , [HomeProductController::class , 'show'])->name('home.products.show');
-Route::get('/products/show/{product:slug}' , [HomeProductController::class , 'show'])->name('home.products.show');
 
 /************* comment route ***************/
 Route::post('/comments/{product}' , [HomeCommentController::class , 'store'])->name('home.comments.store');
@@ -127,6 +127,8 @@ Route::post('/change-password' , [ResetPasswordController::class , 'changePasswo
 Route::prefix('profile')->name('home.')->group(function ()
 {
     Route::get('/' , [UserProfileController::class , 'index'])->name('users_profile.index');
+
+    Route::get('/orders' , [OrderController::class , 'index'])->name('order.users_profile.index');
 
     Route::get('/comments' , [HomeCommentController::class , 'usersProfileIndex'])->name('comments.users_profile.index');
 

@@ -27,6 +27,7 @@ return new class extends Migration
             $table->foreignId('coupon_id');
             $table->foreign('coupon_id')->references('id')->on('coupons')->onDelete('cascade');
 
+            $table->bigInteger('order_number');
             $table->tinyInteger('status')->default(0);
             $table->unsignedInteger('total_amount');
             $table->unsignedInteger('delivery_amount')->default(0);

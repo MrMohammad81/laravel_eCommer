@@ -5,7 +5,7 @@ namespace App\PaymentGateway;
 use App\Services\Cart\CartServices;
 use App\Utilities\Payments\OrderFeatures\OrderFeatures;
 
-class zarinpal
+class Zarinpal
 {
     public function send($amount , $addressId)
     {

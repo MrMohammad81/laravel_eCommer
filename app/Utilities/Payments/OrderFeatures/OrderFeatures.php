@@ -8,6 +8,7 @@ use App\Models\ProductVariation;
 use App\Models\Transaction;
 use App\Services\Sessions\SessionService;
 use App\Utilities\Validators\Auth\AuthValidator;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class OrderFeatures
@@ -17,11 +18,14 @@ class OrderFeatures
         try {
             DB::beginTransaction();
 
+            $orderNumber = rand(1111 , 9999);
+
             $order = Order::create([
                 'user_id' => AuthValidator::getUserId(),
                 'user_ip' => AuthValidator::getUserIp(),
                 'address_id' => $addressId,
                 'coupon_id' => SessionService::findSession('coupon') ? SessionService::getSession('coupon.id') : null,
+                'order_number' => $orderNumber,
                 'total_amount' => $amount['total_amount'],
                 'delivery_amount' => $amount['delivery_amount'],
                 'paying_amount' => $amount['paying_amount'],

@@ -11,8 +11,7 @@ use App\Http\Requests\Home\Cart\UpdateCartRequest;
 use App\Http\Requests\Home\Cart\CheckCouponRequest;
 use App\Services\Coupons\CouponServices;
 use App\Utilities\Validators\Auth\AuthValidator;
-//use http\Env\Request;
-use Illuminate\Http\Request;
+
 
 
 class CartController extends Controller
