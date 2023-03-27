@@ -11,7 +11,7 @@ class Pay
     {
         $api = 'test';
         $amount = $amounts['paying_amount'] * 10;
-        $redirect = route('home.paymentVerify');
+        $redirect = route('home.paymentVerify' , ['gatewayName' => 'pay']);
         $result = $this->sendRequest($api, $amount, $redirect);
         $result = json_decode($result);
         if($result->status) {

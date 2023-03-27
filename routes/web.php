@@ -109,7 +109,7 @@ Route::get('/checkout' , [CheckoutController::class , 'index'])->name('home.chec
 
 /***********************  Payment Routes *********************/
 Route::post('/payment' , [PaymentController::class , 'payment'])->name('home.payment');
-Route::get('/payment-verify' , [PaymentController::class , 'paymentVerify'])->name('home.paymentVerify');
+Route::get('/payment-verify/{gatewayName}' , [PaymentController::class , 'paymentVerify'])->name('home.paymentVerify');
 
 /****************** Auth Routes ***********************************/
 Route::get('/auth' , [AuthController::class , 'index'])->name('auth.index');

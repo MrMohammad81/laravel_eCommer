@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Payment;
 
 use App\Http\Controllers\Controller;
 use App\PaymentGateway\Pay;
+use App\PaymentGateway\zarinpal;
 use App\Services\Cart\CartServices;
 use App\Utilities\Payments\CheckPaymentInformation\CheckPaymentInformation;
 use App\Utilities\Validators\Payments\PayGetWay\PayValidator;
@@ -36,30 +37,78 @@ class PaymentController extends Controller
         }
 
         // Validation is ok And start payment
-        $payGateway = new Pay();
-        $payGatewayResult = $payGateway->send($amounts , $request->address_id);
-
-        if (array_key_exists('error' , $payGatewayResult ?? []))
+        if ($request->payment_method == 'pay')
         {
-            alert()->warning('' , $payGatewayResult['error'] ?? []);
-            return redirect()->back();
-        }else {
-            return redirect()->to($payGatewayResult['success'] ?? []);
+            $payGateway = new Pay();
+            $payGatewayResult = $payGateway->send($amounts , $request->address_id);
+
+            if (array_key_exists('error' , $payGatewayResult ?? []))
+            {
+                alert()->warning('' , $payGatewayResult['error'] ?? []);
+                return redirect()->back();
+            }else {
+                return redirect()->to($payGatewayResult['success'] ?? []);
+            }
         }
+
+        if ($request->payment_method == 'zarinpal')
+        {
+            $zarinpalGateway = new zarinpal();
+            $zarinpalGatewayResult = $zarinpalGateway->send($amounts ,  $request->address_id);
+
+            if (array_key_exists('error' , $zarinpalGatewayResult ?? []))
+            {
+                alert()->warning('' , $zarinpalGatewayResult['error'] ?? []);
+                return redirect()->back();
+            }else {
+                return redirect()->to($zarinpalGatewayResult['success'] ?? []);
+            }
+        }
+
+        alert()->error('' , 'درگاه پرداخت انتخابی نامعتبر است');
+        return redirect()->back();
      }
 
-    public function paymentVerify(Request $request)
+    public function paymentVerify(Request $request , $gatewayName)
     {
-        $payGateway = new Pay();
-        $payGatewayResult = $payGateway->verify($request->token , $request->status);
-
-        if (array_key_exists('error' , $payGatewayResult ?? []))
+        if ($gatewayName == 'pay')
         {
-            alert()->error('' , $payGatewayResult['error']);
-            return redirect()->back();
-        }else {
-            alert()->success('' , $payGatewayResult['success']);
-            return redirect()->route('home.index');
+            $payGateway = new Pay();
+            $payGatewayResult = $payGateway->verify($request->token , $request->status);
+
+            if (array_key_exists('error' , $payGatewayResult ?? []))
+            {
+                alert()->error('' , $payGatewayResult['error']);
+                return redirect()->back();
+            }else {
+                alert()->success('' , $payGatewayResult['success']);
+                return redirect()->route('home.index');
+            }
         }
+
+        if ($gatewayName == 'zarinpal')
+        {
+            $amounts = CheckPaymentInformation::getAmounts();
+            if (array_key_exists('error' , $amounts ?? []))
+            {
+                alert()->warning('' , $amounts['error']);
+                return redirect()->back();
+            }
+
+            $zarinpalGateway = new zarinpal();
+            $zarinpalGatewayResult = $zarinpalGateway->verify($request->Authority , $amounts['paying_amount']);
+
+            if (array_key_exists('error' , $zarinpalGatewayResult ?? []))
+            {
+                alert()->error('' , $zarinpalGatewayResult['error']);
+                return redirect()->back();
+            }else {
+                alert()->success('' , $zarinpalGatewayResult['success']);
+                return redirect()->route('home.index');
+            }
+        }
+
+        alert()->error('' , 'خطا در انجام تراکنش');
+        return redirect()->back();
     }
 }
