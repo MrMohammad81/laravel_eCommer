@@ -21,9 +21,11 @@
                         <th>نام کابر</th>
                         <th>شماره سفارش</th>
                         <th>مبلغ</th>
+                        <th>کد پیگیری تراکنش</th>
                         <th>نوع پرداخت</th>
                         <th>نام درگاه پرداخت</th>
                         <th>وضعیت</th>
+                        <th>ip پرداخت کننده</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -33,6 +35,7 @@
                             <th>{{ $transaction->user->name == null ? 'کاربر' : $transaction->user->name }}</th>
                             <th>{{ $transaction->order->order_number }}</th>
                             <th>{{ number_format($transaction->amount) }} تومان</th>
+                            <th>{{ $transaction->ref_id == null ? '' : $transaction->ref_id }}</th>
                             <th>{{ $transaction->order->payment_type }}</th>
                             <th>{{ $transaction->gateway_name }}</th>
                             <th>
@@ -40,6 +43,7 @@
                                      {{ $transaction->status }}
                                 </span>
                             </th>
+                            <th>{{ $transaction->user_ip }}</th>
                         </tr>
                     @endforeach
                     </tbody>

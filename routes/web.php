@@ -65,7 +65,7 @@ Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
     Route::resource('comments', CommentController::class);
     Route::resource('coupons', CouponController::class);
     Route::resource('orders', OrderController::class);
-    Route::resource('transactions', TransactionController::class);
+    Route::get('transactions', [TransactionController::class , 'index'])->name('transactions.index');
 
     Route::get('/comments/{comment}/change-approve' , [CommentController::class , 'changeApprove'])->name('comments.changeApprove');
 
