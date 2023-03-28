@@ -30,7 +30,7 @@
         نظرات
     </a>
 
-    <a href="login.html">
+    <a href="{{ route('auth.logout') }}">
         <i class="sli sli-logout ml-1"></i>
         خروج
     </a>

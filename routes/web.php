@@ -14,12 +14,14 @@ use App\Http\Controllers\Admin\Products\ProductImageController;
 use App\Http\Controllers\Admin\Tags\TagController;
 use App\Http\Controllers\Admin\Comments\CommentController;
 use App\Http\Controllers\Admin\Coupons\CouponController;
+use App\Http\Controllers\Admin\Orders\OrderController;
 
 /************** Auth Namespaces **************/
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\LogOutController;
 
 /************** Home Namespaces **************/
 use App\Http\Controllers\Home\HomeController;
@@ -27,7 +29,7 @@ use App\Http\Controllers\Home\Categories\CategoryController as HomeCategoryContr
 use App\Http\Controllers\Home\Products\ProductController as HomeProductController;
 use App\Http\Controllers\Home\Comments\CommentController as HomeCommentController;
 use App\Http\Controllers\Home\Profile\UserProfileController;
-use App\Http\Controllers\Home\Orders\OrderController;
+use App\Http\Controllers\Home\Orders\OrderController as HomeOrderController;
 use App\Http\Controllers\Home\Wishlist\WishlistController;
 use App\Http\Controllers\Home\Compare\CompareController;
 use App\Http\Controllers\Home\Cart\CartController;
@@ -61,6 +63,8 @@ Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
     Route::resource('banners', BannerController::class);
     Route::resource('comments', CommentController::class);
     Route::resource('coupons', CouponController::class);
+    Route::resource('orders', OrderController::class);
+    Route::resource('transactions', OrderController::class);
 
     Route::get('/comments/{comment}/change-approve' , [CommentController::class , 'changeApprove'])->name('comments.changeApprove');
 
@@ -115,6 +119,7 @@ Route::get('/payment-verify/{gatewayName}' , [PaymentController::class , 'paymen
 Route::get('/auth' , [AuthController::class , 'index'])->name('auth.index');
 Route::post('/register' , [RegisterController::class , 'register'])->name('auth.register');
 Route::post('/login' , [LoginController::class , 'login'])->name('auth.login');
+Route::get('/logout' , [LogOutController::class , 'logout'])->name('auth.logout');
 Route::post('/check-otp' , [LoginController::class , 'checkOtp'])->name('auth.checkOTP');
 Route::post('/resend-otp' , [LoginController::class , 'resendOTP'])->name('auth.resendOTP');
 Route::post('/check-user-reset-password' , [ResetPasswordController::class , 'checkUserForResetPassword'])->name('auth.checkUser.resetPass');
@@ -128,7 +133,7 @@ Route::prefix('profile')->name('home.')->group(function ()
 {
     Route::get('/' , [UserProfileController::class , 'index'])->name('users_profile.index');
 
-    Route::get('/orders' , [OrderController::class , 'index'])->name('order.users_profile.index');
+    Route::get('/orders' , [HomeOrderController::class , 'index'])->name('order.users_profile.index');
 
     Route::get('/comments' , [HomeCommentController::class , 'usersProfileIndex'])->name('comments.users_profile.index');
 
@@ -147,6 +152,7 @@ Route::get('/test' , function (){
    // dd(\Cart::getContent());
 //    auth()->logout();
 //   dd( \App\Services\Sessions\SessionService::getSession('coupon'));
-    dd(\Cart::getContent());
+    //dd(\Cart::getContent());
+//    dd(\App\Services\Coupons\CouponServices::getCoupon('12345'));
 });
 

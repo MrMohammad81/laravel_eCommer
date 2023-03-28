@@ -13,6 +13,11 @@ class Coupon extends Model
     protected $guarded = [];
     protected $table = 'coupons';
 
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
     public function getTypeAttribute($type)
     {
         return $type == 'amount' ? 'مبلغی' : 'درصدی' ;

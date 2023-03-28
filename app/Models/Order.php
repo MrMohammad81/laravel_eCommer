@@ -17,6 +17,21 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class);
+    }
+
+    public function address()
+    {
+        return $this->belongsTo(UserAddress::class);
+    }
+
     public function getStatusAttribute($status)
     {
         switch ($status)
@@ -30,5 +45,39 @@ class Order extends Model
                 break;
         }
         return $status;
+    }
+
+    public function getPaymentStatusAttribute($status)
+    {
+        switch ($status)
+        {
+            case '0' :
+                $status = 'ناموفق';
+                break;
+
+            case '1' :
+                $status = 'موفق';
+                break;
+        }
+        return $status;
+    }
+
+    public function getPaymentTypeAttribute($paymentType)
+    {
+        switch ($paymentType)
+        {
+            case 'online' :
+                $paymentType = 'اینترنتی';
+                break;
+
+            case 'pos' :
+                $paymentType = 'کارتخوان';
+                break;
+
+                case 'cartToCart' :
+                    $paymentType = 'کارت به کارت';
+                break;
+        }
+        return $paymentType;
     }
 }

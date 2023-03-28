@@ -59,6 +59,7 @@
                         <li><a href="{{ route('home.users_profile.index') }}">پروفایل</a></li>
                     @else
                         <li><a href="{{ route('auth.index') }}">ورود</a></li>
+                        <li><a href="{{ route('auth.logout') }}">خروج</a></li>
                     @endauth
                 </ul>
             </div>
