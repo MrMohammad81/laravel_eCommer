@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\Tags\TagController;
 use App\Http\Controllers\Admin\Comments\CommentController;
 use App\Http\Controllers\Admin\Coupons\CouponController;
 use App\Http\Controllers\Admin\Orders\OrderController;
+use App\Http\Controllers\Admin\Transactions\TransactionController;
 
 /************** Auth Namespaces **************/
 use App\Http\Controllers\Auth\AuthController;
@@ -64,7 +65,7 @@ Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
     Route::resource('comments', CommentController::class);
     Route::resource('coupons', CouponController::class);
     Route::resource('orders', OrderController::class);
-    Route::resource('transactions', OrderController::class);
+    Route::resource('transactions', TransactionController::class);
 
     Route::get('/comments/{comment}/change-approve' , [CommentController::class , 'changeApprove'])->name('comments.changeApprove');
 

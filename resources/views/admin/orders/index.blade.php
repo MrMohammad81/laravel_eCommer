@@ -34,7 +34,11 @@
                             <th>{{ $order->status }}</th>
                             <th>{{ number_format($order->total_amount) }} تومان</th>
                             <th>{{ $order->payment_type }}</th>
-                            <th>{{ $order->payment_status }}</th>
+                            <th>
+                                <span class="{{ $order->getRawOriginal('status') ? 'text-success' : 'text-danger' }}">
+                                     {{ $order->status }}
+                                </span>
+                            </th>
                             <th>
                                 <a class="fa fa-eye" href="{{ route('admin.orders.show' , $order->id) }}"></a>
                             </th>
