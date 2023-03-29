@@ -69,7 +69,6 @@
                                                 </table>
                                         </div>
                                     </div>
-
                                 </div>
                             </div> <!-- My Account Tab Content End -->
                         </div>

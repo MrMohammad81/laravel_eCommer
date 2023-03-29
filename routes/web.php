@@ -36,6 +36,7 @@ use App\Http\Controllers\Home\Compare\CompareController;
 use App\Http\Controllers\Home\Cart\CartController;
 use App\Http\Controllers\Home\Address\AddressController;
 use App\Http\Controllers\Home\Checkout\CheckoutController;
+use App\Http\Controllers\Home\About_Us\AboutUsController;
 
 /************** Payment Namespaces **************/
 use App\Http\Controllers\Payment\PaymentController;
@@ -87,6 +88,7 @@ Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
 Route::get('/' , [HomeController::class , 'index'])->name('home.index');
 Route::get('/categories/{category:slug}' , [HomeCategoryController::class , 'show'])->name('home.categories.show');
 Route::get('/products/show/{product:slug}' , [HomeProductController::class , 'show'])->name('home.products.show');
+Route::get('about-us' , [AboutUsController::class , 'index'])->name('home.about-us');
 
 /************* comment route ***************/
 Route::post('/comments/{product}' , [HomeCommentController::class , 'store'])->name('home.comments.store');
@@ -112,7 +114,7 @@ Route::post('/check-coupon' , [CartController::class , 'checkCoupon'])->name('ho
 /************************** Checkout Routes ***********************/
 Route::get('/checkout' , [CheckoutController::class , 'index'])->name('home.checkout.index');
 
-/***********************  Payment Routes *********************/
+/*********************** Payment Routes *********************/
 Route::post('/payment' , [PaymentController::class , 'payment'])->name('home.payment');
 Route::get('/payment-verify/{gatewayName}' , [PaymentController::class , 'paymentVerify'])->name('home.paymentVerify');
 
