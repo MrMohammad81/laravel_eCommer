@@ -6327,8 +6327,8 @@ h3.cart-page-title {
     padding: 0;
     background-color: transparent;
     text-align: center;
-    color: #fff;
-    background-color: #1f2226;
+    color: #fff !important;
+    background-color: #1f2226 !important;
     display: block;
     width: 100%;
     text-transform: uppercase;
@@ -6339,7 +6339,7 @@ h3.cart-page-title {
       .contact-from button {
         padding: 13px 10px; } }
     .contact-from button:hover {
-      background-color: #ff3535; }
+      background-color: #ff3535 !important; }
 
 .contact-map #map {
   height: 500px; }

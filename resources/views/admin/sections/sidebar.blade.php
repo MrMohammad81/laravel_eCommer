@@ -36,9 +36,8 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header"> کامپونت سفارشی : </h6>
-                <a class="collapse-item" href="#">Buttons</a>
-                <a class="collapse-item" href="#">Cards</a>
+                <a class="collapse-item" href="#">کاربران</a>
+                <a class="collapse-item" href="{{ route('admin.user-messages.index') }}">پیام ها</a>
             </div>
         </div>
     </li>

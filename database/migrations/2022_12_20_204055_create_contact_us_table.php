@@ -18,6 +18,7 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('email');
+            $table->char('cellphone');
             $table->string('subject');
             $table->text('text');
 

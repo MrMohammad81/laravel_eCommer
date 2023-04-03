@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\Comments\CommentController;
 use App\Http\Controllers\Admin\Coupons\CouponController;
 use App\Http\Controllers\Admin\Orders\OrderController;
 use App\Http\Controllers\Admin\Transactions\TransactionController;
+use App\Http\Controllers\Admin\UserMessages\UserMessageController;
 
 /************** Auth Namespaces **************/
 use App\Http\Controllers\Auth\AuthController;
@@ -37,6 +38,7 @@ use App\Http\Controllers\Home\Cart\CartController;
 use App\Http\Controllers\Home\Address\AddressController;
 use App\Http\Controllers\Home\Checkout\CheckoutController;
 use App\Http\Controllers\Home\About_Us\AboutUsController;
+use App\Http\Controllers\Home\Contact_Us\ContactUsController;
 
 /************** Payment Namespaces **************/
 use App\Http\Controllers\Payment\PaymentController;
@@ -66,7 +68,9 @@ Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
     Route::resource('comments', CommentController::class);
     Route::resource('coupons', CouponController::class);
     Route::resource('orders', OrderController::class);
-    Route::get('transactions', [TransactionController::class , 'index'])->name('transactions.index');
+    Route::resource('user-messages', UserMessageController::class);
+
+    Route::get('/transactions', [TransactionController::class , 'index'])->name('transactions.index');
 
     Route::get('/comments/{comment}/change-approve' , [CommentController::class , 'changeApprove'])->name('comments.changeApprove');
 
@@ -89,6 +93,9 @@ Route::get('/' , [HomeController::class , 'index'])->name('home.index');
 Route::get('/categories/{category:slug}' , [HomeCategoryController::class , 'show'])->name('home.categories.show');
 Route::get('/products/show/{product:slug}' , [HomeProductController::class , 'show'])->name('home.products.show');
 Route::get('about-us' , [AboutUsController::class , 'index'])->name('home.about-us');
+
+Route::get('contact-us' , [ContactUsController::class , 'index'])->name('home.contact-us');
+Route::post('contact-us-form' , [ContactUsController::class , 'contactUsForm'])->name('home.contact-us-form');
 
 /************* comment route ***************/
 Route::post('/comments/{product}' , [HomeCommentController::class , 'store'])->name('home.comments.store');

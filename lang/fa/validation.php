@@ -262,5 +262,6 @@ return [
         'store_title' => 'عنوان',
         'province_id' => 'استان',
         'city_id' => 'شهر',
+        'subject' => 'موضوع',
     ],
 ];
