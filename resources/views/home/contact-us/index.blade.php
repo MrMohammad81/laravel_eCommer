@@ -4,6 +4,30 @@
     تماس با ما
 @endsection
 
+@section('style')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossorigin=""/>
+@endsection
+
+@section('script')
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin=""></script>
+
+    <script>
+        var myMap = L.map('map').setView([29.585628633578203, 52.573227527174765], 13);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(myMap);
+
+        var marker = L.marker([29.5856, 52.5732]).addTo(myMap);
+
+    </script>
+@endsection
+
 @section('content')
     <div class="breadcrumb-area pt-35 pb-35 bg-gray" style="direction: rtl;">
         <div class="container">
