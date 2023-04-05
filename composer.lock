@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f46ffa8cb06cb81909337d1d5198c3e7",
+    "content-hash": "4ede49865df900b0b7f30040b8a1421c",
     "packages": [
         {
             "name": "anetwork/validation",
@@ -10038,7 +10038,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.0.2"
+        "php": "^8.0.2",
+        "ext-curl": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"
