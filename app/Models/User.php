@@ -52,4 +52,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(ProductRate::class);
     }
+
+    public function getRoleAttribute($role)
+    {
+        switch ($role)
+        {
+            case 'admin' :
+                $role = 'ادمین';
+                break;
+
+            case 'user' :
+                $role = 'کاربر';
+                break;
+        }
+        return $role;
+    }
 }

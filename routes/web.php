@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\Coupons\CouponController;
 use App\Http\Controllers\Admin\Orders\OrderController;
 use App\Http\Controllers\Admin\Transactions\TransactionController;
 use App\Http\Controllers\Admin\UserMessages\UserMessageController;
+use App\Http\Controllers\Admin\Users\UserController;
 
 /************** Auth Namespaces **************/
 use App\Http\Controllers\Auth\AuthController;
@@ -68,6 +69,7 @@ Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
     Route::resource('comments', CommentController::class);
     Route::resource('coupons', CouponController::class);
     Route::resource('orders', OrderController::class);
+    Route::resource('users', UserController::class);
     Route::resource('user-messages', UserMessageController::class);
 
     Route::get('/transactions', [TransactionController::class , 'index'])->name('transactions.index');
