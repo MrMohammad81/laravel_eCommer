@@ -38,7 +38,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('admin.users.index') }}">لیست کاربران</a>
                 <a class="collapse-item" href="">گروه های کاربری</a>
-                <a class="collapse-item" href="">مجوزها</a>
+                <a class="collapse-item" href="{{ route('admin.permissions.index') }}">مجوزها</a>
                 <a class="collapse-item" href="{{ route('admin.user-messages.index') }}">پیام ها</a>
             </div>
         </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\UserMessages;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContactUs;
+use function view;
 
 class UserMessageController extends Controller
 {
