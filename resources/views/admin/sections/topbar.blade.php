@@ -44,73 +44,15 @@
             </div>
         </li>
 
-        <!-- Nav Item - Alerts -->
-        <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-bell fa-fw"></i>
-                <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">3+</span>
-            </a>
-            <!-- Dropdown - Alerts -->
-            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in text-right"
-                 aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                    لورم ایپسوم
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div>
-                        <div class="small text-gray-500"> مهر 12, 1399 </div>
-                        <span class="font-weight-bold"> متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                      گرافیک است </span>
-                    </div>
-
-                    <div class="mr-3">
-                        <div class="icon-circle bg-primary">
-                            <i class="fas fa-file-alt text-white"></i>
-                        </div>
-                    </div>
-
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-
-                    <div>
-                        <div class="small text-gray-500"> مهر 12, 1399 </div>
-                        متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
-                    </div>
-
-                    <div class="mr-3">
-                        <div class="icon-circle bg-success">
-                            <i class="fas fa-donate text-white"></i>
-                        </div>
-                    </div>
-
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-
-                    <div>
-                        <div class="small text-gray-500"> مهر 12, 1399 </div>
-                        متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
-                    </div>
-
-                    <div class="mr-3">
-                        <div class="icon-circle bg-warning">
-                            <i class="fas fa-exclamation-triangle text-white"></i>
-                        </div>
-                    </div>
-
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#"> مشاهده تمام </a>
-            </div>
-        </li>
-
-        <!-- Nav Item - Messages -->
+        @php
+          $comments = \App\Models\Comment::all();
+        @endphp
         <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
                 <!-- Counter - Messages -->
-                <span class="badge badge-danger badge-counter">7</span>
+                <span class="badge badge-danger badge-counter">{{ count($comments) }}</span>
             </a>
             <!-- Dropdown - Messages -->
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in text-right"
@@ -118,67 +60,24 @@
                 <h6 class="dropdown-header">
                     کامنت ها
                 </h6>
-                <a class="dropdown-item d-flex align-items-center justify-content-between" href="#">
+                @foreach($comments as $comment)
+                    <a class="dropdown-item d-flex align-items-center justify-content-between" href="{{ route('home.products.show' , $comment->product->slug) }}">
 
                     <div class="font-weight-bold">
                         <div class="text-truncate">
-                            متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
+                            {{ $comment->text }}
                         </div>
-                        <div class="small text-gray-500"> لورم ایپسوم </div>
+                        <div class="small text-gray-500"> {{ $comment->product->name }} </div>
                     </div>
 
                     <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="#" alt="">
+                        <img class="rounded-circle" src="{{ asset(env('PRODUCT_IMAGES_UPLOAD_PATCH') . $comment->product->primary_image) }}" alt="">
                         <div class="status-indicator bg-success"></div>
                     </div>
 
                 </a>
-                <a class="dropdown-item d-flex align-items-center justify-content-between" href="#">
-
-                    <div>
-                        <div class="text-truncate">
-                            متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
-                        </div>
-                        <div class="small text-gray-500"> لورم ایپسوم </div>
-                    </div>
-
-                    <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="#" alt="">
-                        <div class="status-indicator"></div>
-                    </div>
-
-                </a>
-                <a class="dropdown-item d-flex align-items-center justify-content-between" href="#">
-
-                    <div>
-                        <div class="text-truncate">
-                            متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
-                        </div>
-                        <div class="small text-gray-500"> لورم ایپسوم </div>
-                    </div>
-
-                    <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="#" alt="">
-                        <div class="status-indicator bg-warning"></div>
-                    </div>
-
-                </a>
-                <a class="dropdown-item d-flex align-items-center justify-content-between" href="#">
-
-                    <div>
-                        <div class="text-truncate">
-                            متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
-                        </div>
-                        <div class="small text-gray-500"> لورم ایپسوم </div>
-                    </div>
-
-                    <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="#" alt="">
-                        <div class="status-indicator bg-success"></div>
-                    </div>
-
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#"> مشاهده تمام کامنت ها </a>
+                @endforeach
+                <a class="dropdown-item text-center small text-gray-500" href="{{ route('admin.comments.index') }}"> مشاهده تمام کامنت ها </a>
             </div>
         </li>
 

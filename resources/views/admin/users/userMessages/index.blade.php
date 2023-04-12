@@ -36,7 +36,7 @@
                             <th>{{ $message->subject }}</th>
                             <th>{{ $message->text }}</th>
                             <th>
-                                <a class="fa fa-eye" href="{{ route('admin.user-messages.show' , $message->id) }}"></a>
+                                <a class="fa fa-eye" href="{{ route('admin.user-messages.show' , $message ) }}"></a>
                             </th>
                         </tr>
                     @endforeach

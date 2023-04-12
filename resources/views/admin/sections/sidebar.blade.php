@@ -36,7 +36,9 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#">کاربران</a>
+                <a class="collapse-item" href="{{ route('admin.users.index') }}">لیست کاربران</a>
+                <a class="collapse-item" href="{{ route('admin.permissions.index') }}">مجوزها</a>
+                <a class="collapse-item" href="{{ route('admin.roles.index') }}">گروه های کاربری</a>
                 <a class="collapse-item" href="{{ route('admin.user-messages.index') }}">پیام ها</a>
             </div>
         </div>

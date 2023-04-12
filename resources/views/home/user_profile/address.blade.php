@@ -46,7 +46,7 @@
                     <li>
                         <a href="{{ route('home.index') }}">صفحه ای اصلی</a>
                     </li>
-                    <li class="active"> نظرات </li>
+                    <li class="active"> آدرس ها </li>
                 </ul>
             </div>
         </div>
