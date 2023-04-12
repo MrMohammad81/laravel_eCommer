@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin\Users;
 
 use App\Http\Controllers\Controller;
+use App\Models\Permision;
+use App\Models\Role;
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Http\Requests\Admin\Users\UpdateRequest;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -18,17 +20,36 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('admin.users.edit' , compact('user'));
+        $roles = Role::all();
+
+        $permissions = Permision::all();
+        return view('admin.users.edit' , compact('user' , 'roles' , 'permissions'));
     }
 
     public function update(UpdateRequest $request , User $user)
     {
-        $request->validated();
+        try {
+            DB::beginTransaction();
 
-        $this->updateUser($request,$user);
+            $request->validated();
 
-        alert()->success('' , 'کاربر با موفقیت بروزرسانی شد')->showConfirmButton('تایید');
-        return redirect()->route('admin.users.index');
+            $this->updateUser($request, $user);
+
+            $user->syncRoles($request->role);
+
+            $permissions = $request->except('_token', 'name', 'cellphone', '_method','role','email');
+            $user->syncPermissions($permissions);
+
+            DB::commit();
+
+            alert()->success('', 'کاربر با موفقیت بروزرسانی شد')->showConfirmButton('تایید');
+            return redirect()->route('admin.users.index');
+        }catch (\Exception $exception)
+        {
+            DB::rollBack();
+            alert()->error('خطا در بروزرسانی کاربر' , $exception->getMessage());
+            return redirect()->back();
+        }
 
     }
 

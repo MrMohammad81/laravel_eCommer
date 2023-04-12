@@ -20,7 +20,6 @@
                         <th>نام</th>
                         <th>ایمیل</th>
                         <th>شماره تلفن</th>
-                        <th>سمت</th>
                         <th>عملیات</th>
                     </tr>
                     </thead>
@@ -31,7 +30,6 @@
                             <th>{{ $user->name }}</th>
                             <th>{{ $user->email }}</th>
                             <th>{{ $user->cellphone }}</th>
-                            <th>{{ $user->role }}</th>
                             <th>
                                 <a class="btn btn-outline-info mr-3 mt-2"  href="{{ route('admin.users.edit' , $user->id) }}">ویرایش</a>
                             </th>

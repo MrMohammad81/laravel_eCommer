@@ -34,11 +34,11 @@
                             <th>{{ $permission->name }}</th>
                             <th>{{ $permission->display_name }}</th>
                             <th>
-                                <a class="btn btn-sm btn-outline-info mr-3" href="{{ route('admin.permissions.edit' , $permission->id) }}">ویرایش</a>
-                                <form action="{{ route('admin.permissions.destroy' , $permission->id) }}" method="post" style="display: inline">
+                                <a class="btn btn-sm btn-outline-info mr-3" href="{{ route('admin.permissions.edit' , $permission) }}">ویرایش</a>
+                                <form action="{{ route('admin.permissions.destroy' , $permission) }}" method="post" style="display: inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button onclick="return confirm('آیا از حذف مجوز {{ $permission->display_name }} اطمینان دارید ؟')"  class="btn btn-sm btn-outline-danger mr-3"  type="submit">حذف</button>
+                                    <button onclick="return confirm('آیا از حذف مجوز {{ $permission->display_name }} اطمینان دارید ؟')"  class="btn btn-sm btn-outline-danger mr-3" type="submit">حذف</button>
                                 </form>
                             </th>
                         </tr>

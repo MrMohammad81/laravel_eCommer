@@ -1,5 +1,10 @@
 <?php
 
+
+
+use Illuminate\Support\Facades\Route;
+
+/************** Admin Namespaces **************/
 use App\Http\Controllers\Admin\Attributes\AttributeController;
 use App\Http\Controllers\Admin\Banners\BannerController;
 use App\Http\Controllers\Admin\Brands\BrandController;
@@ -15,11 +20,17 @@ use App\Http\Controllers\Admin\Tags\TagController;
 use App\Http\Controllers\Admin\Transactions\TransactionController;
 use App\Http\Controllers\Admin\UserMessages\UserMessageController;
 use App\Http\Controllers\Admin\Users\UserController;
+use App\Http\Controllers\Admin\Roles\RoleController;
+
+/************** Auth Namespaces **************/
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogOutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+
+/************** Home Namespaces **************/
+
 use App\Http\Controllers\Home\About_Us\AboutUsController;
 use App\Http\Controllers\Home\Address\AddressController;
 use App\Http\Controllers\Home\Cart\CartController;
@@ -33,17 +44,9 @@ use App\Http\Controllers\Home\Orders\OrderController as HomeOrderController;
 use App\Http\Controllers\Home\Products\ProductController as HomeProductController;
 use App\Http\Controllers\Home\Profile\UserProfileController;
 use App\Http\Controllers\Home\Wishlist\WishlistController;
-use App\Http\Controllers\Payment\PaymentController;
-use Illuminate\Support\Facades\Route;
-
-/************** Admin Namespaces **************/
-
-/************** Auth Namespaces **************/
-
-/************** Home Namespaces **************/
 
 /************** Payment Namespaces **************/
-
+use App\Http\Controllers\Payment\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -72,6 +75,7 @@ Route::prefix('admin-panel/managment')->name('admin.')->group(function ()
     Route::resource('users', UserController::class);
     Route::resource('user-messages', UserMessageController::class);
     Route::resource('permissions', PermisionController::class);
+    Route::resource('roles', RoleController::class);
 
     Route::get('/transactions', [TransactionController::class , 'index'])->name('transactions.index');
 

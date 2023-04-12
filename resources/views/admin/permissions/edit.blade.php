@@ -14,7 +14,7 @@
             </div>
             <hr>
             @include('admin.sections.errors')
-            <form action="{{ route('admin.permissions.update' , $permision->id) }}" method="POST">
+            <form action="{{ route('admin.permissions.update' , $permision) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="form-row">

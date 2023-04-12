@@ -12,11 +12,13 @@ class UserMessageController extends Controller
     {
         $messages = ContactUs::latest()->paginate(15);
 
-        return view('admin.userMessages.index' , compact('messages'));
+        return view('admin.users.userMessages.index' , compact('messages'));
     }
 
-    public function show(ContactUs $contactUs)
+    public function show(int $id)
     {
-        return view('admin.userMessages.show' , compact('contactUs'));
+        $contactUs = ContactUs::findOrFail($id);
+
+        return view('admin.users.userMessages.show' , compact('contactUs'));
     }
 }

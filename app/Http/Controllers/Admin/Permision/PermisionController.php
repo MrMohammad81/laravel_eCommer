@@ -7,6 +7,7 @@ use App\Models\Permision;
 use App\Http\Requests\Admin\Perimision\StoreRequest as StorePermisionRequest;
 use App\Http\Requests\Admin\Perimision\UpdateRequest as UpdatePermisionRequest;
 use RealRashid\SweetAlert\Facades\Alert;
+use function Symfony\Component\String\u;
 
 class PermisionController extends Controller
 {
@@ -32,20 +33,29 @@ class PermisionController extends Controller
         return redirect()->route('admin.permissions.index');
     }
 
-    public function edit(Permision $permision)
+    public function edit(int $id)
     {
-        dd($permision);
+        $permision = Permision::findOrFail($id);
+
         return view('admin.permissions.edit' , compact('permision'));
     }
 
-    public function update(UpdatePermisionRequest $request , Permision $permision)
+    public function update(UpdatePermisionRequest $request , int $id)
     {
         $request->validated();
+
+        $permision = Permision::findOrFail($id);
+
+        $this->updatePermision($permision , $request);
+
+        Alert::success('بروزرسانی مجوز', "مجوز $permision->display_name با موفقیت بروزرسانی شد");
+        return redirect()->route('admin.permissions.index');
+
     }
 
-    public function destroy(Permision $permision)
+    public function destroy(int $id)
     {
-        dd($permision);
+        $permision = Permision::findOrFail($id);
         $permision->delete();
         Alert::success('حذف مجوز', "مجوز $permision->display_name با موفقیت حذف شد");
         return redirect()->route('admin.permissions.index');
@@ -58,6 +68,16 @@ class PermisionController extends Controller
             'display_name' => $request->display_name,
             'guard_name' => 'web',
         ]);
+    }
+
+    private function updatePermision($permision , $request)
+    {
+       $updatedData = $permision->update([
+            'name' => $request->name,
+            'display_name' => $request->display_name,
+        ]);
+
+       return $updatedData;
     }
 
 }

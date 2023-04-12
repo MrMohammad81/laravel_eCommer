@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('cellphone')->unique();
-            $table->enum('role' , ['user' , 'admin'])->default('user');
             $table->string('avatar');
             $table->integer('status')->default(1);
             $table->string('email')->unique();
