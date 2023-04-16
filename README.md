@@ -1,7 +1,5 @@
-#امکانات فروشگاه
-###یی
 paragraf
-# #تصاویر فروشگاه
+# تصاویر فروشگاه
 
 ![SharedScreenshot1](https://user-images.githubusercontent.com/107843527/231464131-4b589836-68a2-4a60-b526-8c0787c8966c.jpg)
 ![SharedScreenshot2](https://user-images.githubusercontent.com/107843527/231464146-3898c9fb-6180-4c25-8411-3a1b348314b0.jpg)
