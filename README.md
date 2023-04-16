@@ -1,5 +1,4 @@
-تصاویر
-paragraf
+## امکانات فروشگاه
 # تصاویر فروشگاه
 
 ![SharedScreenshot1](https://user-images.githubusercontent.com/107843527/231464131-4b589836-68a2-4a60-b526-8c0787c8966c.jpg)
