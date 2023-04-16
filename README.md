@@ -23,3 +23,5 @@
 ![SharedScreenshot21](https://user-images.githubusercontent.com/107843527/231464262-c27bb454-5d51-48f3-ae5f-7d3de34ff9a2.jpg)
 
 paragraf
+
+#امکانات فروشگاه
